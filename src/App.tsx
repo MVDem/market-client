@@ -1,3 +1,5 @@
+import Routing from './routes/Router';
+
 import React from 'react';
 // import { Layout } from 'antd';
 import './App.scss';
@@ -8,6 +10,7 @@ import CustomHeader from './components/header/Header';
 const App: React.FC = () => {
   return (
     <>
+      <Routing />
     <CustomHeader />
     <div>Hello Farmer Market</div>
     </>
