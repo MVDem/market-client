@@ -1,3 +1,5 @@
-const API_URL = 'http://localhost:8080';
+const VERIABLE = import.meta.env;
 
-export { API_URL };
+const SERVER_STATUS = VERIABLE.VITE_SERVER_STATUS;
+const API_URL = VERIABLE.VITE_API_URL;
+export { API_URL, SERVER_STATUS };

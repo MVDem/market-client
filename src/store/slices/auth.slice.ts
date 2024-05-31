@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { User } from '../../types/User';
+import { Farmer } from '../../types/User';
 import { fetchLogin, fetchLogout } from '../thunks/auth.thunk';
 
 interface AuthState {
-  user: Omit<User, 'login' | 'password'> | null;
+  user: Farmer | null;
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -41,11 +41,13 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.user = action.payload;
         state.loading = 'succeeded';
         state.error = null;
       })
       .addCase(fetchLogin.rejected, (state, action) => {
+        console.log(action.payload);
         state.user = null;
         state.loading = 'failed';
         state.error = action.payload as string;
