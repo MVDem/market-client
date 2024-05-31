@@ -1,9 +1,8 @@
-import Routing from './routes/Router';
+import Routing from "./routes/Router";
 
-import React from 'react';
+import React from "react";
 // import { Layout } from 'antd';
-import './App.scss';
-import CustomHeader from './components/header/Header';
+import "./App.scss";
 
 // const { Header, Content, Footer } = Layout;
 
@@ -11,20 +10,7 @@ const App: React.FC = () => {
   return (
     <>
       <Routing />
-    <CustomHeader />
-    <div>Hello Farmer Market</div>
     </>
-    // <Layout className="app-container">
-    //   <Header className="app-header">
-    //     <h1>My Project</h1>
-    //   </Header>
-    //   <Content className="app-content">
-    //     <p>Welcome to my project!</p>
-    //   </Content>
-    //   <Footer className="app-footer">
-    //     ©2024 My Project
-    //   </Footer>
-    // </Layout>
   );
 };
 
