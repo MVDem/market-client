@@ -1,8 +1,8 @@
 import Header from "../header/Header";
 
-export default function Home(){
+export default function SignPage(){
     return <>
     <Header />
-    <p>Home -  Farmer Market</p>
+    <p>Login - Farmer Market</p>
     </>
 }
