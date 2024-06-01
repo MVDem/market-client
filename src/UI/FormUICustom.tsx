@@ -8,18 +8,23 @@ interface InputProps {
   type: string;
   placeholder?: string;
   required?: boolean;
-  validationSchema?: z.Schema;
+  validationSchema?: z.ZodType<any, any, any>;
 }
 
-function FormUICustom({ inputs }: { inputs: InputProps[] }): JSX.Element {
-    const schema = z.object({
-    email: z.string().email('Invalid email address').optional(),
-    password: z.string().min(6, 'Password must be at least 6 characters').optional(),
-    name: z.string().min(2, 'Name must be at least 2 characters').optional(),
-    city: z.string().min(2, 'City must be at least 2 characters').optional(),
-    country: z.string().min(2, 'Country must be at least 2 characters').optional(),
-    phone: z.coerce.number().min(10, 'Phone must be at least 10 digits').optional(),
-  });
+interface FormUICustomProps {
+  inputs: InputProps[];
+  buttonLabel: string;
+}
+
+function FormUICustom({ inputs, buttonLabel }: FormUICustomProps): JSX.Element {
+  const schema = z.object(
+    inputs.reduce((acc, input) => {
+      if (input.validationSchema) {
+        acc[input.name] = input.validationSchema;
+      }
+      return acc;
+    }, {} as Record<string, z.ZodType<any, any, any>>)
+  );
 
   type FormFields = z.infer<typeof schema>;
 
@@ -37,23 +42,24 @@ function FormUICustom({ inputs }: { inputs: InputProps[] }): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {inputs.map((input) => (
-          <div key={input.name}>
-            <label htmlFor={input.name}>{input.label}</label>
-            <input
-                {...register(input.name as keyof FormFields)}
-                id={input.name}
-                type={input.type}
-                placeholder={input.placeholder}
-            />
-            {errors[input.name as keyof FormFields] && (
-              <span role="alert">
-              {(errors[input.name as keyof FormFields]?.message as string) || 'This field is required'}
-            </span>  
-        )};
+      {inputs.map(({ name, label, type, placeholder, required }) => (
+        <div key={name}>
+          <label htmlFor={name}>{label}</label>
+          <input
+            {...register(name)}
+            id={name}
+            type={type}
+            placeholder={placeholder}
+            required={required}
+          />
+          {errors[name] && (
+            <div role='alert' style={{ color: 'red' }}>
+              {(errors[name]?.message as string) || 'This field is required'}
+            </div>
+          )}
         </div>
       ))}
-      <button type='submit'>Submit</button>
+      <button type='submit'>{buttonLabel}</button>
     </form>
   );
 }
