@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, Form, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 interface InputProps {
@@ -11,15 +11,14 @@ interface InputProps {
   validationSchema?: z.Schema;
 }
 
-function FormUICustom({ control, inputs }: { inputs: InputProps[] }): JSX.Element {
-    if (!control) return null;
+function FormUICustom({ inputs }: { inputs: InputProps[] }): JSX.Element {
     const schema = z.object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    city: z.string().min(2, 'City must be at least 2 characters'),
-    country: z.string().min(2, 'Country must be at least 2 characters'),
-    phone: z.coerce.number().min(10, 'Phone must be at least 10 digits'),
+    email: z.string().email('Invalid email address').optional(),
+    password: z.string().min(6, 'Password must be at least 6 characters').optional(),
+    name: z.string().min(2, 'Name must be at least 2 characters').optional(),
+    city: z.string().min(2, 'City must be at least 2 characters').optional(),
+    country: z.string().min(2, 'Country must be at least 2 characters').optional(),
+    phone: z.coerce.number().min(10, 'Phone must be at least 10 digits').optional(),
   });
 
   type FormFields = z.infer<typeof schema>;
@@ -37,27 +36,25 @@ function FormUICustom({ control, inputs }: { inputs: InputProps[] }): JSX.Elemen
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit) as any}>
-      {inputs.map((input) => {
-        const inputSchema = input.validationSchema || schema[input.name as keyof typeof schema];
-        return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {inputs.map((input) => (
           <div key={input.name}>
             <label htmlFor={input.name}>{input.label}</label>
             <input
-                {...register(input.name as keyof FormFields, {
-                    required: true,
-                    ...(inputSchema instanceof z.ZodType ? { required: true } : {}),
-                })}
+                {...register(input.name as keyof FormFields)}
                 id={input.name}
                 type={input.type}
                 placeholder={input.placeholder}
             />
-            {errors[input.name as keyof typeof errors]?.message ?? 'This field is required'}
-          </div>
-        );
-      })}
+            {errors[input.name as keyof FormFields] && (
+              <span role="alert">
+              {(errors[input.name as keyof FormFields]?.message as string) || 'This field is required'}
+            </span>  
+        )};
+        </div>
+      ))}
       <button type='submit'>Submit</button>
-    </Form>
+    </form>
   );
 }
 
