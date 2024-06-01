@@ -63,7 +63,10 @@ farm-market-frontend/
 │ │ │ ├── userService.ts
 │ │ │ ├── productService.ts
 │ │ │ └── ...
-│ │ ├── reducers/
+│ │ ├── slices/
+│ │ │ ├── authSlice.ts
+│ │ │ └── ...
+│ │ ├── store.ts
 │ │ └── ...
 │ │
 │ ├── styles/ # Global styles, SCSS files
