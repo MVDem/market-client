@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <p>Home - Farmer Market</p>
+      <h1>Home - Farmer Market</h1>
     </>
   );
 }
