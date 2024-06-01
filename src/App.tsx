@@ -1,13 +1,11 @@
-import { firstNameInput, emailInput } from './utils/formUICustomFields';
-import FormUICustom from './UI/FormUICustom';
+import Routing from './routes/Router';
 
-function App() {
-  const inputs = [firstNameInput, emailInput];
+import React from 'react';
 
+const App: React.FC = () => {
   return (
     <>
-      <div>Hello World! </div>
-        <FormUICustom inputs={inputs} buttonLabel="Submit"/>
+      <Routing />
     </>
   );
 };
