@@ -1,4 +1,4 @@
-import { Offers } from './Offers';
+import { Offer } from './Offers';
 
 export type Role = 'FARMER' | 'CUSTOMER' | 'ADMIN';
 
@@ -25,5 +25,5 @@ export type Farmer = {
   imageURL: string;
   createdAt: string;
   updatedAt: string;
-  offers: Offers[];
+  offers: Offer[];
 };
