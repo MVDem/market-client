@@ -1,11 +1,13 @@
 import Routing from './routes/Router';
 
-function App() {
+import React from 'react';
+
+const App: React.FC = () => {
   return (
     <>
       <Routing />
     </>
   );
-}
+};
 
 export default App;
