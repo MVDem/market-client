@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "./Header.module.scss";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(true); // Manually set the user state for now
@@ -16,10 +16,10 @@ const Header: React.FC = () => {
         <nav className={styles.navbar}>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to='/'>Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to='/about'>About</Link>
             </li>
           </ul>
         </nav>
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
             <button onClick={handleLogout}>Logout</button>
           </div>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to='/login'>Login</Link>
         )}
       </div>
     </div>

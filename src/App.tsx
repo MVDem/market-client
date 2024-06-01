@@ -1,10 +1,6 @@
-import Routing from "./routes/Router";
+import Routing from './routes/Router';
 
-import React from "react";
-// import { Layout } from 'antd';
-import "./App.scss";
-
-// const { Header, Content, Footer } = Layout;
+import React from 'react';
 
 const App: React.FC = () => {
   return (
