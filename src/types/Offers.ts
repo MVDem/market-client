@@ -1,8 +1,8 @@
-export type Offers = {
-  id: number;
+export type Offer = {
+  id: string;
   unit: string;
   price: string;
-  image: number;
+  image: string;
   isActive: boolean;
   description_EN: string;
   description_HE: string;
@@ -10,3 +10,5 @@ export type Offers = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type OfferCard = Omit<Offer,'createdAt'|'updatedAt'>;
