@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Home from '../pages/home/Home';
+import Home from '../pages/Home/Home';
 import SignPage from '../pages/signpage/SignPage';
 import Layout from '../pages/layout/Layout';
 
