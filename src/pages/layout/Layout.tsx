@@ -4,7 +4,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <p>Layout - Farmer Market</p>
+      <h1>Layout Page - Farmer Market</h1>
     </>
   );
 }

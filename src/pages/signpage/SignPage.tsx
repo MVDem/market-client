@@ -4,7 +4,7 @@ export default function SignPage() {
   return (
     <>
       <Header />
-      <p>Login - Farmer Market</p>
+      <h1>Login Page - Farmer Market</h1>
     </>
   );
 }
