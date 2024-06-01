@@ -10,6 +10,6 @@ function App() {
         <FormUICustom inputs={inputs} buttonLabel="Submit"/>
     </>
   );
-}
+};
 
 export default App;
