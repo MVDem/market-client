@@ -7,7 +7,7 @@ import Layout from "../pages/layout/Layout";
 function Routing() {
   return (
     <BrowserRouter>
-      <Suspense fallback="Loading...">
+      <Suspense fallback='Loading...'>
         <Routes>
           <Route path="/about" element={<Navigate to="/About" />} />
           <Route path="/login" element={<SignPage/>} />
