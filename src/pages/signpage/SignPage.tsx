@@ -1,8 +1,10 @@
-import Header from "../../components/header/Header";
+import Header from '../../components/header/Header';
 
-export default function SignPage(){
-    return <>
-    <Header />
-    <h1>Login Page - Farmer Market</h1>
+export default function SignPage() {
+  return (
+    <>
+      <Header />
+      <h1>Login Page - Farmer Market</h1>
     </>
+  );
 }
