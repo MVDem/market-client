@@ -65,7 +65,7 @@ const OfferCardPage: React.FC = () => {
           className={styles.image}
         />
         <div className={styles.details}>
-          <div className={styles.header}>
+          <div className={styles.unitPrice}>
             <h3 className={styles.unit}>{offer.unit}</h3>
             <p className={styles.price}>${offer.price}</p>
           </div>
