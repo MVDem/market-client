@@ -4,7 +4,7 @@ import OfferDetailsPage from './Dashboard/OfferDetailsPage';
 import EditOfferPage from './Dashboard/EditOfferPage';
 import CreateOfferPage from './Dashboard/CreateOfferPage';
 import EditProfilePage from './Profile/EditProfilePage';
-import ProfilePage from './Profile/ProfilePage/ProfilePage';
+import ProfilePage from './Profile/ProfilePage';
 
 export {
   FarmerLayout,
