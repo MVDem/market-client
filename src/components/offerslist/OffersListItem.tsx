@@ -14,7 +14,7 @@ const maxDescLength = 100;
 const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    const url = `/product/${offer.id}`;
+    const url = `/offer/${offer.id}`;
     console.log(url);
     navigate(url);
   };
