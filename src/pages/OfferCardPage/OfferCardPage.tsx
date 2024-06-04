@@ -1,12 +1,14 @@
 import React from 'react';
-import styles from './OfferCard.module.scss';
-import { OfferCard, OfferCard as OfferCardType } from '../../types/Offers';
+import { OfferCard } from '../../types/Offers';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import OfferShortDetails from '../../components/OfferShortDetails/OfferShortDetails';
+import styles from './OfferCardPage.module.scss';
 
 const offers: OfferCard[] = [
   {
     id: '1',
+    name: 'Apples',
     unit: '3 kg',
     price: '10',
     image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce',
@@ -17,6 +19,7 @@ const offers: OfferCard[] = [
   },
   {
     id: '2',
+    name: 'Oranges',
     unit: '1 kg',
     price: '15',
     image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b',
@@ -27,6 +30,7 @@ const offers: OfferCard[] = [
   },
   {
     id: '3',
+    name: 'Inactive Product',
     unit: '3 kg',
     price: '15',
     image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b',
@@ -37,6 +41,7 @@ const offers: OfferCard[] = [
   },
   {
     id: '4',
+    name: 'Strawberries',
     unit: '100 g',
     price: '50',
     image: 'https://images.unsplash.com/photo-1543158181-e6f9f6712055',
@@ -58,20 +63,8 @@ const OfferCardPage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className={styles.card}>
-        <img
-          src={offer.image}
-          alt={offer.description_EN}
-          className={styles.image}
-        />
-        <div className={styles.details}>
-          <div className={styles.unitPrice}>
-            <h3 className={styles.unit}>{offer.unit}</h3>
-            <p className={styles.price}>${offer.price}</p>
-          </div>
-          <p className={styles.description}>{offer.description_EN}</p>
-          <p className={styles.farmer}>Farmer: {offer.farmerId}</p>
-        </div>
+      <div className={styles.container}>
+        <OfferShortDetails offer={offer} />
       </div>
     </>
   );
