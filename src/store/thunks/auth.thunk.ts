@@ -42,7 +42,7 @@ export const fetchLogin = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axiosInstance.post('/auth/signup', {
+      const response = await axiosInstance.post('/auth/signin', {
         email: email,
         password: password,
       });
@@ -60,29 +60,6 @@ export const fetchLogin = createAsyncThunk(
     }
   }
 );
-
-// export const fetchLogin = createAsyncThunk(
-//   'auth/fetchLogin',
-//   async (
-//     { email, password }: Pick<User, 'email' | 'password'>,
-//     { rejectWithValue }
-//   ) => {
-//     const response = await fetch(`${API_URL}/auth/signin`, {
-//       method: 'POST',
-//       headers: {
-//         'Access-Control-Allow-Origin': '*',
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         email: email,
-//         password: password,
-//       }),
-//     })
-//       .then((res) => res.json())
-//       .catch((err) => rejectWithValue(err));
-//     return response;
-//   }
-// );
 
 export const fetchLogout = createAsyncThunk(
   'auth/fetchLogout',

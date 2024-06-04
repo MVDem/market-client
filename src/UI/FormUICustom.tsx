@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './FormUICustom.module.scss';
-import { User } from '../types/User';
 import { useEffect } from 'react';
 
 interface InputProps {
@@ -17,27 +16,33 @@ interface InputProps {
 interface FormUICustomProps {
   inputs: InputProps[];
   buttonLabel: string;
-  onSubmit: (data: Pick<User, 'email' | 'password'>) => void;
+  onSubmit: (data: DataFormType) => void;
 }
+export type DataFormType = {
+  [x: string]: string;
+};
 
 function FormUICustom({
   inputs,
   buttonLabel,
   onSubmit,
 }: FormUICustomProps): JSX.Element {
-  const baseSchema = z.object (inputs.reduce((acc, input) => {
-    if (input.validationSchema) {
-      acc[input.name] = input.validationSchema;
-    }
-    return acc;
-  }, {} as Record<string, z.ZodType<any, any, any>>))
+  const baseSchema = z.object(
+    inputs.reduce((acc, input) => {
+      if (input.validationSchema) {
+        acc[input.name] = input.validationSchema;
+      }
+      return acc;
+    }, {} as Record<string, z.ZodType<any, any, any>>)
+  );
 
-  const schema = ("password" in baseSchema && 'confirmPassword' in baseSchema) ?
-    baseSchema.refine((data) => data.password === data.confirmPassword, {
-      message: 'Passwords do not match',
-      path: ['confirmPassword'],
-    }) :
-    baseSchema;
+  const schema =
+    'password' in baseSchema && 'confirmPassword' in baseSchema
+      ? baseSchema.refine((data) => data.password === data.confirmPassword, {
+          message: 'Passwords do not match',
+          path: ['confirmPassword'],
+        })
+      : baseSchema;
 
   const {
     register,
@@ -59,14 +64,14 @@ function FormUICustom({
     reset();
   }, [inputs, reset]);
 
+  const _onSubmit: SubmitHandler<DataFormType> = (data) => {
+    onSubmit(data);
+    reset();
+  };
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit((data) => {
-          onSubmit(data as Pick<User, 'email' | 'password'>);
-          reset();
-        })}
-      >
+      <form onSubmit={handleSubmit(_onSubmit)}>
         {inputs.map(({ name, label, type, placeholder, required }) => (
           <div key={name} className={styles.inputWrapper}>
             <div>
@@ -81,7 +86,7 @@ function FormUICustom({
             />
             <div className={styles.errorMessage}>
               {errors[name] && (
-                <div role='alert' style={{ color: 'red' }}>
+                <div role="alert" style={{ color: 'red' }}>
                   {(errors[name]?.message as string) ||
                     'This field is required'}
                 </div>
@@ -89,7 +94,7 @@ function FormUICustom({
             </div>
           </div>
         ))}
-        <button type='submit' disabled={!isValid}>
+        <button type="submit" disabled={!isValid}>
           {buttonLabel}
         </button>
       </form>
