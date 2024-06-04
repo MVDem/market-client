@@ -2,6 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './FormUICustom.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { User } from '../types/User';
 
 interface InputProps {
   name: string;
@@ -15,9 +17,10 @@ interface InputProps {
 interface FormUICustomProps {
   inputs: InputProps[];
   buttonLabel: string;
+  onSubmit: (data: Pick<User, 'email' | 'password'>)=>void;
 }
 
-function FormUICustom({ inputs, buttonLabel }: FormUICustomProps): JSX.Element {
+function FormUICustom({ inputs, buttonLabel, onSubmit }: FormUICustomProps): JSX.Element {
   const schema = z
     .object(
       inputs.reduce((acc, input) => {
@@ -32,28 +35,18 @@ function FormUICustom({ inputs, buttonLabel }: FormUICustomProps): JSX.Element {
       path: ['confirmPassword'],
     });
 
-  type FormFields = z.infer<typeof schema>;
-
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
-    reset,
-  } = useForm<FormFields>({
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
 
-  const password = watch('password');
-
-  const onSubmit: SubmitHandler<FormFields> = (data: FormFields) => {
-    console.log(data);
-    reset();
-  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(data => onSubmit(data as Pick<User, 'email' | 'password'>))}>
       {inputs.map(({ name, label, type, placeholder, required }) => (
         <div key={name} className={styles.inputWrapper}>
           <div>

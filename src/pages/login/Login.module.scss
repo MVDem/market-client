@@ -1,7 +1,42 @@
 .container {
-  padding-left: 15px;
-  padding-right: 15px;
   background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+}
+.switch {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  font-size: large;
+  font-weight: 700;
+  list-style: none;
+  padding: 0;
+  gap: 2rem;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    cursor: pointer;
+
+    &:hover::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background-color: #084b11;
+      cursor: pointer;
+    }
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }

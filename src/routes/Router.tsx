@@ -11,6 +11,7 @@ function Routing() {
         <Routes>
           <Route path='/about' element={<Navigate to='/About' />} />
           <Route path='/login' element={<Login />} />
+          {/* <Route path='/register' element={<Register />} /> */}
           <Route path='/layout' element={<Layout />} />
           <Route path='*' element={<Home />} />
         </Routes>
