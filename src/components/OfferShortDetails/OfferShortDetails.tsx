@@ -17,7 +17,7 @@ function OfferShortDetails({ offer }: OfferShortDetailsProps) {
         </div>
         <div>
           <div className={styles.purchases}>
-            <div className="offer-short-details__price">Offer price</div>
+            <div className="offer-short-details__price">₪{offer.price}</div>
             <button disabled>Buy now</button>
           </div>
           <div className={styles.description}>

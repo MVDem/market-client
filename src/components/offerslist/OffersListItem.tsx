@@ -29,7 +29,7 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
       <div className={styles.details}>
         <div className={styles.unitPrice}>
           <h3 className={styles.unit}>{offer.unit}</h3>
-          <p className={styles.price}>${offer.price}</p>
+          <p className={styles.price}>₪{offer.price}</p>
         </div>
         <div className={styles.text}>
           <p className={styles.description}>
