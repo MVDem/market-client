@@ -9,6 +9,7 @@ export type User = {
   role: Role;
   createdAt: string;
   updatedAt: string;
+  farmer?: Farmer;
 };
 
 export type Farmer = {
