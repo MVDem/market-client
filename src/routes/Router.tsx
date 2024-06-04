@@ -29,6 +29,7 @@ function Routing() {
             path="/farmer"
             element={<Guard role={'FARMER'} element={<FarmerLayout />} />}
           >
+            <Route index element={<Navigate to="/farmer/offers" />} />
             <Route path="/farmer/offers" element={<OffersListPage />} />
             <Route
               path="/farmer/offers/one/:id"

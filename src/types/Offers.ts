@@ -1,6 +1,7 @@
 export type Offer = {
   id: string;
   productId?: string;
+  name: string;
   unit: string;
   price: string;
   image: string;
@@ -17,6 +18,7 @@ export type OfferCard = Omit<Offer, 'createdAt' | 'updatedAt'>;
 export type CreateOffer = {
   productId: string;
   farmerId: number;
+  name: string;
   unit: string;
   price: string;
   image?: string;
