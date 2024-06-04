@@ -1,4 +1,4 @@
-import { API_URL, SERVER_STATUS } from '../../config';
+import { API_URL } from '../../config';
 import { User } from '../../types/User';
 
 const registerRequest = async ({

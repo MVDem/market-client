@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Farmer } from '../../types/User';
+import { User } from '../../types/User';
 import { fetchLogin, fetchLogout } from '../thunks/auth.thunk';
 
 interface AuthState {
-  user: Farmer | null;
+  user: User | null;
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | null;
 }

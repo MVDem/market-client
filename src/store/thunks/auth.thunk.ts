@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from '../../types/User';
-import { API_URL, SERVER_STATUS } from '../../config';
+import { API_URL } from '../../config';
 
 export const fetchLogin = createAsyncThunk(
   'auth/fetchLogin',
@@ -63,11 +63,6 @@ export const fetchLogin = createAsyncThunk(
 export const fetchLogout = createAsyncThunk(
   'auth/fetchLogout',
   async (_, { rejectWithValue }) => {
-    // Mock data===================================
-    if (SERVER_STATUS === 'OFF') {
-      return true;
-    }
-    //==========================================
     const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       headers: {
