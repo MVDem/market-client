@@ -1,0 +1,38 @@
+.layoutContainer {
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: max-content 1fr;
+  grid-template-areas:
+    'header header '
+    'nav main ';
+  gap: 0;
+}
+
+.header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+  background-color: $background-body;
+  transition: background-color 0.25s linear;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.mainContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  background-color: $background-card;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  overflow: auto;
+  transition: background-color 0.25s linear;
+  padding: 2rem;
+  gap: 1rem;
+}
