@@ -40,9 +40,9 @@ export const passwordInput = {
   validationSchema: z
     .string()
     .min(6, 'Password must be at least 6 characters')
-    .regex(new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z]).{6}$`), {
-      message: `Must 2 upper, 1 lowercase, 2 digits, 1 simbol of !@#$&*`,
-    }),
+    // .regex(new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z]).{6}$`), {
+    //   message: `Must 2 upper, 1 lowercase, 2 digits, 1 simbol of !@#$&*`,
+    // }),
 };
 
 export const confirmPasswordInput = {
@@ -54,9 +54,9 @@ export const confirmPasswordInput = {
   validationSchema: z
   .string()
   .min(6, 'Password must be at least 6 characters')
-  .regex(new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z]).{6}$`), {
-    message: `Must 2 upper, 1 lowercase, 2 digits, 1 simbol of !@#$&*`,
-  }),
+  // .regex(new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z]).{6}$`), {
+  //   message: `Must 2 upper, 1 lowercase, 2 digits, 1 simbol of !@#$&*`,
+  // }),
 };
 
 export const cityInput = {
