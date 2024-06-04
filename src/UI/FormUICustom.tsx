@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './FormUICustom.module.scss';
-import { useNavigate } from 'react-router-dom';
 import { User } from '../types/User';
 
 interface InputProps {
@@ -17,10 +16,14 @@ interface InputProps {
 interface FormUICustomProps {
   inputs: InputProps[];
   buttonLabel: string;
-  onSubmit: (data: Pick<User, 'email' | 'password'>)=>void;
+  onSubmit: (data: Pick<User, 'email' | 'password'>) => void;
 }
 
-function FormUICustom({ inputs, buttonLabel, onSubmit }: FormUICustomProps): JSX.Element {
+function FormUICustom({
+  inputs,
+  buttonLabel,
+  onSubmit,
+}: FormUICustomProps): JSX.Element {
   const schema = z
     .object(
       inputs.reduce((acc, input) => {
@@ -44,9 +47,12 @@ function FormUICustom({ inputs, buttonLabel, onSubmit }: FormUICustomProps): JSX
     mode: 'onChange',
   });
 
-
   return (
-    <form onSubmit={handleSubmit(data => onSubmit(data as Pick<User, 'email' | 'password'>))}>
+    <form
+      onSubmit={handleSubmit((data) =>
+        onSubmit(data as Pick<User, 'email' | 'password'>)
+      )}
+    >
       {inputs.map(({ name, label, type, placeholder, required }) => (
         <div key={name} className={styles.inputWrapper}>
           <div>
@@ -61,14 +67,14 @@ function FormUICustom({ inputs, buttonLabel, onSubmit }: FormUICustomProps): JSX
           />
           <div className={styles.errorMessage}>
             {errors[name] && (
-              <div role='alert' style={{ color: 'red' }}>
+              <div role="alert" style={{ color: 'red' }}>
                 {(errors[name]?.message as string) || 'This field is required'}
               </div>
             )}
           </div>
         </div>
       ))}
-      <button type='submit' disabled={!isValid}>
+      <button type="submit" disabled={!isValid}>
         {buttonLabel}
       </button>
     </form>
