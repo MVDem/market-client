@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import { Farmer } from '../../types/User';
 
@@ -9,6 +9,10 @@ export default function InputText(props: {
   inputValue: Farmer[keyof Omit<Farmer, 'offers'>];
 }) {
   const [atrValue, setAtrValue] = useState(props.inputValue);
+
+  useEffect(() => {
+    setAtrValue(props.inputValue);
+  }, [props.inputValue]);
 
   const hadleCloseWindow = () => {
     props.setIsInputText(false);
