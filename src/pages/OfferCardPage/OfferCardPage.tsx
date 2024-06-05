@@ -1,7 +1,6 @@
 import React from 'react';
 import { OfferCard } from '../../types/Offers';
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header/Header';
 import OfferShortDetails from '../../components/OfferShortDetails/OfferShortDetails';
 import styles from './OfferCardPage.module.scss';
 
@@ -61,12 +60,9 @@ const OfferCardPage: React.FC = () => {
     return <p>Offer not found</p>;
   }
   return (
-    <>
-      <Header />
-      <div className={styles.container}>
-        <OfferShortDetails offer={offer} />
-      </div>
-    </>
+    <div className={styles.container}>
+      <OfferShortDetails offer={offer} />
+    </div>
   );
 };
 

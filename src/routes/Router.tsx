@@ -20,11 +20,12 @@ function Routing() {
     <BrowserRouter>
       <Suspense fallback='Loading...'>
         <Routes>
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path='*' element={<Navigate to='/' />} />
           {/* Public routes */}
-          <Route path="/" element={<Layout />}>
+          <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/offer/:id' element={<OfferCardPage />} />
           </Route>
 
           {/* Farmer routes */}
@@ -43,11 +44,6 @@ function Routing() {
             <Route path='/farmer/profile' element={<ProfilePage />} />
             <Route path='/farmer/profile/edit' element={<EditProfilePage />} />
           </Route>
-          <Route path='/about' element={<Navigate to='/About' />} />
-          <Route path='/login' element={<SignPage />} />
-          <Route path='/layout' element={<Layout />} />
-          <Route path='/offer/:id' element={<OfferCardPage />} />
-          <Route path='*' element={<Home />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
