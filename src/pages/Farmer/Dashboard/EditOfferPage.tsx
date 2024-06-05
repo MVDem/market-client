@@ -1,12 +1,16 @@
-import FormUICustom from '../../../UI/FormUICustom';
+import FormUICustom from '../../../UI/FormUICustom/FormUICustom';
 import { z } from 'zod';
 import { OfferCard } from '../../../types/Offers';
 
 function EditOfferPage() {
+  const handleEdit = (values: any) => {
+    console.log('Edit offer', values);
+  };
+
   return (
     <div>
       <h1>Edit Offer</h1>
-      <FormUICustom buttonLabel="Edit" inputs={inputs} />
+      <FormUICustom buttonLabel="Edit" inputs={inputs} onSubmit={handleEdit} />
     </div>
   );
 }
@@ -71,26 +75,3 @@ const inputs = [
     value: _offer.description_HE,
   },
 ];
-
-// export type Offer = {
-//   id: string;
-//   productId?: string;
-//   name: string;
-//   unit: string;
-//   price: string;
-//   image: string;
-//   isActive: boolean;
-//   description_EN: string;
-//   description_HE: string;
-//   farmerId: number;
-//   createdAt: string;
-//   updatedAt: string;
-// };
-
-// const _tableNames: Array<keyof OfferCard> = [
-//   'name',
-//   'price',
-//   'unit',
-//   'description_EN',
-//   'description_HE',
-// ];

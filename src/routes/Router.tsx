@@ -20,17 +20,14 @@ function Routing() {
     <BrowserRouter>
       <Suspense fallback='Loading...'>
         <Routes>
-          <Route path='/about' element={<Navigate to='/About' />} />
-          <Route path='/login' element={<Login />} />
-          {/* <Route path='/register' element={<Register />} /> */}
-          <Route path='/layout' element={<Layout />} />
-          <Route path='*' element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
+          {/* Public routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            
-            <Route path="/about" element={<Navigate to="/About" />} />
+            <Route path="/login" element={<Login />} />
           </Route>
+
+          {/* Farmer routes */}
           <Route
             path='/farmer'
             element={<Guard role={'FARMER'} element={<FarmerLayout />} />}
