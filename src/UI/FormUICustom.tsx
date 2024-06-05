@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import styles from './FormUICustom.module.scss';
+import { useEffect } from 'react';
 
 interface InputProps {
   name: string;
@@ -14,10 +16,18 @@ interface InputProps {
 interface FormUICustomProps {
   inputs: InputProps[];
   buttonLabel: string;
+  onSubmit: (data: DataFormType) => void;
 }
+export type DataFormType = {
+  [x: string]: string;
+};
 
-function FormUICustom({ inputs, buttonLabel }: FormUICustomProps): JSX.Element {
-  const schema = z.object(
+function FormUICustom({
+  inputs,
+  buttonLabel,
+  onSubmit,
+}: FormUICustomProps): JSX.Element {
+  const baseSchema = z.object(
     inputs.reduce((acc, input) => {
       if (input.validationSchema) {
         acc[input.name] = input.validationSchema;
@@ -26,41 +36,69 @@ function FormUICustom({ inputs, buttonLabel }: FormUICustomProps): JSX.Element {
     }, {} as Record<string, z.ZodType<any, any, any>>)
   );
 
-  type FormFields = z.infer<typeof schema>;
+  const schema =
+    'password' in baseSchema && 'confirmPassword' in baseSchema
+      ? baseSchema.refine((data) => data.password === data.confirmPassword, {
+          message: 'Passwords do not match',
+          path: ['confirmPassword'],
+        })
+      : baseSchema;
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormFields>({
+    reset,
+    formState: { errors, isValid },
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
+    mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data: FormFields) => {
-    console.log(data);
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      console.log(errors);
+    }
+  }, [errors]);
+
+  useEffect(() => {
+    reset();
+  }, [inputs, reset]);
+
+  const _onSubmit: SubmitHandler<DataFormType> = (data) => {
+    onSubmit(data);
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {inputs.map(({ name, label, type, placeholder, required }) => (
-        <div key={name}>
-          <label htmlFor={name}>{label}</label>
-          <input
-            {...register(name)}
-            id={name}
-            type={type}
-            placeholder={placeholder}
-            required={required}
-          />
-          {errors[name] && (
-            <div role='alert' style={{ color: 'red' }}>
-              {(errors[name]?.message as string) || 'This field is required'}
+    <>
+      <form onSubmit={handleSubmit(_onSubmit)}>
+        {inputs.map(({ name, label, type, placeholder, required }) => (
+          <div key={name} className={styles.inputWrapper}>
+            <div>
+              <label htmlFor={name}>{label}</label>
             </div>
-          )}
-        </div>
-      ))}
-      <button type='submit'>{buttonLabel}</button>
-    </form>
+            <input
+              {...register(name)}
+              id={name}
+              type={type}
+              placeholder={placeholder}
+              required={required}
+            />
+            <div className={styles.errorMessage}>
+              {errors[name] && (
+                <div role="alert" style={{ color: 'red' }}>
+                  {(errors[name]?.message as string) ||
+                    'This field is required'}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+        <button type="submit" disabled={!isValid}>
+          {buttonLabel}
+        </button>
+      </form>
+    </>
   );
 }
 

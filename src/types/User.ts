@@ -4,7 +4,7 @@ export type Role = 'FARMER' | 'CUSTOMER' | 'ADMIN';
 
 export type User = {
   id: number;
-  login: string;
+  email: string;
   password: string;
   role: Role;
   createdAt: string;

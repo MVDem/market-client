@@ -1,0 +1,41 @@
+.container {
+  width: 90dvw;
+  max-width: 30rem;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 1rem;
+  margin-top: 5rem;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+button {
+  border: none;
+  color: inherit;
+  position: relative;
+  cursor: pointer;
+
+  &:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #084b11;
+    cursor: pointer;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
