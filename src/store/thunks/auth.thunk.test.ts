@@ -4,8 +4,8 @@ import { fetchLogin } from './auth.thunk';
 describe('authThunk', () => {
   it('should register user', async () => {
     // window.fetch = mockFetch(_data);
-    const mockData: Pick<User, 'login' | 'password'> = {
-      login: 'farmer5@gmail.com',
+    const mockData: Pick<User, 'email' | 'password'> = {
+      email: 'farmer5@gmail.com',
       password: '12345',
     };
     const dispatch = jest.fn();

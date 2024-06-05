@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../../types/User';
-import { fetchLogin, fetchLogout } from '../thunks/auth.thunk';
+import { fetchLogin, fetchLogout, fetchRegister } from '../thunks/auth.thunk';
 
 interface AuthState {
   user: User | null;
@@ -48,6 +48,21 @@ const authSlice = createSlice({
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         console.log(action.payload);
+        state.user = null;
+        state.loading = 'failed';
+        state.error = action.payload as string;
+      })
+
+      // Register
+      .addCase(fetchRegister.pending, (state) => {
+        state.loading = 'pending';
+        state.error = null;
+      })
+      .addCase(fetchRegister.fulfilled, (state) => {
+        state.loading = 'succeeded';
+        state.error = null;
+      })
+      .addCase(fetchRegister.rejected, (state, action) => {
         state.user = null;
         state.loading = 'failed';
         state.error = action.payload as string;

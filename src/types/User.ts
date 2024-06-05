@@ -4,8 +4,8 @@ export type Role = 'FARMER' | 'CUSTOMER' | 'ADMIN';
 
 export type User = {
   id: number;
-  login: string;
-  password: string;
+  email: string;
+  password?: string;
   role: Role;
   createdAt: string;
   updatedAt: string;
@@ -14,17 +14,17 @@ export type User = {
 
 export type Farmer = {
   id: number;
-  name: string;
-  description: string;
-  city: string;
-  address: string;
+  name: string | null;
+  description: string | null;
+  city: string | null;
+  address: string | null;
   email: string;
-  phone: string;
-  coordinateLat: number;
-  coordinateLong: number;
+  phone: string | null;
+  coordinateLat: number | null;
+  coordinateLong: number | null;
   userId: number;
   imageURL: string;
   createdAt: string;
   updatedAt: string;
-  offers: Offer[];
+  offers?: Offer[];
 };
