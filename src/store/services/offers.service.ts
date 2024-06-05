@@ -1,14 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_URL, SERVER_STATUS } from '../../config';
+import { API_URL } from '../../config';
 import { CreateOffer, Offer } from '../../types/Offers';
-import { mockBaseQuery } from './offersMock';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
-  baseQuery:
-    SERVER_STATUS === 'OFF'
-      ? mockBaseQuery
-      : fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },

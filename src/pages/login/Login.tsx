@@ -1,6 +1,5 @@
 import styles from './Login.module.scss';
-import Header from '../../components/header/Header';
-import FormUICustom from '../../UI/FormUICustom';
+import FormUICustom from '../../UI/FormUICustom/FormUICustom';
 import {
   emailInput,
   passwordInput,
@@ -10,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchLogin, fetchRegister } from '../../store/thunks/auth.thunk';
-import { DataFormType } from '../../UI/FormUICustom';
+import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
 import { User } from '../../types/User';
 
 const INITIAL_ROLE = 'FARMER';
@@ -22,7 +21,6 @@ export default function Login() {
   const authState = useAppSelector((state) => state.authReducer);
 
   useEffect(() => {
-    console.log(authState);
     if (page === 'signUp' && authState.loading === 'succeeded') {
       setPage('signIn');
     }
@@ -48,13 +46,13 @@ export default function Login() {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
-        {page === 'signIn' ? (
+        <h2>{page === 'signUp' ? 'Register' : 'Login'}</h2>
+        {/* {page === 'signIn' ? (
           <button onClick={() => setPage('signUp')}>Sign up</button>
         ) : (
           <button onClick={() => setPage('signIn')}>Sign in</button>
-        )}
+        )} */}
         {authState.error && (
           <div className={styles.error}>{authState.error}</div>
         )}
@@ -66,6 +64,17 @@ export default function Login() {
           buttonLabel={page === 'signUp' ? 'Sign up' : 'Sign in'}
           onSubmit={handleSubmit}
         />
+        <div>
+          {page === 'signIn' ? (
+            <button onClick={() => setPage('signUp')}>
+              Already have an account? Go to Login!
+            </button>
+          ) : (
+            <button onClick={() => setPage('signIn')}>
+              Don't have an account? Go to Register
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
