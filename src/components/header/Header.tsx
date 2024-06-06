@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
-import AvatarUI from '../../UI/AvatarUI/AvatarUI';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchLogout } from '../../store/thunks/auth.thunk';
+import { FiLogOut } from 'react-icons/fi';
 
 const Header: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true); // Manually set the user state for now
+  const { user } = useAppSelector((state) => state.authReducer);
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    setLoggedIn(false);
+    dispatch(fetchLogout());
   };
+
+  const setActive = ({ isActive }: { isActive: boolean }) =>
+    isActive ? styles.linkActive : styles.link;
 
   return (
     <div className={styles.header}>
@@ -17,26 +23,37 @@ const Header: React.FC = () => {
         <nav className={styles.navbar}>
           <ul>
             <li>
-              <Link to='/'>Home</Link>
+              <NavLink to="/" className={setActive}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to='/about'>About</Link>
+              <NavLink to="/about" className={setActive}>
+                About
+              </NavLink>
             </li>
+            {user?.farmer && (
+              <li>
+                <NavLink to="/farmer" className={setActive}>
+                  My dashboard
+                </NavLink>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
       <div className={styles.rightPanel}>
-        {loggedIn ? (
+        {user ? (
           <div className={styles.userInfo}>
-            <span>Farmer_John</span>
-            <button onClick={handleLogout}>Logout</button>
-            <AvatarUI src='https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg' />
+            <span>{user.email}</span>
+            <button onClick={handleLogout}>
+              <FiLogOut />
+            </button>
           </div>
         ) : (
-          <>
-            <Link to='/login'>Login</Link>
-            <AvatarUI src='https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg' />
-          </>
+          <NavLink to="/login" className={setActive}>
+            Login
+          </NavLink>
         )}
       </div>
     </div>
