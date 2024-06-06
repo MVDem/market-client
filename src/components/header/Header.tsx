@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
+import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 
 const Header: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(true); // Manually set the user state for now
@@ -29,9 +30,13 @@ const Header: React.FC = () => {
           <div className={styles.userInfo}>
             <span>Farmer_John</span>
             <button onClick={handleLogout}>Logout</button>
+            <AvatarUI src='https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg' />
           </div>
         ) : (
-          <Link to='/login'>Login</Link>
+          <>
+            <Link to='/login'>Login</Link>
+            <AvatarUI src='https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg' />
+          </>
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import FormUICustom from '../../../UI/FormUICustom';
+import FormUICustom from '../../../UI/FormUICustom/FormUICustom';
 import { z } from 'zod';
 import { OfferCard } from '../../../types/Offers';
 
