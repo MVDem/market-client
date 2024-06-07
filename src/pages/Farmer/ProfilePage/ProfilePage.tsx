@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import TableList from '../../components/TableList/TableList';
-import { useAppSelector } from '../../store/hooks';
-import { OfferCard } from '../../types/Offers';
-import { Farmer } from '../../types/User';
+import TableList from '../../../components/TableList/TableList';
+import { useAppSelector } from '../../../store/hooks';
+import { OfferCard } from '../../../types/Offers';
+import { Farmer } from '../../../types/User';
 import styles from './profilePage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { FiEdit2 } from 'react-icons/fi';
+import { TableColumnsType } from 'antd';
 
 function ProfilePage() {
   const { user } = useAppSelector((state) => state.authReducer);
@@ -16,7 +17,7 @@ function ProfilePage() {
     if (user?.farmer?.id !== farmer.id) {
       setEditMode(true);
     }
-  }, []);
+  }, [user]);
 
   const handleClick = (id: number) => {
     console.log('handleClick', id);
@@ -25,6 +26,28 @@ function ProfilePage() {
   const handleNavigate = () => {
     navigate(`/farmer/profile/edit`, { state: { farmer } });
   };
+
+  const _columns: TableColumnsType<OfferCard> = [
+    {
+      title: 'Image',
+      dataIndex: 'image_URL_here',
+      render: (_, r) => (
+        <div className={styles.imageContainer}>
+          <img src={r.image} width={'px'} height={'50px'} />,
+        </div>
+      ),
+    },
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Price', dataIndex: 'price', key: 'price' },
+    { title: 'Unit', dataIndex: 'unit', key: 'unit' },
+    { title: 'Active', dataIndex: 'isActive', key: 'isActive' },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: () => <button>Delete</button>,
+    },
+  ];
 
   return (
     <>
@@ -64,7 +87,7 @@ function ProfilePage() {
         <section className={styles.offers}>
           <h2>Offers:</h2>
           <TableList
-            tableNames={_tableNames}
+            columns={_columns}
             items={_offers}
             handleItemClick={handleClick}
           />
@@ -91,14 +114,6 @@ const farmer: Farmer = {
   createdAt: '2024-06-05T10:34:44.158Z',
   updatedAt: '2024-06-05T10:34:44.158Z',
 };
-
-const _tableNames: Array<{ value: keyof OfferCard; label: string }> = [
-  { value: 'image', label: 'Image' },
-  { value: 'name', label: 'Name' },
-  { value: 'price', label: 'Price' },
-  { value: 'unit', label: 'Unit' },
-  { value: 'isActive', label: 'Active' },
-];
 
 const _offers: OfferCard[] = [
   {

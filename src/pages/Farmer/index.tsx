@@ -3,7 +3,7 @@ import OfferDetailsPage from './Dashboard/OfferDetailsPage';
 import EditOfferPage from './Dashboard/EditOfferPage';
 import CreateOfferPage from './Dashboard/CreateOfferPage';
 import EditProfilePage from './EditProfilePage/EditProfilePage';
-import ProfilePage from '../FarmerProfilePage/ProfilePage';
+import ProfilePage from './ProfilePage/ProfilePage';
 
 export {
   FarmerLayout,

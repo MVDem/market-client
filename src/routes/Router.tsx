@@ -3,10 +3,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Layout from '../pages/layout/Layout';
 import {
-  FarmerLayout,
-  OfferDetailsPage,
-  EditOfferPage,
-  CreateOfferPage,
+  // FarmerLayout,
+  // OfferDetailsPage,
+  // EditOfferPage,
+  // CreateOfferPage,
   EditProfilePage,
   ProfilePage,
 } from '../pages/Farmer';
@@ -24,22 +24,25 @@ function Routing() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/farmer/profile" element={<ProfilePage />} />
+            <Route
+              path="/farmer/profile/edit"
+              element={<Guard role={'FARMER'} element={<EditProfilePage />} />}
+            />
           </Route>
 
           {/* Farmer routes */}
-          <Route
+          {/* <Route
             path="/farmer"
             element={<Guard role={'FARMER'} element={<FarmerLayout />} />}
           >
             <Route index element={<Navigate to="/farmer/offers" />} />
-            <Route path="/farmer/profile/edit" element={<EditProfilePage />} />
             <Route
               path="/farmer/offers/one/:id"
               element={<OfferDetailsPage />}
             />
             <Route path="/farmer/offers/edit/:id" element={<EditOfferPage />} />
             <Route path="/farmer/offers/create" element={<CreateOfferPage />} />
-          </Route>
+          </Route> */}
         </Routes>
       </Suspense>
     </BrowserRouter>
