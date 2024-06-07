@@ -10,9 +10,9 @@ function FarmerLayout() {
         <div className={styles.header}>
           <Header />
         </div>
-        <SideBar />
+        {/* <SideBar /> */}
         <main>
-          <div className={styles.mainContent}>
+          <div className={styles.mainConteiner}>
             <Outlet />
           </div>
         </main>

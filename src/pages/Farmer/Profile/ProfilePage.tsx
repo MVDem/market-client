@@ -24,13 +24,34 @@ function ProfilePage() {
   return (
     <>
       <div className={styles.container}>
-        <h1>Profile Page</h1>
-        <section className={styles.mainInfo}>
-          <div className={styles.avatar}>
-            <img src="" alt="avatar" />
+        <section className={styles.topContainer}>
+          <div className={styles.cover}>
+            <img src="/img/1.jpg" alt="avatar" />
           </div>
+          <div className={styles.avatar}>
+            <img
+              src={
+                _user.farmer?.imageURL
+                  ? _user.farmer?.imageURL
+                  : '/public/img/default.jpg'
+              }
+              alt="avatar"
+            />
+          </div>
+        </section>
+        <section className={styles.title}>
+          <div className={styles.mainInfo}>
+            <h1>{_user.farmer?.name}</h1>
+          </div>
+          <div className={styles.contacts}>
+            <p>Phone: {_user.farmer?.phone}</p>
+            <p>Email: {_user.farmer?.email}</p>
+          </div>
+        </section>
+        <span className={styles.line}></span>
+        <section>
           <div className={styles.info}>
-            <table>
+            {/* <table>
               <tbody>
                 <tr>
                   <td>Name:</td>
@@ -91,7 +112,7 @@ function ProfilePage() {
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
           </div>
         </section>
         <section className={styles.subInfo}>
@@ -134,7 +155,7 @@ const _user: User = {
     coordinateLat: null,
     coordinateLong: null,
     userId: 5,
-    imageURL: 'farmers/default.jpg',
+    imageURL: '/img/logo2.png',
     createdAt: '2024-06-05T10:34:44.158Z',
     updatedAt: '2024-06-05T10:34:44.158Z',
   },
