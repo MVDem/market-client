@@ -1,0 +1,111 @@
+.contanerSearch {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  .myInput {
+    .myInputInput {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 0.3rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-family: "Fira Sans";
+      color: #656ec2;
+      font-weight: bold;
+    }
+  }
+  .mylable {
+    position: absolute;
+    color: #656ec2;
+    font-family: "Fira Sans";
+
+    top: 9.7rem;
+    left: 56rem;
+  }
+  .myInputInput:focus + label,
+  .myInputInput:not(:placeholder-shown) + label {
+    top: 11rem;
+    left: 56rem;
+    font-size: 13px;
+    color: #65707b;
+    padding: 2px 10px;
+  }
+  .foundGroceries {
+    font-family: "Montserrat";
+    color: #282626;
+    padding-left: 20px;
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .buttonContainer {
+    .glowOnHover {
+      margin-left: 3rem;
+      width: 10rem;
+      height: 2rem;
+      border: none;
+      outline: none;
+      color: #fff;
+      background: #111;
+      cursor: pointer;
+      position: relative;
+      z-index: 0;
+      border-radius: 10px;
+    }
+
+    .glowOnHover:before {
+      content: "";
+      background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+      );
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      background-size: 400%;
+      z-index: -1;
+      filter: blur(5px);
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      animation: glowing 20s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      border-radius: 10px;
+    }
+
+    .glowOnHover:active {
+      color: #000;
+    }
+
+    .glowOnHover:active:after {
+      background: transparent;
+    }
+
+    .glowOnHover:hover:before {
+      opacity: 1;
+    }
+
+    .glowOnHover:after {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      left: 0;
+      top: 0;
+      border-radius: 10px;
+    }
+  }
+}

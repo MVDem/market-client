@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 :root {
   --bg-header: #98bdff; /* Light Grey background for header */
   --bg-sideBar: #f5f7ff; /* Lighter Grey background for sidebar */
@@ -15,7 +17,7 @@
   --active-link-text: #4747a1;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --bg-header: #25476a; /* Dark Charcoal background for header */
   --bg-sideBar: #191c24; /* Slightly darker Charcoal background for sidebar */
   --bg-card: #191c24; /* Dark Charcoal background for cards */
@@ -119,6 +121,7 @@ video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
+  font-family: Roboto;
 }
 /* HTML5 display-role reset for older browsers 
 article, aside, details, figcaption, figure, 
@@ -140,10 +143,31 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+@keyframes identifier {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }

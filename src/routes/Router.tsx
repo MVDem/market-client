@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Home from '../pages/home/Home';
-import Layout from '../pages/layout/Layout';
+import { Suspense } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Home from "../pages/home/Home";
+import Layout from "../pages/layout/Layout";
 import {
   FarmerLayout,
   OffersListPage,
@@ -10,9 +10,11 @@ import {
   CreateOfferPage,
   EditProfilePage,
   ProfilePage,
-} from '../pages/Farmer';
-import Guard from './Guard';
-import Login from '../pages/login/Login';
+} from "../pages/Farmer";
+import Guard from "./Guard";
+import Login from "../pages/login/Login";
+import About from "../pages/about/About";
+import Contact from "../pages/contact/Contact";
 
 function Routing() {
   return (
@@ -24,12 +26,14 @@ function Routing() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
           </Route>
 
           {/* Farmer routes */}
           <Route
             path="/farmer"
-            element={<Guard role={'FARMER'} element={<FarmerLayout />} />}
+            element={<Guard role={"FARMER"} element={<FarmerLayout />} />}
           >
             <Route index element={<Navigate to="/farmer/offers" />} />
             <Route path="/farmer/offers" element={<OffersListPage />} />
