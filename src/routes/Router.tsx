@@ -4,7 +4,6 @@ import Home from '../pages/home/Home';
 import Layout from '../pages/layout/Layout';
 import {
   FarmerLayout,
-  OffersListPage,
   OfferDetailsPage,
   EditOfferPage,
   CreateOfferPage,
@@ -24,6 +23,7 @@ function Routing() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/farmer/profile" element={<ProfilePage />} />
           </Route>
 
           {/* Farmer routes */}
@@ -32,15 +32,13 @@ function Routing() {
             element={<Guard role={'FARMER'} element={<FarmerLayout />} />}
           >
             <Route index element={<Navigate to="/farmer/offers" />} />
-            <Route path="/farmer/offers" element={<OffersListPage />} />
+            <Route path="/farmer/profile/edit" element={<EditProfilePage />} />
             <Route
               path="/farmer/offers/one/:id"
               element={<OfferDetailsPage />}
             />
             <Route path="/farmer/offers/edit/:id" element={<EditOfferPage />} />
             <Route path="/farmer/offers/create" element={<CreateOfferPage />} />
-            <Route path="/farmer/profile" element={<ProfilePage />} />
-            <Route path="/farmer/profile/edit" element={<EditProfilePage />} />
           </Route>
         </Routes>
       </Suspense>

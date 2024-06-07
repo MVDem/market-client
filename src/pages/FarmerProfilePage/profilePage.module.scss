@@ -42,9 +42,23 @@ $border: green;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  position: relative;
   .mainInfo {
     h1 {
       @include font(28px, 32px, 500);
+    }
+  }
+  .edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    background-color: inherit;
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $text-color;
+      cursor: pointer;
     }
   }
 }
@@ -56,33 +70,22 @@ $border: green;
   box-sizing: border-box;
 }
 
-//=================================
-
-.mainInfo {
-  display: flex;
-  .info {
-    td:nth-child(1) {
-      text-align: end;
-      padding: 0.5rem 1rem;
-    }
+.extra {
+  padding: 1rem 3rem;
+  h2 {
+    @include font(24px, 28px, 500);
+    margin-bottom: 1rem;
+  }
+  p {
+    @include font(16px, 19px, 300);
+    text-align: justify;
   }
 }
 
-.subInfo {
-}
-
-.editBtn {
-  margin: 0;
-  background-color: inherit;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  @include font(16px, 19px, 300);
-  display: flex;
-
-  svg {
-    margin-left: 1rem;
-    width: 1.5rem;
-    height: 1.5rem;
+.offers {
+  padding: 1rem 3rem;
+  h2 {
+    @include font(24px, 28px, 500);
+    margin-bottom: 1rem;
   }
 }
