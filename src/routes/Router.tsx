@@ -4,11 +4,10 @@ import Home from '../pages/home/Home';
 import Layout from '../pages/layout/Layout';
 import OfferCardPage from '../pages/OfferCardPage/OfferCardPage';
 import {
-  FarmerLayout,
-  OffersListPage,
-  OfferDetailsPage,
-  EditOfferPage,
-  CreateOfferPage,
+  // FarmerLayout,
+  // OfferDetailsPage,
+  // EditOfferPage,
+  // CreateOfferPage,
   EditProfilePage,
   ProfilePage,
 } from '../pages/Farmer';
@@ -35,6 +34,7 @@ function Routing() {
           >
             <Route index element={<Navigate to='/farmer/offers' />} />
             <Route path='/farmer/offers' element={<OffersListPage />} />
+
             <Route
               path='/farmer/offers/one/:id'
               element={<OfferDetailsPage />}
@@ -44,6 +44,7 @@ function Routing() {
             <Route path='/farmer/profile' element={<ProfilePage />} />
             <Route path='/farmer/profile/edit' element={<EditProfilePage />} />
           </Route>
+
         </Routes>
       </Suspense>
     </BrowserRouter>
