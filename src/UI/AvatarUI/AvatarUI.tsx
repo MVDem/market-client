@@ -9,7 +9,7 @@ const AvatarUI = (props: AvatarProps) => {
   return (
     <div className={styles.avatar}>
       {props.src ? (
-        <img className={styles.icon} src={props.src} alt='avatar' />
+        <img className={styles.icon} src={props.src} alt="avatar" />
       ) : (
         <RxAvatar className={styles.icon} />
       )}

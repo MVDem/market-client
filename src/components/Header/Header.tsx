@@ -7,6 +7,7 @@ import { FiLogOut } from 'react-icons/fi';
 // import { FaBasketShopping } from 'react-icons/fa6';
 // import { RiSearch2Line } from 'react-icons/ri';
 import { IoMenu } from 'react-icons/io5';
+import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector((state) => state.authReducer);
@@ -65,13 +66,14 @@ const Header: React.FC = () => {
           <FaBasketShopping /> */}
           {user ? (
             <div className={styles.userInfo}>
-              <span>{user.email}</span>
+              <h5>{user.email}</h5>
+              <AvatarUI src={user.farmer?.imageURL} />
               <button onClick={handleLogout}>
                 <FiLogOut />
               </button>
             </div>
           ) : (
-            <NavLink to="/login" className={setActive}>
+            <NavLink to="/sign" className={setActive}>
               Login
             </NavLink>
           )}
