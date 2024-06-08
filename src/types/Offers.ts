@@ -1,3 +1,5 @@
+import { Farmer } from './User';
+
 export type Offer = {
   id: string;
   productId?: string;
@@ -11,6 +13,7 @@ export type Offer = {
   farmerId: number;
   createdAt: string;
   updatedAt: string;
+  farmer: Farmer;
 };
 
 export type OfferCard = Omit<Offer, 'createdAt' | 'updatedAt'>;
