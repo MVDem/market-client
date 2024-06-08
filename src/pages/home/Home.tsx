@@ -1,4 +1,6 @@
-import OffersList from '../../components/offerslist/OffersList';
+import Baner from '../../components/Banner/Banner';
+
+import OffersList from '../../components/offersList/OffersList';
 import { OfferCard } from '../../types/Offers';
 import styles from './Home.module.scss';
 
@@ -55,6 +57,7 @@ export default function Home() {
     <>
       <div className={styles.container}>
         <h1>Home - Farmer Market</h1>
+        <Baner />
         <OffersList offers={offers} />
       </div>
     </>
