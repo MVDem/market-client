@@ -1,5 +1,7 @@
+import { Offer } from './Offers';
+
 export type Farmer = {
-  userId: number;  
+  userId: number;
   name: string;
   description: string;
   city: string;
@@ -8,4 +10,5 @@ export type Farmer = {
   phone: string;
   coordinateLat: number;
   coordinateLong: number;
+  offers: Offer[];
 };

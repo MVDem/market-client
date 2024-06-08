@@ -8,6 +8,7 @@ type TableList = {
 };
 
 function TableList({ columns, items }: TableList) {
+  console.log(items);
   return (
     <Table
       columns={columns}

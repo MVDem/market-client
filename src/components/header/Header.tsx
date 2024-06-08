@@ -33,7 +33,7 @@ const Header: React.FC = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/farmer/profile/:id" className={setActive}>
+              <NavLink to="/farmer/profile/1" className={setActive}>
                 My Profile
               </NavLink>
             </li>
