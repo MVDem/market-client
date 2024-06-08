@@ -1,6 +1,6 @@
-import Baner from '../../components/afterHeader/Baner';
+import Baner from '../../components/Banner/Banner';
 
-import OffersList from '../../components/offerslist/OffersList';
+import OffersList from '../../components/offersList/OffersList';
 import { OfferCard } from '../../types/Offers';
 import styles from './Home.module.scss';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -21,7 +21,6 @@ const Header: React.FC = () => {
 
   return (
     <div className={styles.header}>
-<<<<<<< 31-create-searchbar-component
       <div className={styles.container}>
         <div className={styles.leftgroup}>
           <div className={styles.logo}>
@@ -35,75 +34,36 @@ const Header: React.FC = () => {
           </div>
           <nav className={styles.navbar}>
             <ul>
-=======
-      <div className={styles.leftgroup}>
-        <div className={styles.logo}>Farmers Market</div>
-        <nav className={styles.navbar}>
-          <ul>
-            <li>
-              <NavLink to="/" className={setActive}>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/about" className={setActive}>
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/farmer/profile/:id" className={setActive}>
-                My Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/offer/ditails/1" className={setActive}>
-                An offer
-              </NavLink>
-            </li>
-            {user?.farmer && (
->>>>>>> develop
               <li>
-                <NavLink
-                  to="/"
-                  // className={menu === "home" ? styles.linkActive : styles.link}
-                  className={setActive}
-                >
+                <NavLink to="/" className={setActive}>
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/about"
-                  // className={menu === "about" ? styles.linkActive : styles.link}
-                  className={setActive}
-                >
+                <NavLink to="/about" className={setActive}>
                   About
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/contact"
-                  // className={
-                  //   menu === "contact" ? styles.linkActive : styles.link
-                  // }
-                  className={setActive}
-                >
+                <NavLink to="/contact" className={setActive}>
                   Contact us
                 </NavLink>
               </li>
-              {user?.farmer && (
-                <li>
-                  <NavLink to="/farmer" className={setActive}>
-                    My dashboard
-                  </NavLink>
-                </li>
-              )}
+              <li>
+                <NavLink to="/farmer/profile/:id" className={setActive}>
+                  My Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/offer/ditails/1" className={setActive}>
+                  An offer
+                </NavLink>
+              </li>
             </ul>
           </nav>
           <div className={styles.burger}>
             <IoMenu />
           </div>
-<<<<<<< 31-create-searchbar-component
         </div>
         <div className={styles.rightPanel}>
           <RiSearch2Line />
@@ -116,23 +76,11 @@ const Header: React.FC = () => {
               </button>
             </div>
           ) : (
-            <NavLink
-              onClick={() => setMenu('login')}
-              to="/login"
-              // className={menu === "login" ? styles.linkActive : styles.link}
-              className={setActive}
-            >
+            <NavLink to="/login" className={setActive}>
               Login
             </NavLink>
           )}
         </div>
-=======
-        ) : (
-          <NavLink to="/sign" className={setActive}>
-            Login
-          </NavLink>
-        )}
->>>>>>> develop
       </div>
     </div>
   );
