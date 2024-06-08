@@ -72,8 +72,8 @@ function FormUICustom({
   return (
     <>
       <form onSubmit={handleSubmit(_onSubmit)}>
-        {inputs.map(({ name, label, type, placeholder, required }) => (
-          <>
+        {inputs.map(({ name, label, type, placeholder, required }, i) => (
+          <div key={i}>
             <label htmlFor={name}>
               {label}
               <input
@@ -92,7 +92,7 @@ function FormUICustom({
                 </div>
               )}
             </div>
-          </>
+          </div>
         ))}
         <button type="submit" disabled={!isValid}>
           {buttonLabel}

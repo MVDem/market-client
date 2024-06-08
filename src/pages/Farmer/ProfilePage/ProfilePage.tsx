@@ -19,24 +19,15 @@ function ProfilePage() {
     }
   }, [user]);
 
-  const handleClick = (id: number) => {
-    console.log('handleClick', id);
-  };
-
   const handleNavigate = () => {
     navigate(`/farmer/profile/edit`, { state: { farmer } });
   };
 
+  const handleDeleteOffer = (id: number) => {
+    console.log('handleDeleteOffer', id); // add RTL Query method
+  };
+
   const _columns: TableColumnsType<OfferCard> = [
-    {
-      title: 'Image',
-      dataIndex: 'image_URL_here',
-      render: (_, r) => (
-        <div className={styles.imageContainer}>
-          <img src={r.image} width={'px'} height={'50px'} />,
-        </div>
-      ),
-    },
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
     { title: 'Unit', dataIndex: 'unit', key: 'unit' },
@@ -45,7 +36,9 @@ function ProfilePage() {
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: () => <button>Delete</button>,
+      render: (r) => (
+        <button onClick={() => handleDeleteOffer(r.id)}>Delete</button>
+      ),
     },
   ];
 
@@ -86,11 +79,7 @@ function ProfilePage() {
         <span className={styles.line}></span>
         <section className={styles.offers}>
           <h2>Offers:</h2>
-          <TableList
-            columns={_columns}
-            items={_offers}
-            handleItemClick={handleClick}
-          />
+          <TableList columns={_columns} items={_offers} />
         </section>
       </div>
     </>

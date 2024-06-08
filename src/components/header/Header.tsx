@@ -32,6 +32,16 @@ const Header: React.FC = () => {
                 About
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/farmer/profile/:id" className={setActive}>
+                My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/offer/ditails/1" className={setActive}>
+                An offer
+              </NavLink>
+            </li>
             {user?.farmer && (
               <li>
                 <NavLink to="/farmer" className={setActive}>
@@ -51,7 +61,7 @@ const Header: React.FC = () => {
             </button>
           </div>
         ) : (
-          <NavLink to="/login" className={setActive}>
+          <NavLink to="/sign" className={setActive}>
             Login
           </NavLink>
         )}
