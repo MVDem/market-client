@@ -14,7 +14,7 @@ function TableList({ columns, items }: TableList) {
       columns={columns}
       expandable={{
         expandedRowRender: (record) => (
-          <OfferShortDetails offerid={record.id} />
+          <OfferShortDetails offerId={record.id} />
         ),
         rowExpandable: (record) => record.name !== 'Not Expandable',
       }}
