@@ -1,4 +1,5 @@
-import AfterHeader from "../../components/afterHeader/AfterHeader";
+import Baner from "../../components/afterHeader/Baner";
+
 import OffersList from "../../components/offerslist/OffersList";
 import { OfferCard } from "../../types/Offers";
 import styles from "./Home.module.scss";
@@ -52,7 +53,7 @@ export default function Home() {
     <>
       <div className={styles.container}>
         <h1>Home - Farmer Market</h1>
-        <AfterHeader />
+        <Baner />
         <OffersList offers={offers} />
       </div>
     </>

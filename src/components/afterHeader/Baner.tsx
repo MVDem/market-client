@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./AfterHeader.module.scss";
+import styles from "./Baner.module.scss";
 
-export default function AfterHeader() {
+export default function Baner() {
   return (
     <div className={styles.header}>
       <div className={styles.headerContents}>

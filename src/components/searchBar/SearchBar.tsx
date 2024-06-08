@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/debounse";
 import styles from "./SearchBar.module.scss";
+import { RiSearch2Line } from "react-icons/ri";
+import { FaBasketShopping } from "react-icons/fa6";
+import { FaHeartCirclePlus } from "react-icons/fa6";
 
 export default function SearchBar() {
   const [search, setSearch] = useState<string>("");
@@ -14,26 +17,26 @@ export default function SearchBar() {
 
   return (
     <div className={styles.contanerSearch}>
-      <div className={styles.myinput}>
+      <div className={styles.myInput}>
         <input
           className={styles.myInputInput}
           autoFocus
           type="text"
-          placeholder=" "
+          placeholder="Search groceries "
           onChange={(e) => setSearch(e.target.value)}
         />
         <label className={styles.mylable}>
-          <strong>Search groceries...</strong>
+          <RiSearch2Line />
         </label>
         <div className={styles.foundGroceries}>Found groceries....</div>
       </div>
       <div>
         <div className={styles.buttonContainer}>
           <button className={styles.glowOnHover} type="button">
-            HOVER ME, THEN CLICK ME!
+            <FaBasketShopping />
           </button>
           <button className={styles.glowOnHover} type="button">
-            HOVER ME, THEN CLICK ME!
+            <FaHeartCirclePlus />
           </button>
         </div>
       </div>
