@@ -85,12 +85,10 @@ function FormUICustom({
   return (
     <>
       <form onSubmit={handleSubmit(_onSubmit)}>
-        {inputs.map(
-          ({ name, label, type, placeholder, defaultValue, required }) => (
-            <div key={name} className={styles.inputWrapper}>
-              <div>
-                <label htmlFor={name}>{label}</label>
-              </div>
+        {inputs.map(({ name, label, type, placeholder, defaultValue, required }, i) => (
+          <div key={i}>
+            <label htmlFor={name}>
+              {label}
               <input
                 {...register(name)}
                 id={name}
@@ -99,18 +97,18 @@ function FormUICustom({
                 defaultValue={defaultValue}
                 required={required}
               />
-              <div className={styles.errorMessage}>
-                {errors[name] && (
-                  <div role='alert' style={{ color: 'red' }}>
-                    {(errors[name]?.message as string) ||
-                      'This field is required'}
-                  </div>
-                )}
-              </div>
+            </label>
+            <div className={styles.errorMessage}>
+              {errors[name] && (
+                <div role="alert" style={{ color: 'red' }}>
+                  {(errors[name]?.message as string) ||
+                    'This field is required'}
+                </div>
+              )}
             </div>
-          )
-        )}
-        <button type='submit' disabled={!isValid}>
+          </div>
+        ))}
+        <button type="submit" disabled={!isValid}>
           {buttonLabel}
         </button>
       </form>
