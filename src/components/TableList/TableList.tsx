@@ -1,11 +1,10 @@
 import { Table, TableColumnsType } from 'antd';
-import TableOffersItem from '../TableOffersItem/TableOffersItem';
 import { OfferCard } from '../../types/Offers';
+import OfferShortDetails from '../OfferShortDetails/OfferShortDetails';
 
 type TableList = {
   columns: TableColumnsType<OfferCard>;
   items: OfferCard[];
-  handleItemClick: (id: number) => void;
 };
 
 function TableList({ columns, items }: TableList) {
@@ -13,7 +12,9 @@ function TableList({ columns, items }: TableList) {
     <Table
       columns={columns}
       expandable={{
-        expandedRowRender: (record) => <TableOffersItem offerCard={record} />,
+        expandedRowRender: (record) => (
+          <OfferShortDetails offerid={record.id} />
+        ),
         rowExpandable: (record) => record.name !== 'Not Expandable',
       }}
       rowKey={(record) => record.id}

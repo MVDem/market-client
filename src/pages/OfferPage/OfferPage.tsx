@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import OfferShortDetails from '../../components/OfferShortDetails/OfferShortDetails';
 import styles from './OfferPage.module.scss';
 
-const OfferCardPage: React.FC = () => {
+const OfferPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const offer = _offers.find((offer) => offer.id === id);
 
@@ -32,7 +32,7 @@ const OfferCardPage: React.FC = () => {
   );
 };
 
-export default OfferCardPage;
+export default OfferPage;
 
 const _offers: OfferCard[] = [
   {
