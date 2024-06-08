@@ -72,18 +72,18 @@ function FormUICustom({
   return (
     <>
       <form onSubmit={handleSubmit(_onSubmit)}>
-        {inputs.map(({ name, label, type, placeholder, required }) => (
-          <div key={name} className={styles.inputWrapper}>
-            <div>
-              <label htmlFor={name}>{label}</label>
-            </div>
-            <input
-              {...register(name)}
-              id={name}
-              type={type}
-              placeholder={placeholder}
-              required={required}
-            />
+        {inputs.map(({ name, label, type, placeholder, required }, i) => (
+          <div key={i}>
+            <label htmlFor={name}>
+              {label}
+              <input
+                {...register(name)}
+                id={name}
+                type={type}
+                placeholder={placeholder}
+                required={required}
+              />
+            </label>
             <div className={styles.errorMessage}>
               {errors[name] && (
                 <div role="alert" style={{ color: 'red' }}>

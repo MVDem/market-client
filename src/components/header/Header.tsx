@@ -21,6 +21,7 @@ const Header: React.FC = () => {
 
   return (
     <div className={styles.header}>
+<<<<<<< 31-create-searchbar-component
       <div className={styles.container}>
         <div className={styles.leftgroup}>
           <div className={styles.logo}>
@@ -34,6 +35,33 @@ const Header: React.FC = () => {
           </div>
           <nav className={styles.navbar}>
             <ul>
+=======
+      <div className={styles.leftgroup}>
+        <div className={styles.logo}>Farmers Market</div>
+        <nav className={styles.navbar}>
+          <ul>
+            <li>
+              <NavLink to="/" className={setActive}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" className={setActive}>
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/farmer/profile/:id" className={setActive}>
+                My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/offer/ditails/1" className={setActive}>
+                An offer
+              </NavLink>
+            </li>
+            {user?.farmer && (
+>>>>>>> develop
               <li>
                 <NavLink
                   to="/"
@@ -75,6 +103,7 @@ const Header: React.FC = () => {
           <div className={styles.burger}>
             <IoMenu />
           </div>
+<<<<<<< 31-create-searchbar-component
         </div>
         <div className={styles.rightPanel}>
           <RiSearch2Line />
@@ -97,6 +126,13 @@ const Header: React.FC = () => {
             </NavLink>
           )}
         </div>
+=======
+        ) : (
+          <NavLink to="/sign" className={setActive}>
+            Login
+          </NavLink>
+        )}
+>>>>>>> develop
       </div>
     </div>
   );
