@@ -4,8 +4,8 @@ import styles from './Header.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchLogout } from '../../store/thunks/auth.thunk';
 import { FiLogOut } from 'react-icons/fi';
-import { FaBasketShopping } from 'react-icons/fa6';
-import { RiSearch2Line } from 'react-icons/ri';
+// import { FaBasketShopping } from 'react-icons/fa6';
+// import { RiSearch2Line } from 'react-icons/ri';
 import { IoMenu } from 'react-icons/io5';
 
 const Header: React.FC = () => {
@@ -41,16 +41,11 @@ const Header: React.FC = () => {
               </li>
               <li>
                 <NavLink to="/about" className={setActive}>
-                  About
+                  Farmers
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/contact" className={setActive}>
-                  Contact us
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/farmer/profile/:id" className={setActive}>
+                <NavLink to="/farmer/profile/1" className={setActive}>
                   My Profile
                 </NavLink>
               </li>
@@ -66,8 +61,8 @@ const Header: React.FC = () => {
           </div>
         </div>
         <div className={styles.rightPanel}>
-          <RiSearch2Line />
-          <FaBasketShopping />
+          {/* <RiSearch2Line />
+          <FaBasketShopping /> */}
           {user ? (
             <div className={styles.userInfo}>
               <span>{user.email}</span>
