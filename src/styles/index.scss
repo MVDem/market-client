@@ -1,4 +1,8 @@
 :root {
+  --banerContentColor: #747474;
+  --color-lable: #656ec2;
+  --color-input: #151b1a;
+  --bg-input: #f4f4f4;
   --bg-header: #98bdff; /* Light Grey background for header */
   --bg-sideBar: #f5f7ff; /* Lighter Grey background for sidebar */
   --bg-card: #f5f7ff; /* White background for cards */
@@ -119,6 +123,7 @@ video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
+  font-family: Roboto;
 }
 /* HTML5 display-role reset for older browsers 
 article, aside, details, figcaption, figure, 
@@ -146,4 +151,13 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+@keyframes identifier {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
