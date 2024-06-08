@@ -6,7 +6,7 @@ export const offersAPI = createApi({
   reducerPath: 'offersAPI',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
-    getPaginatedSortedOffers: builder.query<
+    getPaginatedSortedOffers: builder.query< 
       { offers: Offer[]; count: number },
       { limit?: number; page?: number; sortBy?: string; order?: string }
     >({
