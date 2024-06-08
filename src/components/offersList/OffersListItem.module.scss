@@ -21,10 +21,10 @@
 }
 
 .details {
-  padding: 16px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  flex: 1
+  flex: 1;
 }
 
 .unitPrice {
@@ -44,7 +44,7 @@
   margin: 0;
   font-size: 1.2rem;
   color: #e91e63;
-  white-space: nowrap;
+  // white-space: nowrap;
 }
 
 .text {
@@ -53,8 +53,8 @@
   flex-direction: column;
 }
 
-.description{
-  flex: 1
+.description {
+  flex: 1;
 }
 
 .description,
@@ -62,5 +62,5 @@
   margin: 0;
   font-size: 1rem;
   color: #777;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }

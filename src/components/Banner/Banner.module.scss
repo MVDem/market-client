@@ -1,0 +1,35 @@
+.container {
+  height: 30rem;
+  margin: 2rem auto;
+  background: url(https://s1.1zoom.ru/b6853/487/Avocado_Lime_552106_3840x2400.jpg)
+    no-repeat;
+  background-size: cover;
+  position: relative;
+
+  .wrapper {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    max-width: 35%;
+    animation: identifier;
+
+    .title {
+      @include font(3rem, 3rem, 500);
+      color: white;
+    }
+
+    .subTitle {
+      color: white;
+      font-size: 1rem;
+    }
+    .btn {
+      border: none;
+      color: $baner-content-color;
+      padding: 1.4rem 3rem;
+      font-size: 1rem;
+      border-radius: 1rem;
+    }
+  }
+}

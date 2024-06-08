@@ -33,6 +33,16 @@ const Header: React.FC = () => {
                 About
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/farmer/profile/1" className={setActive}>
+                My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/offer/ditails/1" className={setActive}>
+                An offer
+              </NavLink>
+            </li>
             {user?.farmer && (
               <li>
                 <NavLink to='/farmer' className={setActive}>
@@ -59,6 +69,7 @@ const Header: React.FC = () => {
             </NavLink>
             <AvatarUI src='' />
           </>
+
         )}
       </div>
     </div>

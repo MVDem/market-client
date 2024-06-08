@@ -1,4 +1,6 @@
-import OffersList from '../../components/offerslist/OffersList';
+import Baner from '../../components/Banner/Banner';
+
+import OffersList from '../../components/offersList/OffersList';
 import { OfferCard } from '../../types/Offers';
 import styles from './Home.module.scss';
 
@@ -6,6 +8,7 @@ export default function Home() {
   const offers: OfferCard[] = [
     {
       id: '1',
+      name: 'Apple',
       unit: '3 kg',
       price: '10',
       image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce',
@@ -16,6 +19,7 @@ export default function Home() {
     },
     {
       id: '2',
+      name: 'Orange',
       unit: '1 kg',
       price: '15',
       image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b',
@@ -26,6 +30,7 @@ export default function Home() {
     },
     {
       id: '3',
+      name: 'Inactive',
       unit: '3 kg',
       price: '15',
       image: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b',
@@ -36,6 +41,7 @@ export default function Home() {
     },
     {
       id: '4',
+      name: 'Strawberries',
       unit: '100 g',
       price: '50',
       image: 'https://images.unsplash.com/photo-1543158181-e6f9f6712055',
@@ -51,6 +57,7 @@ export default function Home() {
     <>
       <div className={styles.container}>
         <h1>Home - Farmer Market</h1>
+        <Baner />
         <OffersList offers={offers} />
       </div>
     </>

@@ -27,7 +27,7 @@ export const offersAPI = createApi({
         },
       }),
     }),
-    getOneById: builder.query<Offer[], { offerId: number }>({
+    getOneById: builder.query<Offer, { offerId: string }>({
       query: ({ offerId }) => ({
         url: `/offers/one/${offerId}`,
         method: 'GET',
