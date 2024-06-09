@@ -1,38 +1,48 @@
-import { OfferCard } from '../../types/Offers';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { offersAPI } from '../../store/services/offers.service';
 import styles from './offerShortDetails.module.scss';
 
 type OfferShortDetailsProps = {
-  offerid: string;
+  offerId: string;
 };
 
-function OfferShortDetails({ offerid }: OfferShortDetailsProps) {
-  //add method to get offer by id
+function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
+  const { data: offer, isLoading } = offersAPI.useGetOneByIdQuery({ offerId });
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.topContainer}>
-        <p>/Shop/Category</p>
-        <div className={styles.category}>Category</div>
-      </div>
-      <div className={styles.mainContainer}>
-        <div className={styles.image}>
-          <img src={_offer.image} alt="image" />
+    <>
+      {isLoading && (
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      )}
+      {!isLoading && offer && (
+        <div className={styles.wrapper}>
+          <div className={styles.topContainer}>
+            <p>/Shop/Category</p>
+            <div className={styles.category}>Category</div>
+          </div>
+          <div className={styles.mainContainer}>
+            <div className={styles.image}>
+              <img src={offer.image} alt="image" />
+            </div>
+            <div className={styles.info}>
+              <div className={styles.mainInfo}>
+                <h2>{offer.name}</h2>
+                <p>Unit: {offer.unit}</p>
+              </div>
+              <div className={styles.description}>
+                <h3>About:</h3>
+                <article>{offer.description_EN}</article>
+              </div>
+              <div className={styles.purchases}>
+                <div className="offer-short-details__price">₪{offer.price}</div>
+                <button disabled>Buy now</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={styles.info}>
-          <div className={styles.mainInfo}>
-            <h2>{_offer.name}</h2>
-            <p>Unit: {_offer.unit}</p>
-          </div>
-          <div className={styles.description}>
-            <h3>About:</h3>
-            <article>{_offer.description_EN}</article>
-          </div>
-          <div className={styles.purchases}>
-            <div className="offer-short-details__price">₪{_offer.price}</div>
-            <button disabled>Buy now</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 export default OfferShortDetails;

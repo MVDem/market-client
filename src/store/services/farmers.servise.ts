@@ -21,8 +21,8 @@ export const farmersAPI = createApi({
     }),
 
     getFarmerById: builder.query({
-      query: (id: string) => ({
-        url: `farmers/one/${id}`,
+      query: (id: number) => ({
+        url: `farmers/${id}`,
       }),
     }),
 
