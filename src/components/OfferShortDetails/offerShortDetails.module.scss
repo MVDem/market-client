@@ -1,7 +1,5 @@
 .wrapper {
   width: 100%;
-  // width: 95dvw;
-  // max-width: 1280px;
   margin: 2rem auto;
   display: flex;
   flex-direction: column;
@@ -36,6 +34,7 @@
     height: 30dvw;
     border-radius: 1rem;
     overflow: hidden;
+    background-color: #777;
 
     img {
       width: 100%;
