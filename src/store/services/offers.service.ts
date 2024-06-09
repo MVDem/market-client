@@ -6,17 +6,26 @@ export const offersAPI = createApi({
   reducerPath: 'offersAPI',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
-    getPaginatedSortedOffers: builder.query< 
+    getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },
       { limit?: number; page?: number; sortBy?: string; order?: string }
     >({
-      query: ({ limit = 10, page = 1, sortBy, order }) => ({
-        url: `/offers?limit=${limit}&page=${page}&sortBy=${sortBy}&order=${order}`,
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }),
+      query: ({ limit = 10, page = 1, sortBy, order }) => {
+        const params = new URLSearchParams({
+          limit: limit.toString(),
+          page: page.toString(),
+        });
+        if (sortBy && sortBy.length) params.append('sortBy', sortBy);
+        if (order && order.length) params.append('order', order);
+
+        return {
+          url: `/offers?${params.toString()}`,
+          method: 'GET',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        };
+      },
     }),
     getAllByFarmer: builder.query<Offer[], { farmerId: number }>({
       query: ({ farmerId }) => ({
