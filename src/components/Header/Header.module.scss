@@ -1,0 +1,104 @@
+.header {
+  background-color: $background-input;
+  color: $color-input;
+
+  .container {
+    width: 95dvw;
+    max-width: 1280px;
+    height: 4rem;
+    margin: 0 auto;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+
+  .leftgroup {
+    display: flex;
+    align-items: center;
+    .logo {
+      text-align: center;
+      @include font(1rem, 1.2rem, 400);
+      position: relative;
+      z-index: 7;
+      top: 1rem;
+      div {
+        padding: 0.3rem;
+        border-radius: 0.5rem;
+        background-color: lightgreen;
+      }
+    }
+
+    .navbar {
+      padding-left: 2rem;
+      ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 1.5rem;
+        font-size: 1.2rem;
+      }
+    }
+    .burger {
+      visibility: hidden;
+    }
+  }
+  .link {
+    font-size: 1.2rem;
+    color: black;
+    text-decoration: none;
+    @include font(1.2rem, 1.2rem, 400);
+    &:hover {
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid #49557e;
+    }
+  }
+
+  .linkActive {
+    font-size: 1.2rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid #49557e;
+    color: #1890ff;
+    text-decoration: none;
+    @include font(1.2rem, 1.2rem, 400);
+  }
+
+  .rightPanel {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .userInfo {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      margin-right: 1.5rem;
+      gap: 1rem;
+      @include font(1.2rem, 1.2rem, 400);
+      button {
+        background-color: transparent;
+        @include font(1.2rem, 1.2rem, 400);
+        cursor: pointer;
+        border-radius: 0.5rem;
+        &:hover {
+          text-decoration: underline;
+        }
+        svg {
+          height: 1.5rem;
+          width: 1.5rem;
+        }
+      }
+    }
+  }
+}
+@include mobile {
+  .burger {
+    visibility: visible;
+  }
+  .navbar {
+    display: none;
+  }
+}
