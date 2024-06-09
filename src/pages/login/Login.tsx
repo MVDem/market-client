@@ -67,11 +67,11 @@ export default function Login() {
         <div>
           {page === 'signIn' ? (
             <button onClick={() => setPage('signUp')}>
-              Already have an account? Go to Login!
+              Don't have an account? Go to Register
             </button>
           ) : (
             <button onClick={() => setPage('signIn')}>
-              Don't have an account? Go to Register
+              Already have an account? Go to Login!
             </button>
           )}
         </div>

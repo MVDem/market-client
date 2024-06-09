@@ -1,7 +1,8 @@
 import { Farmer } from './User';
 
 export type Offer = {
-  id: string;
+  // id: string;  //Fix API
+  offerId: string;
   productId?: string;
   name: string;
   unit: string;

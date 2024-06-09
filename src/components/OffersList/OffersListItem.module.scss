@@ -1,31 +1,33 @@
 .card {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 50%;
+  background-color: #777;
+  img {
+    object-fit: cover;
+  }
 }
 
 .details {
-  padding: 1rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  flex: 1;
-}
-
-.unitPrice {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  gap: 1rem;
 }
 
 .unit {
@@ -38,23 +40,12 @@
   margin: 0;
   font-size: 1.2rem;
   color: #e91e63;
-  // white-space: nowrap;
 }
 
-.text {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.description {
-  flex: 1;
-}
-
-.description,
 .farmer {
-  margin: 0;
+  height: 2rem;
   font-size: 1rem;
   color: #777;
-  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
 }
