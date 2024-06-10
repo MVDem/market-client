@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  height: 10rem;
+  width: 10rem;
+
+  background-position: center;
+
+  background-size: cover;
+  border-radius: 1rem;
+
+  .wrapper {
+    @include font(1.2rem, 1.5rem, 200, italic, white);
+    position: absolute;
+
+    top: 15%;
+    transform: translateY(-50%);
+    left: 1rem;
+  }
+}
