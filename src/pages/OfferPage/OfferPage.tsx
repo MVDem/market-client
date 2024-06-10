@@ -20,18 +20,20 @@ const OfferPage: React.FC = () => {
         <div className={styles.container}>
           <OfferShortDetails offerId={id!} />
           <span className={styles.line}></span>
-          <div className={styles.farmerInfo} onClick={handleClick}>
-            <div className={styles.logo}>
-              <AvatarUI src={offer.farmer.imageURL} />
+          {offer.farmer && (
+            <div className={styles.farmerInfo} onClick={handleClick}>
+              <div className={styles.logo}>
+                <AvatarUI src={offer.farmer.logoURL} />
+              </div>
+              <div className={styles.info}>
+                <h3>{offer.farmer.name}</h3>
+                <p>
+                  {offer.farmer.city}, {offer.farmer.address}
+                </p>
+                <p>{offer.farmer.email}</p>
+              </div>
             </div>
-            <div className={styles.info}>
-              <h3>{offer.farmer.name}</h3>
-              <p>
-                {offer.farmer.city}, {offer.farmer.address}
-              </p>
-              <p>{offer.farmer.email}</p>
-            </div>
-          </div>
+          )}
           <span className={styles.line}></span>
         </div>
       )}

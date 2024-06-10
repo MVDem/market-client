@@ -15,7 +15,7 @@ import { User } from '../../types/User';
 const INITIAL_ROLE = 'FARMER';
 
 export default function Login() {
-  const [page, setPage] = useState('signUp');
+  const [page, setPage] = useState('signIn');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.authReducer);

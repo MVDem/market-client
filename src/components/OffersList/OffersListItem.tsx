@@ -12,7 +12,7 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/offer/ditails/${offer.offerId}`);
+    navigate(`/offer/ditails/${offer.id}`);
   };
 
   return (
@@ -26,7 +26,7 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
         <p className={styles.price}>₪{offer.price}</p>
       </div>
       <div className={styles.farmer}>
-        <AvatarUI src={offer.farmer?.imageURL} />
+        <AvatarUI src={offer.farmer?.logoURL} size={50} />
         <h5>{offer.farmer?.name}</h5>
       </div>
     </div>

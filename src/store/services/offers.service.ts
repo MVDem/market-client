@@ -31,9 +31,12 @@ export const offersAPI = createApi({
       query: ({ farmerId }) => ({
         url: `/offers/allByFarmer/${farmerId}`,
         method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
+      }),
+    }),
+    getFullOffers: builder.query<Offer[], number>({
+      query: () => ({
+        url: `/offers/getfulloffers`,
+        method: 'GET',
       }),
     }),
     getOneById: builder.query<Offer, { offerId: string }>({
@@ -84,4 +87,5 @@ export const {
   useGetPaginatedSortedOffersQuery,
   useGetAllByFarmerQuery,
   useGetOneByIdQuery,
+  useGetFullOffersQuery,
 } = offersAPI;

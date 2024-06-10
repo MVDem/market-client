@@ -6,12 +6,12 @@ import { offersAPI } from '../../store/services/offers.service';
 interface OffersListProps {}
 
 const OffersList: React.FC<OffersListProps> = () => {
-  const { data: _data } = offersAPI.useGetPaginatedSortedOffersQuery({});
-  console.log(_data?.offers);
+  const { data: _data } = offersAPI.useGetFullOffersQuery(1);
+  console.log(_data);
 
   return (
     <div className={styles.offersList}>
-      {_data?.offers.map((offer, i) => (
+      {_data?.map((offer, i) => (
         <div key={i} className={styles.card}>
           <OffersListItem offer={offer} />
         </div>

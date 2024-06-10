@@ -23,7 +23,8 @@ export type Farmer = {
   coordinateLat: number | null;
   coordinateLong: number | null;
   userId: number;
-  imageURL: string;
+  logoURL: string;
+  coverURL: string;
   createdAt: string;
   updatedAt: string;
   offers?: Offer[];

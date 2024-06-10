@@ -19,7 +19,6 @@ export const farmersAPI = createApi({
             ]
           : [{ type: 'Farmers', id: 'LIST' }],
     }),
-
     getFarmerById: builder.query({
       query: (id: string) => ({
         url: `farmers/one/${id}`,

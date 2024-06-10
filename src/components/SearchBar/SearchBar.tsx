@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDebounce } from '../../hooks/debounse';
 import styles from './SearchBar.module.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FaGrip, FaMapLocationDot } from 'react-icons/fa6';
-import { FaHeartCirclePlus } from 'react-icons/fa6';
-import { TfiLayoutListThumbAlt } from 'react-icons/tfi';
-import { TbLayoutListFilled } from 'react-icons/tb';
 
 export default function SearchBar() {
   const [search, setSearch] = useState<string>('');
@@ -18,16 +15,14 @@ export default function SearchBar() {
   }, [debounced]);
 
   return (
-    <div className={styles.contanerSearch}>
-      <div className={styles.myInput}>
+    <div className={styles.contaner}>
+      <div className={styles.search}>
         <input
-          className={styles.myInputInput}
-          autoFocus
           type="text"
           placeholder="Search groceries"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <label className={styles.mylable}>
+        <label>
           <RiSearch2Line />
         </label>
       </div>
