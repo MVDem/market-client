@@ -1,5 +1,5 @@
 import Baner from '../../components/Banner/Banner';
-import CategoryList from '../../components/CardForGroupList/CategoryList';
+import CategoryList from '../../components/CategoryList/CategoryList';
 
 import OffersList from '../../components/OffersList/OffersList';
 import styles from './Home.module.scss';
