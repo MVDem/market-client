@@ -1,14 +1,15 @@
-.contanerSearch {
+.contaner {
   min-height: 3rem;
   display: flex;
   justify-content: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
 
-  .myInput {
+  .search {
     position: relative;
-    .myInputInput {
-      padding: 0 2rem;
+
+    input {
+      padding: 0 3rem;
       background-color: $background-input;
       max-width: 30rem;
       width: 70dvw;
@@ -17,17 +18,20 @@
       box-sizing: border-box;
       border: 1px solid $background-input;
       box-shadow: 0 10px 20px rgba(92, 89, 89, 0.04);
-      font-family: 'Fira Sans';
-      color: $color-input;
-      font-weight: bold;
+      @include font(1rem, 1.2rem, 400);
+
+      &:focus {
+        outline: none;
+        border: 1px solid $color-input;
+      }
     }
-  }
-  .mylable {
-    position: absolute;
-    color: --color-lable;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 1rem;
+    label {
+      position: absolute;
+      color: --color-lable;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 1rem;
+    }
   }
 
   .buttonContainer {

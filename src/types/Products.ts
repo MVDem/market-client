@@ -1,17 +1,27 @@
+export type Product = {
+  id: string;
+  category: string;
+  name_EN: string;
+  name_HE: string;
+  description_EN: string;
+  description_HE: string;
+  photo: string;
+};
+
 export type CreateProduct = {
   category: string;
-  nameENG: string;
-  nameHEB: string;
-  descriptionENG: string;
-  descriptionHEB: string;
+  name_EN: string;
+  name_HE: string;
+  description_EN: string;
+  description_HE: string;
   photo: string;
 };
 
 export type UpdateProduct = {
-      category: string;
-      nameENG: string;
-      nameHEB: string;
-      descriptionENG: string;
-      descriptionHEB: string;
-      photo: string;
-}
+  category: string;
+  name_EN: string;
+  name_HE: string;
+  description_EN: string;
+  description_HE: string;
+  photo: string;
+};

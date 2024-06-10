@@ -11,7 +11,7 @@ export default function Baner() {
           consequatur. Asperiores nam modi adipisci explicabo fugit vero sequi
           libero? Iusto, minus est.
         </p>
-        <button className={styles.btn}>View Menu</button>
+        {/* <button className={styles.btn}>View Menu</button> */}
       </div>
     </div>
   );

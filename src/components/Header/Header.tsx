@@ -45,11 +45,13 @@ const Header: React.FC = () => {
                   Farmers
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/farmer/profile/1" className={setActive}>
-                  My Profile
-                </NavLink>
-              </li>
+              {user?.farmer && (
+                <li>
+                  <NavLink to="/farmer/profile/1" className={setActive}>
+                    My Profile
+                  </NavLink>
+                </li>
+              )}
               <li>
                 <NavLink to="/offer/ditails/1" className={setActive}>
                   An offer
@@ -67,7 +69,7 @@ const Header: React.FC = () => {
           {user ? (
             <div className={styles.userInfo}>
               <h5>{user.email}</h5>
-              <AvatarUI src={user.farmer?.imageURL} />
+              <AvatarUI src={user.farmer?.logoURL!} size={40} />
               <button onClick={handleLogout}>
                 <FiLogOut />
               </button>

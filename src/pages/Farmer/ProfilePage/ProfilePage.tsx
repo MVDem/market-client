@@ -13,7 +13,7 @@ function ProfilePage() {
   const { user } = useAppSelector((state) => state.authReducer);
   const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
-
+  console.log('id', id);
   const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(id!);
 
   useEffect(() => {
@@ -51,14 +51,12 @@ function ProfilePage() {
         <div className={styles.container}>
           <section className={styles.topContainer}>
             <div className={styles.cover}>
-              <img src="/img/1.jpg" alt="avatar" />
+              <img src="/img/covers/1.jpg" alt="avatar" />
             </div>
             <div className={styles.avatar}>
               <img
                 src={
-                  farmer?.imageURL
-                    ? farmer?.imageURL
-                    : '/public/img/default.jpg'
+                  farmer?.logoURL ? farmer?.logoURL : '/public/img/default.jpg'
                 }
                 alt="avatar"
               />

@@ -12,7 +12,7 @@ export const fetchRegister = createAsyncThunk(
   'auth/fetchRegister',
   async (
     { email, password, role }: Pick<User, 'email' | 'password' | 'role'>,
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
       const response = await axiosInstance.post('/auth/signup', {
@@ -32,14 +32,14 @@ export const fetchRegister = createAsyncThunk(
         (err.response?.data as { message: string }).message || err.message;
       return rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const fetchLogin = createAsyncThunk(
   'auth/fetchLogin',
   async (
     { email, password }: Pick<User, 'email' | 'password'>,
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
       const response = await axiosInstance.post('/auth/signin', {
@@ -58,16 +58,16 @@ export const fetchLogin = createAsyncThunk(
         (err.response?.data as { message: string }).message || err.message;
       return rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const fetchLogout = createAsyncThunk(
   'auth/fetchLogout',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/auth/logout');
-
-      if (response.status !== 201) {
+      const response = await axiosInstance.post('/auth/logout', {});
+      console.log(response);
+      if (response.status !== 200) {
         throw new Error(response.data);
       }
 
@@ -78,5 +78,5 @@ export const fetchLogout = createAsyncThunk(
         (err.response?.data as { message: string }).message || err.message;
       return rejectWithValue(message);
     }
-  }
+  },
 );
