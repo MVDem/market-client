@@ -8,7 +8,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      {pathname === '/' && <SearchBar />}
+      
       <main className={styles.wrapper}>
         <Outlet />
       </main>

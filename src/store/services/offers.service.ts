@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
-import { CreateOffer, Offer } from '../../types/Offers';
+import { CreateOffer, Offer, OfferCard } from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
-      { offers: Offer[]; count: number },
+      { offers: OfferCard[]; count: number },
       { limit?: number; page?: number; sortBy?: string; order?: string }
     >({
       query: ({ limit = 10, page = 1, sortBy, order }) => {

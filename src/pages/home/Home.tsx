@@ -1,17 +1,47 @@
-import Baner from '../../components/Banner/Banner';
+import { useState } from 'react';
+import Banner from '../../components/Banner/Banner';
 import CategoryList from '../../components/CategoryList/CategoryList';
 
 import OffersList from '../../components/OffersList/OffersList';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import { offersAPI } from '../../store/services/offers.service';
 import styles from './Home.module.scss';
 
+
+export type Params = {
+  search: {
+    columnName: string;
+    value: string;
+  };
+  limit: number;
+  page: number;
+  sortBy: string;
+  order: string;
+};
+
 export default function Home() {
+  const [params, setParams] = useState<Params>({
+    search: {columnName: '', value: ''},
+    limit: 10,
+    page: 1,
+    sortBy: 'createdAt',
+    order: 'asc',
+  });
+
+  console.log(params);
+  
+  const { data: _data } = offersAPI.useGetPaginatedSortedOffersQuery(params);
+  const {offers, count} = _data || {offers: [], count: 0};
+  console.log(offers);
+
   return (
     <>
       <div className={styles.container}>
-        <h1>Home - Farmer Market</h1>
+      
+        <SearchBar setParams={setParams}/>
         <CategoryList />
-        <Baner />
-        <OffersList />
+        <Banner />
+        <OffersList offersList={offers!}/>
       </div>
     </>
   );
