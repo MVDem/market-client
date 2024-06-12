@@ -7,7 +7,7 @@ import {
   firstNameInput,
   phoneInput,
 } from '../../../utils/formUICustomFields';
-import InputImage from '../../../UI/FormUICustom/InputImage/InputImage';
+// import InputImage from '../../../UI/FormUICustom/InputImage/InputImage';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { UploadFile } from 'antd';
@@ -28,8 +28,8 @@ function EditProfilePage() {
       <h1>Edit Profile :</h1>
       <span className={styles.line}></span>
       <div className={styles.wrapper}>
-        <InputImage onChange={setFileList} label="coverURL" />
-        <InputImage onChange={setFileList} label="logoURL" />
+        {/* <InputImage onChange={setFileList} label="coverURL" />
+        <InputImage onChange={setFileList} label="logoURL" /> */}
         <FormUICustom
           buttonLabel="Edit"
           inputs={_inputs}
