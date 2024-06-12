@@ -10,6 +10,8 @@ const OfferPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: offer } = offersAPI.useGetOneByIdQuery({ offerId: id! });
 
+  console.log(offer);
+
   const handleClick = () => {
     navigate(`/farmer/profile/${offer?.farmer.id}`);
   };

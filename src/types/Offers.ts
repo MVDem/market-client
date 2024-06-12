@@ -2,8 +2,9 @@ import { Product } from './Products';
 import { Farmer } from './User';
 
 export type Offer = {
-  id: string; //Fix API
-  // offerId: string;
+  id: string;
+  name_EN: string;
+  name_HE: string;
   unit: string;
   price: string;
   image: string;
@@ -21,7 +22,7 @@ export type OfferCard = Omit<Offer, 'createdAt' | 'updatedAt'>;
 export type CreateOffer = {
   productId: string;
   farmerId: number;
-  name: string;
+  name_EN: string;
   unit: string;
   price: string;
   image?: string;

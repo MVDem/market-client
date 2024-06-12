@@ -41,13 +41,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.user = action.payload;
         state.loading = 'succeeded';
         state.error = null;
       })
       .addCase(fetchLogin.rejected, (state, action) => {
-        console.log(action.payload);
         state.user = null;
         state.loading = 'failed';
         state.error = action.payload as string;

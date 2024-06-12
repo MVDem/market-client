@@ -1,46 +1,59 @@
-import { useEffect, useState } from 'react';
 import TableList from '../../../components/TableList/TableList';
 import { useAppSelector } from '../../../store/hooks';
 import { OfferCard } from '../../../types/Offers';
 import styles from './profilePage.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FiEdit2 } from 'react-icons/fi';
-import { TableColumnsType } from 'antd';
-import { farmersAPI } from '../../../store/services/farmers.service';
+import { Switch, TableColumnsType } from 'antd';
+import { offersAPI } from '../../../store/services/offers.service';
 
 function ProfilePage() {
-  const { id } = useParams<{ id: string }>();
   const { user } = useAppSelector((state) => state.authReducer);
-  const [editMode, setEditMode] = useState(false);
-  const navigate = useNavigate();
-  console.log('id', id);
-  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(id!);
+  const { data: offers } = offersAPI.useGetAllByFarmerQuery({
+    farmerId: user?.farmer?.id!,
+  });
+  const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
+  const [deleteOffer] = offersAPI.useDeleteMutation();
 
-  useEffect(() => {
-    if (user?.farmer?.id !== farmer?.id) {
-      setEditMode(true);
-    }
-  }, [user, farmer]);
+  const navigate = useNavigate();
+  const farmer = user?.farmer;
 
   const handleNavigate = () => {
-    navigate(`/farmer/profile/edit`, { state: { farmer } });
+    navigate(`/farmer/profile/edit`, { state: { farmer: user?.farmer } });
   };
 
   const handleDeleteOffer = (id: number) => {
-    console.log('handleDeleteOffer', id); // add RTL Query method
+    deleteOffer({ offerId: id });
+  };
+
+  const handleActivate = (checked: boolean, offer: OfferCard) => {
+    changeOffer({ ...offer, isActive: checked, price: offer.price.toString() });
   };
 
   const _columns: TableColumnsType<OfferCard> = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Name', dataIndex: 'name_EN', key: 'name_EN' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
     { title: 'Unit', dataIndex: 'unit', key: 'unit' },
-    { title: 'Active', dataIndex: 'isActive', key: 'isActive' },
+    {
+      title: 'Active',
+      dataIndex: 'isActive',
+      key: 'isActive',
+      render: (_, value: any) => (
+        <Switch
+          checked={value.isActive}
+          onChange={(checked) => handleActivate(checked, value)}
+          loading={isLoading}
+          checkedChildren={'Active'}
+          unCheckedChildren={'Inactive'}
+        />
+      ),
+    },
     {
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: (r) => (
-        <button onClick={() => handleDeleteOffer(r.id)}>Delete</button>
+      render: (_, value) => (
+        <button onClick={() => handleDeleteOffer(+value.id)}>Delete</button>
       ),
     },
   ];
@@ -51,23 +64,16 @@ function ProfilePage() {
         <div className={styles.container}>
           <section className={styles.topContainer}>
             <div className={styles.cover}>
-              <img src="/img/covers/1.jpg" alt="avatar" />
+              <img src={farmer.coverURL} alt="avatar" />
             </div>
             <div className={styles.avatar}>
-              <img
-                src={
-                  farmer?.logoURL ? farmer?.logoURL : '/public/img/default.jpg'
-                }
-                alt="avatar"
-              />
+              <img src={farmer?.logoURL} alt="avatar" />
             </div>
           </section>
           <section className={styles.title}>
-            {editMode && (
-              <button className={styles.edit} onClick={handleNavigate}>
-                <FiEdit2 />
-              </button>
-            )}
+            <button className={styles.edit} onClick={handleNavigate}>
+              <FiEdit2 />
+            </button>
             <div className={styles.mainInfo}>
               <h1>{farmer.name}</h1>
             </div>
@@ -83,7 +89,7 @@ function ProfilePage() {
           <span className={styles.line}></span>
           <section className={styles.offers}>
             <h2>Offers:</h2>
-            <TableList columns={_columns} items={farmer.offers} />
+            {offers && <TableList columns={_columns} items={offers} />}
           </section>
         </div>
       )}

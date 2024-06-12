@@ -7,7 +7,6 @@ interface OffersListProps {}
 
 const OffersList: React.FC<OffersListProps> = () => {
   const { data: _data } = offersAPI.useGetFullOffersQuery(1);
-  console.log(_data);
 
   return (
     <div className={styles.offersList}>

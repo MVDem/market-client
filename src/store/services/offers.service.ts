@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
-import { CreateOffer, Offer } from '../../types/Offers';
+import { CreateOffer, Offer, OfferCard } from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
@@ -59,13 +59,12 @@ export const offersAPI = createApi({
         },
       }),
     }),
-    update: builder.mutation<Offer, CreateOffer>({
+    update: builder.mutation<OfferCard, OfferCard>({
       query: (body) => ({
         url: '/offers',
         method: 'PUT',
         body,
         headers: {
-          'Access-Control-Allow-Origin': '*',
           Cookie: document.cookie,
         },
       }),

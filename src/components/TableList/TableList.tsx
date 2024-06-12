@@ -1,6 +1,6 @@
 import { Table, TableColumnsType } from 'antd';
 import { OfferCard } from '../../types/Offers';
-import OfferShortDetails from '../OfferShortDetails/OfferShortDetails';
+import TableListItem from './TableListItem';
 
 type TableList = {
   columns: TableColumnsType<OfferCard>;
@@ -8,15 +8,12 @@ type TableList = {
 };
 
 function TableList({ columns, items }: TableList) {
-  console.log(items);
   return (
     <Table
       columns={columns}
       expandable={{
-        expandedRowRender: (record) => (
-          <OfferShortDetails offerId={record.id} />
-        ),
-        rowExpandable: (record) => record.name !== 'Not Expandable',
+        expandedRowRender: (record) => <TableListItem offer={record} />,
+        rowExpandable: (record) => record.name_EN !== 'Not Expandable',
       }}
       rowKey={(record) => record.id}
       dataSource={items}
