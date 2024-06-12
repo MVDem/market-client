@@ -4,78 +4,71 @@ import { CreateOffer, Offer, OfferCard } from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/offers` }),
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: OfferCard[]; count: number },
-      { limit?: number; page?: number; sortBy?: string; order?: string }
+      { limit?: number; page?: number; sortBy?: string; order?: string; search?: {columnName?: string; value?: string}} 
     >({
-      query: ({ limit = 10, page = 1, sortBy, order }) => {
+      query: ({ limit = 10, page = 1, sortBy, order, search}) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           page: page.toString(),
         });
         if (sortBy && sortBy.length) params.append('sortBy', sortBy);
         if (order && order.length) params.append('order', order);
+        if (search?.columnName && search.columnName.length) params.append('columnName', search.columnName);
+        if (search?.value && search.value.length) params.append('value', search.value);
 
         return {
-          url: `/offers?${params.toString()}`,
+          url: `?${params.toString()}`,
           method: 'GET',
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
         };
       },
     }),
     getAllByFarmer: builder.query<Offer[], { farmerId: number }>({
       query: ({ farmerId }) => ({
-        url: `/offers/allByFarmer/${farmerId}`,
+        url: `/allByFarmer/${farmerId}`,
         method: 'GET',
       }),
     }),
     getFullOffers: builder.query<Offer[], number>({
       query: () => ({
-        url: `/offers/getfulloffers`,
+        url: `/getfulloffers`,
         method: 'GET',
       }),
     }),
     getOneById: builder.query<Offer, { offerId: string }>({
       query: ({ offerId }) => ({
-        url: `/offers/one/${offerId}`,
+        url: `/${offerId}`,
         method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
       }),
     }),
     create: builder.mutation<Offer, CreateOffer>({
       query: (body) => ({
-        url: '/offers',
+        url: '',
         method: 'POST',
         body,
         headers: {
-          'Access-Control-Allow-Origin': '*',
           Cookie: document.cookie,
         },
       }),
     }),
     update: builder.mutation<Offer, CreateOffer>({
       query: (body) => ({
-        url: '/offers',
+        url: '',
         method: 'PUT',
         body,
         headers: {
-          'Access-Control-Allow-Origin': '*',
           Cookie: document.cookie,
         },
       }),
     }),
     delete: builder.mutation<Offer, { offerId: number }>({
       query: ({ offerId }) => ({
-        url: `/offers/${offerId}`,
+        url: `/${offerId}`,
         method: 'DELETE',
         headers: {
-          'Access-Control-Allow-Origin': '*',
           Cookie: document.cookie,
         },
       }),

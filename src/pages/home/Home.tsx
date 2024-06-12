@@ -25,7 +25,7 @@ export default function Home() {
     limit: 10,
     page: 1,
     sortBy: 'createdAt',
-    order: 'asc',
+    order: 'ASC',
   });
 
   console.log(params);
