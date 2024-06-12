@@ -3,14 +3,24 @@ import { useDebounce } from '../../hooks/debounse';
 import styles from './SearchBar.module.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FaGrip, FaMapLocationDot } from 'react-icons/fa6';
+import { Params } from '../../pages/home/Home';
 
-export default function SearchBar() {
-  const [search, setSearch] = useState<string>('');
-  const debounced = useDebounce(search);
+type SearchBarProps = {
+  setParams: (params: any) => void;
+};
+
+export default function SearchBar({ setParams }: SearchBarProps) {
+  const [text, setText] = useState<string>('');
+  const debounced = useDebounce(text);
 
   useEffect(() => {
     if (debounced.length > 3) {
-      console.log(search);
+      setParams((prev: Params) => {
+        const newParams = { ...prev };
+        newParams.search = { columnName: 'name_EN', value: debounced };
+        return newParams;
+      });
+      console.log(text);
     }
   }, [debounced]);
 
@@ -20,7 +30,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search groceries"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
         />
         <label>
           <RiSearch2Line />

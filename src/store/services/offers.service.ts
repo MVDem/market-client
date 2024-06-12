@@ -1,83 +1,99 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
-import { CreateOffer, Offer } from '../../types/Offers';
+import {
+  Offer,
+  CreateOfferUpload,
+  UpdateOfferUpload,
+} from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/offers` }),
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },
-      { limit?: number; page?: number; sortBy?: string; order?: string }
+      {
+        limit?: number;
+        page?: number;
+        sortBy?: string;
+        order?: string;
+        search?: { columnName?: string; value?: string };
+      }
     >({
-      query: ({ limit = 10, page = 1, sortBy, order }) => {
+      query: ({ limit = 10, page = 1, sortBy, order, search }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           page: page.toString(),
         });
         if (sortBy && sortBy.length) params.append('sortBy', sortBy);
         if (order && order.length) params.append('order', order);
+        if (search?.columnName && search.columnName.length)
+          params.append('columnName', search.columnName);
+        if (search?.value && search.value.length)
+          params.append('value', search.value);
 
         return {
-          url: `/offers?${params.toString()}`,
+          url: `?${params.toString()}`,
           method: 'GET',
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
         };
       },
     }),
-    getAllByFarmer: builder.query<Offer[], { farmerId: number }>({
-      query: ({ farmerId }) => ({
-        url: `/offers/allByFarmer/${farmerId}`,
-        method: 'GET',
-      }),
+
+    create: builder.mutation<Offer, CreateOfferUpload>({
+      query: (body) => {
+        const headers = new Headers();
+        headers.append('Cookie', document.cookie);
+        const formData = new FormData();
+        formData.append('dto', JSON.stringify(body.dto));
+        if (body.file) {
+          formData.append('file', body.file);
+          headers.append('Content-Type', 'multipart/form-data');
+        }
+        return {
+          url: '',
+          method: 'POST',
+          body: formData,
+          headers: headers,
+        };
+      },
     }),
-    getFullOffers: builder.query<Offer[], number>({
-      query: () => ({
-        url: `/offers/getfulloffers`,
-        method: 'GET',
-      }),
+
+    update: builder.mutation<Offer, UpdateOfferUpload>({
+      query: (body) => {
+        const headers = new Headers();
+        headers.append('Cookie', document.cookie);
+        const formData = new FormData();
+        if (body.dto) {
+          formData.append('dto', JSON.stringify(body.dto));
+        }
+        if (body.file) {
+          formData.append('file', body.file);
+          headers.append('Content-Type', 'multipart/form-data');
+        }
+
+        return {
+          url: '',
+          method: 'PUT',
+          body: formData,
+          headers: headers,
+        };
+      },
     }),
-    getOneById: builder.query<Offer, { offerId: string }>({
-      query: ({ offerId }) => ({
-        url: `/offers/one/${offerId}`,
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }),
-    }),
-    create: builder.mutation<Offer, CreateOffer>({
-      query: (body) => ({
-        url: '/offers',
-        method: 'POST',
-        body,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          Cookie: document.cookie,
-        },
-      }),
-    }),
-    update: builder.mutation<Offer, CreateOffer>({
-      query: (body) => ({
-        url: '/offers',
-        method: 'PUT',
-        body,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          Cookie: document.cookie,
-        },
-      }),
-    }),
+
     delete: builder.mutation<Offer, { offerId: number }>({
       query: ({ offerId }) => ({
-        url: `/offers/${offerId}`,
+        url: `/${offerId}`,
         method: 'DELETE',
         headers: {
-          'Access-Control-Allow-Origin': '*',
           Cookie: document.cookie,
         },
+      }),
+    }),
+
+    getById: builder.query<Offer, { offerId: number }>({
+      query: ({ offerId }) => ({
+        url: `/${offerId}`,
+        method: 'GET',
       }),
     }),
   }),
@@ -85,7 +101,8 @@ export const offersAPI = createApi({
 
 export const {
   useGetPaginatedSortedOffersQuery,
-  useGetAllByFarmerQuery,
-  useGetOneByIdQuery,
-  useGetFullOffersQuery,
+  useCreateMutation,
+  useUpdateMutation,
+  useDeleteMutation,
+  useGetByIdQuery,
 } = offersAPI;
