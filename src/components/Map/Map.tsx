@@ -3,38 +3,22 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import styles from './Map.module.scss';
 import { Icon } from 'leaflet';
+import { Offer } from '../../types/Offers';
 
-// create custom icon
-const customIcon = new Icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-
-  iconSize: [38, 38], // size of the icon
-});
-
-interface Marker {
-  geocode: [number, number];
-  popUp: string;
+ const customIcon = new Icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+    iconSize: [38, 38],
+  });
+interface MapProps {
+  offersList: Offer[];
 }
-const markers: Marker[] = [
-  {
-    geocode: [48.86, 2.3522],
-    popUp: 'Hello, I am pop up 1',
-  },
-  {
-    geocode: [48.85, 2.3522],
-    popUp: 'Hello, I am pop up 2',
-  },
-  {
-    geocode: [48.855, 2.34],
-    popUp: 'Hello, I am pop up 3',
-  },
-];
 
-export default function Map() {
+export default function Map({ offersList }: MapProps) {
+
   return (
     <div className={styles.leafletContainer}>
       <MapContainer
-        center={[48.8566, 2.3522]}
+        center={[32.1699171, 34.7335666]}
         zoom={13}
         style={{ height: '100%', width: '100%' }}
       >
@@ -43,9 +27,11 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <MarkerClusterGroup>
-          {markers.map((pos) => (
-            <Marker position={pos.geocode} icon={customIcon}>
-              <Popup>{pos.popUp}</Popup>
+          {offersList.map((offer) => (
+            <Marker 
+            position={[offer.farmer!.coordinateLat!, offer.farmer!.coordinateLong!]} 
+            icon={offer.imageURL !== null ?  new Icon({iconUrl: offer.imageURL, iconSize: [38, 38]}) : customIcon } >
+              <Popup>{offer.farmer!.name!}</Popup>
             </Marker>
           ))}
         </MarkerClusterGroup>
