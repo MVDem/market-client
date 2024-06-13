@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, UseFormProps, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import styles from './FormUICustom.module.scss';
 import { useEffect } from 'react';
@@ -9,6 +9,7 @@ interface InputProps {
   label: string;
   type: string;
   placeholder?: string;
+  defaultValue?: string;
   required?: boolean;
   validationSchema?: z.ZodType<any, any, any>;
 }
@@ -27,42 +28,48 @@ function FormUICustom({
   buttonLabel,
   onSubmit,
 }: FormUICustomProps): JSX.Element {
-  const baseSchema = z.object(
-    inputs.reduce((acc, input) => {
-      if (input.validationSchema) {
-        acc[input.name] = input.validationSchema;
-      }
-      return acc;
-    }, {} as Record<string, z.ZodType<any, any, any>>)
-  );
+  const formParams = () => {
+    const params: UseFormProps = {};
 
-  const schema =
-    'password' in baseSchema && 'confirmPassword' in baseSchema
-      ? baseSchema.refine((data) => data.password === data.confirmPassword, {
-          message: 'Passwords do not match',
-          path: ['confirmPassword'],
-        })
-      : baseSchema;
+    const baseSchema = z.object(
+      inputs.reduce((acc, input) => {
+        if (input.validationSchema) {
+          acc[input.name] = input.validationSchema;
+        }
+        return acc;
+      }, {} as Record<string, z.ZodType<any, any, any>>),
+    );
+
+    const schema =
+      'password' in baseSchema && 'confirmPassword' in baseSchema
+        ? baseSchema.refine((data) => data.password === data.confirmPassword, {
+            message: 'Passwords do not match',
+            path: ['confirmPassword'],
+          })
+        : baseSchema;
+
+    params.resolver = zodResolver(schema);
+
+    params.defaultValues = inputs.reduce((acc, input) => {
+      acc[input.name] = input.defaultValue || '';
+      return acc;
+    }, {} as Record<string, string>);
+
+    return params;
+  };
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-    mode: 'onChange',
-  });
+  } = useForm(formParams());
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       console.log(errors);
     }
   }, [errors]);
-
-  useEffect(() => {
-    reset();
-  }, [inputs, reset]);
 
   const _onSubmit: SubmitHandler<DataFormType> = (data) => {
     onSubmit(data);
