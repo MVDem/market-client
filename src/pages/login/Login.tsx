@@ -1,112 +1,81 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, UseFormProps, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import styles from './FormUICustom.module.scss';
-import { useEffect } from 'react';
+import styles from './Login.module.scss';
+import FormUICustom from '../../UI/FormUICustom/FormUICustom';
+import {
+  emailInput,
+  passwordInput,
+  confirmPasswordInput,
+} from '../../utils/formUICustomFields';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchLogin, fetchRegister } from '../../store/thunks/auth.thunk';
+import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
+import { User } from '../../types/User';
 
-interface InputProps {
-  name: string;
-  label: string;
-  type: string;
-  placeholder?: string;
-  defaultValue?: string;
-  required?: boolean;
-  validationSchema?: z.ZodType<any, any, any>;
-}
+const INITIAL_ROLE = 'FARMER';
 
-interface FormUICustomProps {
-  inputs: InputProps[];
-  buttonLabel: string;
-  onSubmit: (data: DataFormType) => void;
-}
-export type DataFormType = {
-  [x: string]: string;
-};
-
-function FormUICustom({
-  inputs,
-  buttonLabel,
-  onSubmit,
-}: FormUICustomProps): JSX.Element {
-  const formParams = () => {
-    const params: UseFormProps = {};
-
-    const baseSchema = z.object(
-      inputs.reduce((acc, input) => {
-        if (input.validationSchema) {
-          acc[input.name] = input.validationSchema;
-        }
-        return acc;
-      }, {} as Record<string, z.ZodType<any, any, any>>),
-    );
-
-    const schema =
-      'password' in baseSchema && 'confirmPassword' in baseSchema
-        ? baseSchema.refine((data) => data.password === data.confirmPassword, {
-            message: 'Passwords do not match',
-            path: ['confirmPassword'],
-          })
-        : baseSchema;
-
-    params.resolver = zodResolver(schema);
-
-    params.defaultValues = inputs.reduce((acc, input) => {
-      acc[input.name] = input.defaultValue || '';
-      return acc;
-    }, {} as Record<string, string>);
-
-    return params;
-  };
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm(formParams());
+export default function Login() {
+  const [page, setPage] = useState('signIn');
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector((state) => state.authReducer);
 
   useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      console.log(errors);
+    if (page === 'signUp' && authState.loading === 'succeeded') {
+      setPage('signIn');
     }
-  }, [errors]);
+    if (page === 'signIn' && authState.loading === 'succeeded') {
+      navigate('/');
+    }
+  }, [authState]);
 
-  const _onSubmit: SubmitHandler<DataFormType> = (data) => {
-    onSubmit(data);
-    reset();
+  const inputs =
+    page === 'signUp'
+      ? [emailInput, passwordInput, confirmPasswordInput]
+      : [emailInput, passwordInput];
+
+  const handleSubmit = (data: DataFormType) => {
+    const { email, password } = data as Pick<User, 'email' | 'password'>;
+    if (page === 'signUp') {
+      dispatch(fetchRegister({ email, password, role: INITIAL_ROLE }));
+    }
+    if (page === 'signIn') {
+      dispatch(fetchLogin({ email, password }));
+    }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(_onSubmit)}>
-        {inputs.map(({ name, label, type, placeholder, required }, i) => (
-          <div key={i}>
-            <label htmlFor={name}>
-              {label}
-              <input
-                {...register(name)}
-                id={name}
-                type={type}
-                placeholder={placeholder}
-                required={required}
-              />
-            </label>
-            <div className={styles.errorMessage}>
-              {errors[name] && (
-                <div role="alert" style={{ color: 'red' }}>
-                  {(errors[name]?.message as string) ||
-                    'This field is required'}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-        <button type="submit" disabled={!isValid}>
-          {buttonLabel}
-        </button>
-      </form>
+      <div className={styles.container}>
+        <h2>{page === 'signUp' ? 'Register' : 'Login'}</h2>
+        {/* {page === 'signIn' ? (
+          <button onClick={() => setPage('signUp')}>Sign up</button>
+        ) : (
+          <button onClick={() => setPage('signIn')}>Sign in</button>
+        )} */}
+        {authState.error && (
+          <div className={styles.error}>{authState.error}</div>
+        )}
+        {authState.loading === 'pending' && (
+          <div className={styles.loading}>Loading...</div>
+        )}
+        <FormUICustom
+          inputs={inputs}
+          buttonLabel={page === 'signUp' ? 'Sign up' : 'Sign in'}
+          onSubmit={handleSubmit}
+        />
+        <div>
+          {page === 'signIn' ? (
+            <button onClick={() => setPage('signUp')}>
+              Don't have an account? Go to Register
+            </button>
+          ) : (
+            <button onClick={() => setPage('signIn')}>
+              Already have an account? Go to Login!
+            </button>
+          )}
+        </div>
+      </div>
     </>
   );
 }
-
-export default FormUICustom;
