@@ -141,7 +141,8 @@ function ProfilePage() {
           />
           <section className={styles.offers}>
             <h2>Offers:</h2>
-            {farmer?.offers && <TableList farmerId={farmer?.id} />}
+            {farmer && <TableList farmerId={farmer?.id} />}
+            {/* {farmer?.offers && <TableList farmerId={farmer?.id} />} */}
           </section>
         </div>
       )}

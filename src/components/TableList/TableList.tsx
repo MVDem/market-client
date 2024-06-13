@@ -1,5 +1,5 @@
 import { Switch, Table, TableColumnsType } from 'antd';
-import { OfferCard } from '../../types/Offers';
+import { Offer } from '../../types/Offers';
 import TableListItem from './TableListItem';
 import { offersAPI } from '../../store/services/offers.service';
 
@@ -8,9 +8,12 @@ type TableList = {
 };
 
 function TableList({ farmerId }: TableList) {
-  const { data: offers } = offersAPI.useGetAllByFarmerQuery({
-    farmerId,
+  console.log(farmerId.toString());
+  const { data: offers } = offersAPI.useGetPaginatedSortedOffersQuery({
+    search: { columnName: 'farmerId', value: farmerId.toString() },
   });
+
+  console.log(offers);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
   const [deleteOffer] = offersAPI.useDeleteMutation();
 
@@ -18,11 +21,11 @@ function TableList({ farmerId }: TableList) {
     deleteOffer({ offerId: id });
   };
 
-  const handleActivate = (checked: boolean, offer: OfferCard) => {
-    changeOffer({ ...offer, isActive: checked, price: offer.price.toString() });
+  const handleActivate = (checked: boolean, offer: Offer) => {
+    // changeOffer({ ...offer, isActive: checked, price: offer.price.toString() });
   };
 
-  const columns: TableColumnsType<OfferCard> = [
+  const columns: TableColumnsType<Offer> = [
     { title: 'Name', dataIndex: 'name_EN', key: 'name_EN' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
     { title: 'Unit', dataIndex: 'unit', key: 'unit' },
@@ -58,7 +61,7 @@ function TableList({ farmerId }: TableList) {
         rowExpandable: (record) => record.name_EN !== 'Not Expandable',
       }}
       rowKey={(record) => record.id}
-      dataSource={offers}
+      dataSource={offers?.offers}
     />
   );
 }

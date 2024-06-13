@@ -7,7 +7,6 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import { offersAPI } from '../../store/services/offers.service';
 import styles from './Home.module.scss';
 
-
 export type Params = {
   search: {
     columnName: string;
@@ -21,27 +20,23 @@ export type Params = {
 
 export default function Home() {
   const [params, setParams] = useState<Params>({
-    search: {columnName: '', value: ''},
+    search: { columnName: '', value: '' },
     limit: 10,
     page: 1,
     sortBy: 'createdAt',
     order: 'ASC',
   });
 
-  console.log(params);
-  
   const { data: _data } = offersAPI.useGetPaginatedSortedOffersQuery(params);
-  const {offers, count} = _data || {offers: [], count: 0};
-  console.log(offers);
+  const { offers, count } = _data || { offers: [], count: 0 };
 
   return (
     <>
       <div className={styles.container}>
-      
-        <SearchBar setParams={setParams}/>
+        <SearchBar setParams={setParams} />
         <CategoryList />
         <Banner />
-        <OffersList offersList={offers!}/>
+        <OffersList offersList={offers!} />
       </div>
     </>
   );
