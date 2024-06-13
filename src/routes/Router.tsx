@@ -19,7 +19,10 @@ function Routing() {
             <Route path="/sign" element={<Login />} />
             <Route path="/farmer/ditails/:id" element={<FarmerPage />} />
             <Route path="/offer/ditails/:id" element={<OfferPage />} />
-            <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route
+              path="/profile/:id"
+              element={<Guard role={'FARMER'} element={<ProfilePage />} />}
+            />
             <Route
               path="/farmer/profile/edit"
               element={<Guard role={'FARMER'} element={<EditProfilePage />} />}

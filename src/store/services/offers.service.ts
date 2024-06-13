@@ -4,6 +4,7 @@ import {
   Offer,
   CreateOfferUpload,
   UpdateOfferUpload,
+  UpdateOffer,
 } from '../../types/Offers';
 
 export const offersAPI = createApi({
@@ -54,28 +55,37 @@ export const offersAPI = createApi({
           method: 'POST',
           body: formData,
           headers: headers,
+          credentials: 'include',
         };
       },
     }),
 
-    update: builder.mutation<Offer, UpdateOfferUpload>({
-      query: (body) => {
+    update: builder.mutation<
+      Offer,
+      { body?: UpdateOffer; id: number; file?: File }
+    >({
+      query: ({ body, id, file }) => {
         const headers = new Headers();
         headers.append('Cookie', document.cookie);
         const formData = new FormData();
-        if (body.dto) {
+        if (body) {
+          // for (const key in body) {
+          //   formData.append(key, body[key]);
+          // }
           formData.append('dto', JSON.stringify(body.dto));
         }
-        if (body.file) {
-          formData.append('file', body.file);
+        if (file) {
+          formData.append('file', file);
           headers.append('Content-Type', 'multipart/form-data');
         }
 
+        console.log(formData.get('isActive'));
         return {
-          url: '',
+          url: `/${id}`,
           method: 'PUT',
           body: formData,
           headers: headers,
+          credentials: 'include',
         };
       },
     }),
@@ -84,6 +94,7 @@ export const offersAPI = createApi({
       query: ({ offerId }) => ({
         url: `/${offerId}`,
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           Cookie: document.cookie,
         },

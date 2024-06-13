@@ -8,12 +8,12 @@ type TableList = {
 };
 
 function TableList({ farmerId }: TableList) {
-  console.log(farmerId.toString());
+  // console.log(farmerId.toString());
   const { data: offers } = offersAPI.useGetPaginatedSortedOffersQuery({
     search: { columnName: 'farmerId', value: farmerId.toString() },
   });
 
-  console.log(offers);
+  // console.log(offers);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
   const [deleteOffer] = offersAPI.useDeleteMutation();
 
@@ -22,7 +22,7 @@ function TableList({ farmerId }: TableList) {
   };
 
   const handleActivate = (checked: boolean, offer: Offer) => {
-    // changeOffer({ ...offer, isActive: checked, price: offer.price.toString() });
+    changeOffer({ body: { isActive: checked }, id: offer.id });
   };
 
   const columns: TableColumnsType<Offer> = [

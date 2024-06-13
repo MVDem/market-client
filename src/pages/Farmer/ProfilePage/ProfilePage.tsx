@@ -18,13 +18,13 @@ function ProfilePage() {
     farmersAPI.useUpdateFarmerMutation();
 
   const handleSubmit = (data: DataFormType) => {
-    // editFarmer({
-    //   body: {
-    //     ...farmer,
-    //     ...data,
-    //   },
-    //   id: farmer?.id!,
-    // });
+    editFarmer({
+      body: {
+        ...farmer,
+        ...data,
+      },
+      id: farmer?.id!,
+    });
   };
 
   const inputs = [

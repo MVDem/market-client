@@ -47,4 +47,5 @@ export type UpdateOffer = {
 export type UpdateOfferUpload = {
   dto?: UpdateOffer;
   file?: File;
+  id: number;
 };
