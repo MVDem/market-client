@@ -4,7 +4,7 @@ import styles from './SearchBar.module.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FaGrip, FaMapLocationDot } from 'react-icons/fa6';
 
-export default function SearchBar() {
+export default function SearchBar({setIsMap}: {setIsMap: (value: boolean) => void}) {
   const [search, setSearch] = useState<string>('');
   const debounced = useDebounce(search);
 
@@ -27,10 +27,10 @@ export default function SearchBar() {
         </label>
       </div>
       <div className={styles.buttonContainer}>
-        <button className={styles.glowOnHover} type="button">
+        <button className={styles.glowOnHover} type="button" onClick={() => setIsMap(true)}>
           <FaMapLocationDot />
         </button>
-        <button className={styles.glowOnHover} type="button">
+        <button className={styles.glowOnHover} type="button" onClick={() => setIsMap(false)}>
           <FaGrip />
         </button>
       </div>

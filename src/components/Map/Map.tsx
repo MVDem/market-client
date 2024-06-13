@@ -30,7 +30,7 @@ const markers: Marker[] = [
   },
 ];
 
-export default function App() {
+export default function Map() {
   return (
     <div className={styles.leafletContainer}>
       <MapContainer
