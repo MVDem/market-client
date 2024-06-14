@@ -43,6 +43,7 @@ function BackdropForm({
             inputs={inputs}
             buttonLabel="Edit"
             onSubmit={onSubmit}
+            colspan={12}
           />
         </div>
       )}

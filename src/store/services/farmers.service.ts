@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Farmer } from '../../types/Farmers';
+import { API_URL } from '../../config';
 
 export const farmersAPI = createApi({
   reducerPath: 'farmersApi',
   tagTypes: ['Farmers'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/farmers/` }),
   endpoints: (builder) => ({
     getFarmers: builder.query({
-      query: () => 'farmers',
+      query: () => '',
       providesTags: (result) =>
         result
           ? [
@@ -21,42 +22,33 @@ export const farmersAPI = createApi({
     }),
     getFarmerById: builder.query({
       query: (id: string) => ({
-        url: `farmers/one/${id}`,
+        url: `/one/${id}`,
       }),
-    }),
-
-    createFarmer: builder.mutation({
-      query: (body: Pick<Farmer, 'email' | 'userId'>) => ({
-        url: 'farmers',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: [{ type: 'Farmers', id: 'LIST' }],
     }),
 
     updateFarmer: builder.mutation({
       query: ({ body, id }: { body: Omit<Farmer, 'userId'>; id: number }) => ({
-        url: `farmers/${id}`,
+        url: `${id}`,
         method: 'PUT',
+        credentials: 'include',
         body,
       }),
       invalidatesTags: [{ type: 'Farmers', id: 'LIST' }],
     }),
 
-    deleteFarmer: builder.mutation({
-      query: (id: number) => ({
-        url: `/farmers/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: [{ type: 'Farmers', id: 'LIST' }],
-    }),
+    // deleteFarmer: builder.mutation({
+    //   query: (id: number) => ({
+    //     url: `/farmers/${id}`,
+    //     method: 'DELETE',
+    //   }),
+    //   invalidatesTags: [{ type: 'Farmers', id: 'LIST' }],
+    // }),
   }),
 });
 
 export const {
   useGetFarmersQuery,
   useGetFarmerByIdQuery,
-  useCreateFarmerMutation,
   useUpdateFarmerMutation,
-  useDeleteFarmerMutation,
+  // useDeleteFarmerMutation,
 } = farmersAPI;

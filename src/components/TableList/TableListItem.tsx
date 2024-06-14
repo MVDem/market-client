@@ -5,28 +5,26 @@ import { useState } from 'react';
 import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
 import { offersAPI } from '../../store/services/offers.service';
 import BackdropForm from '../BackdropForm/BackdropForm';
+import { CircularProgress } from '@mui/material';
 
 type TableOffersItemProps = {
   offer: Offer;
+  refetch: () => void;
 };
 
-function TableListItem({ offer }: TableOffersItemProps) {
+function TableListItem({ offer, refetch }: TableOffersItemProps) {
   const [open, setOpen] = useState(false);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
 
   const handleSubmit = async (data: DataFormType) => {
+    console.log(data);
     const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
+    for (let key in data) {
+      formData.append(key, String(data[key]));
     }
     await changeOffer({ body: formData, id: offer.id });
-  };
-
-  const handleImageUpload = async (file: File) => {
-    console.log(file);
-    const formData = new FormData();
-    formData.append('file', file);
-    // await changeOffer({ body: formData, id: offer.id });
+    setOpen(false);
+    refetch();
   };
 
   const items: DescriptionsProps['items'] = [
@@ -110,24 +108,40 @@ function TableListItem({ offer }: TableOffersItemProps) {
       required: true,
       defaultValue: offer.unit,
     },
+    {
+      name: 'imageURL',
+      label: 'Image',
+      type: 'upload',
+      placeholder: 'Enter unit',
+      required: true,
+    },
   ];
 
   return (
     <div style={{ display: 'flex', gap: '2rem' }}>
       <div style={{ width: '20%', borderRadius: '1rem', overflow: 'hidden' }}>
-        <img src={offer.imageURL} style={{ width: '100%', height: '100%' }} />
-      </div>
-      <div style={{ flexGrow: '1' }}>
-        <Descriptions
-          title="Offer details"
-          extra={
-            <button onClick={() => setOpen(true)}>
-              <FiEdit2 size={20} />
-            </button>
-          }
-          items={items}
+        <img
+          src={offer.imageURL ? offer.imageURL : offer.product.imageURL}
+          style={{ width: '100%', height: '100%' }}
         />
       </div>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <div style={{ flexGrow: '1' }}>
+          <Descriptions
+            title="Offer details"
+            extra={
+              <FiEdit2
+                size={20}
+                style={{ color: 'black', cursor: 'pointer' }}
+                onClick={() => setOpen(true)}
+              />
+            }
+            items={items}
+          />
+        </div>
+      )}
       <BackdropForm
         open={open}
         setOpen={setOpen}
