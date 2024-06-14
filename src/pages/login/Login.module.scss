@@ -17,23 +17,12 @@
   h2 {
     @include font(2.1em, 2.25rem, 600);
   }
-}
 
-button {
-  border: none;
-  color: inherit;
-  position: relative;
-  background-color: inherit;
-  cursor: pointer;
-
-  &:hover::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 2px;
-    background-color: #084b11;
+  button {
+    border: none;
+    color: inherit;
+    position: relative;
+    background-color: inherit;
     cursor: pointer;
   }
 }
