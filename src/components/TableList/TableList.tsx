@@ -8,21 +8,22 @@ type TableList = {
 };
 
 function TableList({ farmerId }: TableList) {
-  // console.log(farmerId.toString());
-  const { data: offers } = offersAPI.useGetPaginatedSortedOffersQuery({
+  const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
+  const [deleteOffer] = offersAPI.useDeleteMutation();
+  const { data: offers, refetch } = offersAPI.useGetPaginatedSortedOffersQuery({
     search: { columnName: 'farmerId', value: farmerId.toString() },
   });
 
-  // console.log(offers);
-  const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
-  const [deleteOffer] = offersAPI.useDeleteMutation();
-
-  const handleDeleteOffer = (id: number) => {
-    deleteOffer({ offerId: id });
+  const handleDeleteOffer = async (id: number) => {
+    await deleteOffer({ offerId: id });
+    await refetch();
   };
 
-  const handleActivate = (checked: boolean, offer: Offer) => {
-    changeOffer({ body: { isActive: checked }, id: offer.id });
+  const handleActivate = async (checked: boolean, offer: Offer) => {
+    const formData = new FormData();
+    formData.append('isActive', checked.toString());
+    await changeOffer({ body: formData, id: offer.id });
+    await refetch();
   };
 
   const columns: TableColumnsType<Offer> = [

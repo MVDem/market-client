@@ -1,27 +1,32 @@
 import { Descriptions, DescriptionsProps } from 'antd';
-import { OfferCard } from '../../types/Offers';
+import { Offer } from '../../types/Offers';
 import { FiEdit2 } from 'react-icons/fi';
 import { useState } from 'react';
 import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
 import { offersAPI } from '../../store/services/offers.service';
-import { UploadButton } from '@bytescale/upload-widget-react';
 import BackdropForm from '../BackdropForm/BackdropForm';
 
 type TableOffersItemProps = {
-  offer: OfferCard;
+  offer: Offer;
 };
 
 function TableListItem({ offer }: TableOffersItemProps) {
   const [open, setOpen] = useState(false);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
-  console.log('offer', offer);
 
-  const handleSubmit = (data: DataFormType) => {
-    changeOffer({
-      ...offer,
-      ...data,
-      price: data.price.toString(),
-    });
+  const handleSubmit = async (data: DataFormType) => {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    await changeOffer({ body: formData, id: offer.id });
+  };
+
+  const handleImageUpload = async (file: File) => {
+    console.log(file);
+    const formData = new FormData();
+    formData.append('file', file);
+    // await changeOffer({ body: formData, id: offer.id });
   };
 
   const items: DescriptionsProps['items'] = [
@@ -109,25 +114,9 @@ function TableListItem({ offer }: TableOffersItemProps) {
 
   return (
     <div style={{ display: 'flex', gap: '2rem' }}>
-      <UploadButton
-        options={options}
-        // onComplete={(files) => changeOffer(files[0])}
-      >
-        {({ onClick }) => (
-          <div style={{ height: 'max-content', maxWidth: '25%' }}>
-            <img
-              style={{
-                height: 'auto',
-                width: '100%',
-                objectFit: 'cover',
-                backgroundColor: '#777',
-              }}
-              src={offer.image ? offer.image : offer.product.imageURL}
-              onClick={onClick}
-            />
-          </div>
-        )}
-      </UploadButton>
+      <div style={{ width: '20%', borderRadius: '1rem', overflow: 'hidden' }}>
+        <img src={offer.imageURL} style={{ width: '100%', height: '100%' }} />
+      </div>
       <div style={{ flexGrow: '1' }}>
         <Descriptions
           title="Offer details"
@@ -150,8 +139,3 @@ function TableListItem({ offer }: TableOffersItemProps) {
   );
 }
 export default TableListItem;
-
-const options = {
-  apiKey: 'free',
-  maxFileCount: 1,
-};
