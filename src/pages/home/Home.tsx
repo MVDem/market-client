@@ -20,9 +20,20 @@ export type Params = {
   order: string;
 };
 
+
+export type Params = {
+  search: {
+    columnName: string;
+    value: string;
+  };
+  limit: number;
+  page: number;
+  sortBy: string;
+  order: string;
+};
+
 export default function Home() {
   const [isMap, setIsMap] = useState(false);
-
   const [params, setParams] = useState<Params>({
     search: {columnName: '', value: ''},
     limit: 10,
