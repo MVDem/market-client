@@ -7,9 +7,11 @@ import { Params } from '../../pages/home/Home';
 
 type SearchBarProps = {
   setParams: (params: any) => void;
+  setIsMap: (value: boolean) => void
 };
 
-export default function SearchBar({ setParams }: SearchBarProps) {
+export default function SearchBar({ setParams, setIsMap }: SearchBarProps) {
+  const [search, setSearch] = useState<string>('');
   const [text, setText] = useState<string>('');
   const debounced = useDebounce(text);
 
@@ -37,10 +39,10 @@ export default function SearchBar({ setParams }: SearchBarProps) {
         </label>
       </div>
       <div className={styles.buttonContainer}>
-        <button className={styles.glowOnHover} type="button">
+        <button className={styles.glowOnHover} type="button" onClick={() => setIsMap(true)}>
           <FaMapLocationDot />
         </button>
-        <button className={styles.glowOnHover} type="button">
+        <button className={styles.glowOnHover} type="button" onClick={() => setIsMap(false)}>
           <FaGrip />
         </button>
       </div>
