@@ -11,8 +11,8 @@ export default function CategoryList() {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          {categoryList.map((category) => (
-            <CategoryListItem item={category} />
+          {categoryList.map((category, i) => (
+            <CategoryListItem key={i} item={category} />
           ))}
         </div>
       </div>

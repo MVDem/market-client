@@ -8,9 +8,9 @@ interface OffersListProps {
   offersList: OfferCard[];
 }
 
-const OffersList: React.FC<OffersListProps> = ({offersList}: OffersListProps ) => {
-  
-
+const OffersList: React.FC<OffersListProps> = ({
+  offersList,
+}: OffersListProps) => {
   return (
     <div className={styles.offersList}>
       {offersList?.map((offer, i) => (

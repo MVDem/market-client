@@ -27,10 +27,10 @@ export type CreateOffer = {
   productId: number;
 };
 
-export type CreateOfferUpload = {   
+export type CreateOfferUpload = {
   dto: CreateOffer;
   file?: File;
-}
+};
 
 export type UpdateOffer = {
   name_EN?: string;
@@ -44,7 +44,8 @@ export type UpdateOffer = {
   productId?: number;
 };
 
-export type UpdateOfferUpload = {   
+export type UpdateOfferUpload = {
   dto?: UpdateOffer;
   file?: File;
-}
+  id: number;
+};

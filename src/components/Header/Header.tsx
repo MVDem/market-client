@@ -47,7 +47,7 @@ const Header: React.FC = () => {
               </li>
               {user?.farmer && (
                 <li>
-                  <NavLink to="/farmer/profile/1" className={setActive}>
+                  <NavLink to="/profile/1" className={setActive}>
                     My Profile
                   </NavLink>
                 </li>

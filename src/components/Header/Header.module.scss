@@ -79,9 +79,9 @@
         @include font(1.2rem, 1.2rem, 400);
         cursor: pointer;
         border-radius: 0.5rem;
-        &:hover {
-          text-decoration: underline;
-        }
+        // &:hover {
+        // text-decoration: underline;
+        // }
         svg {
           height: 1.5rem;
           width: 1.5rem;

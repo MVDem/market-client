@@ -1,47 +1,95 @@
-import { useEffect, useState } from 'react';
 import TableList from '../../../components/TableList/TableList';
 import { useAppSelector } from '../../../store/hooks';
-import { OfferCard } from '../../../types/Offers';
 import styles from './profilePage.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
 import { FiEdit2 } from 'react-icons/fi';
-import { TableColumnsType } from 'antd';
+import { useState } from 'react';
+import BackdropForm from '../../../components/BackdropForm/BackdropForm';
 import { farmersAPI } from '../../../store/services/farmers.service';
+import { DataFormType } from '../../../UI/FormUICustom/FormUICustom';
+import { Button, Dropdown, Space } from 'antd';
 
 function ProfilePage() {
-  const { id } = useParams<{ id: string }>();
+  const [open, setOpen] = useState(false);
   const { user } = useAppSelector((state) => state.authReducer);
-  const [editMode, setEditMode] = useState(false);
-  const navigate = useNavigate();
-  console.log('id', id);
-  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(id!);
+  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(
+    user?.farmer?.id!.toString()!,
+  );
+  const [editFarmer, { isLoading: isLoadingEditFarmer }] =
+    farmersAPI.useUpdateFarmerMutation();
 
-  useEffect(() => {
-    if (user?.farmer?.id !== farmer?.id) {
-      setEditMode(true);
-    }
-  }, [user, farmer]);
-
-  const handleNavigate = () => {
-    navigate(`/farmer/profile/edit`, { state: { farmer } });
+  const handleSubmit = (data: DataFormType) => {
+    editFarmer({
+      body: {
+        ...farmer,
+        ...data,
+      },
+      id: farmer?.id!,
+    });
   };
 
-  const handleDeleteOffer = (id: number) => {
-    console.log('handleDeleteOffer', id); // add RTL Query method
-  };
-
-  const _columns: TableColumnsType<OfferCard> = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Price', dataIndex: 'price', key: 'price' },
-    { title: 'Unit', dataIndex: 'unit', key: 'unit' },
-    { title: 'Active', dataIndex: 'isActive', key: 'isActive' },
+  const inputs = [
     {
-      title: 'Action',
-      dataIndex: '',
-      key: 'x',
-      render: (r) => (
-        <button onClick={() => handleDeleteOffer(r.id)}>Delete</button>
-      ),
+      name: 'name_EN',
+      label: 'English name',
+      type: 'text',
+      placeholder: 'Enter English name',
+      required: true,
+      defaultValue: farmer?.name_EN,
+    },
+    {
+      name: 'name_HE',
+      label: 'Hebrew name',
+      type: 'text',
+      placeholder: 'Enter Hebrew name',
+      required: true,
+      defaultValue: farmer?.name_HE,
+    },
+    {
+      name: 'phone',
+      label: 'Phone',
+      type: 'text',
+      placeholder: 'Enter phone',
+      required: true,
+      defaultValue: farmer?.phone,
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      placeholder: 'Enter email',
+      required: true,
+      defaultValue: farmer?.email,
+    },
+    {
+      name: 'description_EN',
+      label: 'English description',
+      type: 'text',
+      placeholder: 'Enter English description',
+      required: true,
+      defaultValue: farmer?.description_EN,
+    },
+    {
+      name: 'description_HE',
+      label: 'Hebrew description',
+      type: 'text',
+      placeholder: 'Enter Hebrew description',
+      required: true,
+      defaultValue: farmer?.description_HE,
+    },
+  ];
+
+  const items = [
+    {
+      key: '1',
+      icon: <Button onClick={() => setOpen(true)}>Edit info</Button>,
+    },
+    {
+      key: '2',
+      icon: <Button onClick={() => setOpen(true)}>Change cover</Button>,
+    },
+    {
+      key: '3',
+      icon: <Button onClick={() => setOpen(true)}>Change logo</Button>,
     },
   ];
 
@@ -51,23 +99,26 @@ function ProfilePage() {
         <div className={styles.container}>
           <section className={styles.topContainer}>
             <div className={styles.cover}>
-              <img src="/img/covers/1.jpg" alt="avatar" />
+              <img src={farmer.coverURL} alt="avatar" />
             </div>
             <div className={styles.avatar}>
-              <img
-                src={
-                  farmer?.logoURL ? farmer?.logoURL : '/public/img/default.jpg'
-                }
-                alt="avatar"
-              />
+              <img src={farmer?.logoURL} alt="avatar" />
             </div>
           </section>
           <section className={styles.title}>
-            {editMode && (
-              <button className={styles.edit} onClick={handleNavigate}>
-                <FiEdit2 />
-              </button>
-            )}
+            <div className={styles.edit}>
+              <Dropdown
+                menu={{ items }}
+                placement="bottomRight"
+                trigger={['click']}
+              >
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <FiEdit2 size={20} />
+                  </Space>
+                </a>
+              </Dropdown>
+            </div>
             <div className={styles.mainInfo}>
               <h1>{farmer.name}</h1>
             </div>
@@ -81,9 +132,17 @@ function ProfilePage() {
             <p>{farmer?.description}</p>
           </section>
           <span className={styles.line}></span>
+          <BackdropForm
+            open={open}
+            setOpen={setOpen}
+            onSubmit={handleSubmit}
+            inputs={inputs}
+            isLoading={isLoadingEditFarmer}
+          />
           <section className={styles.offers}>
             <h2>Offers:</h2>
-            <TableList columns={_columns} items={farmer.offers} />
+            {farmer && <TableList farmerId={farmer?.id} />}
+            {/* {farmer?.offers && <TableList farmerId={farmer?.id} />} */}
           </section>
         </div>
       )}

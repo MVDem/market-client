@@ -8,19 +8,6 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './Home.module.scss';
 import Map from '../../components/Map/Map';
 
-
-export type Params = {
-  search: {
-    columnName: string;
-    value: string;
-  };
-  limit: number;
-  page: number;
-  sortBy: string;
-  order: string;
-};
-
-
 export type Params = {
   search: {
     columnName: string;
@@ -35,26 +22,27 @@ export type Params = {
 export default function Home() {
   const [isMap, setIsMap] = useState(false);
   const [params, setParams] = useState<Params>({
-    search: {columnName: '', value: ''},
+    search: { columnName: '', value: '' },
     limit: 10,
     page: 1,
     sortBy: 'createdAt',
     order: 'ASC',
   });
 
-  console.log(params);
-  
   const { data: _data } = offersAPI.useGetPaginatedSortedOffersQuery(params);
-  const {offers, count} = _data || {offers: [], count: 0};
-  console.log(offers);
+  const { offers, count } = _data || { offers: [], count: 0 };
 
   return (
     <>
       <div className={styles.container}>
-        <SearchBar setParams={setParams} setIsMap={setIsMap}/>
+        <SearchBar setParams={setParams} setIsMap={setIsMap} />
         <CategoryList />
         <Banner />
-         {isMap ? <Map offersList={offers}/> : <OffersList  offersList={offers}/>}
+        {isMap ? (
+          <Map offersList={offers} />
+        ) : (
+          <OffersList offersList={offers} />
+        )}
       </div>
     </>
   );

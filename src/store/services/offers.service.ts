@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
-import {
-  Offer,
-  CreateOfferUpload,
-  UpdateOfferUpload,
-} from '../../types/Offers';
+import { Offer, CreateOfferUpload } from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
@@ -54,28 +50,21 @@ export const offersAPI = createApi({
           method: 'POST',
           body: formData,
           headers: headers,
+          credentials: 'include',
         };
       },
     }),
 
-    update: builder.mutation<Offer, UpdateOfferUpload>({
-      query: (body) => {
+    update: builder.mutation<Offer, { body?: FormData; id: number }>({
+      query: ({ body, id }) => {
         const headers = new Headers();
         headers.append('Cookie', document.cookie);
-        const formData = new FormData();
-        if (body.dto) {
-          formData.append('dto', JSON.stringify(body.dto));
-        }
-        if (body.file) {
-          formData.append('file', body.file);
-          headers.append('Content-Type', 'multipart/form-data');
-        }
-
         return {
-          url: '',
+          url: `/${id}`,
           method: 'PUT',
-          body: formData,
+          body: body,
           headers: headers,
+          credentials: 'include',
         };
       },
     }),
@@ -84,6 +73,7 @@ export const offersAPI = createApi({
       query: ({ offerId }) => ({
         url: `/${offerId}`,
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           Cookie: document.cookie,
         },
