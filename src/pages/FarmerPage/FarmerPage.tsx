@@ -2,10 +2,14 @@ import styles from './farmerPage.module.scss';
 import { useParams } from 'react-router-dom';
 import { farmersAPI } from '../../store/services/farmers.service';
 import OffersList from '../../components/OffersList/OffersList';
+import { offersAPI } from '../../store/services/offers.service';
 
 function FarmerPage() {
   const { id } = useParams<{ id: string }>();
   const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(id!);
+  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
+    search: { columnName: 'farmerId', value: farmer?.id.toString() },
+  });
 
   return (
     <>
@@ -13,7 +17,7 @@ function FarmerPage() {
         <div className={styles.container}>
           <section className={styles.topContainer}>
             <div className={styles.cover}>
-              <img src="/img/covers/1.jpg" alt="avatar" />
+              <img src={farmer.coverURL} alt="avatar" />
             </div>
             <div className={styles.avatar}>
               <img
@@ -40,7 +44,7 @@ function FarmerPage() {
           <span className={styles.line}></span>
           <section className={styles.offers}>
             <h2>Offers:</h2>
-            {/* <OffersList offers={farmer.offers} /> */}
+            <OffersList offersList={farmeroffers?.offers!} />
           </section>
         </div>
       )}

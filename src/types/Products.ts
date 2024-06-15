@@ -1,6 +1,8 @@
+import { Category } from './Category';
+
 export type Product = {
-  id: number;
-  category: string;
+  id: string;
+  category: Category;
   name_EN: string;
   name_HE: string;
   description_EN: string;

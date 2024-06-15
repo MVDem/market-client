@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './OffersList.module.scss';
 import OffersListItem from './OffersListItem';
-import { offersAPI } from '../../store/services/offers.service';
-import { OfferCard } from '../../types/Offers';
+import { Offer } from '../../types/Offers';
 
 interface OffersListProps {
-  offersList: OfferCard[];
+  offersList: Offer[];
 }
 
 const OffersList: React.FC<OffersListProps> = ({
