@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Layout from '../pages/layout/Layout';
-import { EditProfilePage, ProfilePage } from '../pages/Farmer';
+import { ProfilePage } from '../pages/Farmer';
 import Guard from './Guard';
 import Login from '../pages/login/Login';
 import OfferPage from '../pages/OfferPage/OfferPage';
@@ -22,10 +22,6 @@ function Routing() {
             <Route
               path="/profile/:id"
               element={<Guard role={'FARMER'} element={<ProfilePage />} />}
-            />
-            <Route
-              path="/farmer/profile/edit"
-              element={<Guard role={'FARMER'} element={<EditProfilePage />} />}
             />
           </Route>
         </Routes>

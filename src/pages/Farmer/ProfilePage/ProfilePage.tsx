@@ -25,31 +25,22 @@ function ProfilePage() {
       },
       id: farmer?.id!,
     });
+    setOpen(false);
   };
 
-  const inputs = [
+  const inputsFarmer = [
     {
-      name: 'name_EN',
-      label: 'English name',
+      name: 'name',
+      label: 'Name',
       type: 'text',
-      placeholder: 'Enter English name',
-      required: true,
-      defaultValue: farmer?.name_EN,
-    },
-    {
-      name: 'name_HE',
-      label: 'Hebrew name',
-      type: 'text',
-      placeholder: 'Enter Hebrew name',
-      required: true,
-      defaultValue: farmer?.name_HE,
+      placeholder: 'Enter a name',
+      defaultValue: farmer?.name,
     },
     {
       name: 'phone',
       label: 'Phone',
       type: 'text',
       placeholder: 'Enter phone',
-      required: true,
       defaultValue: farmer?.phone,
     },
     {
@@ -57,24 +48,28 @@ function ProfilePage() {
       label: 'Email',
       type: 'email',
       placeholder: 'Enter email',
-      required: true,
       defaultValue: farmer?.email,
     },
     {
-      name: 'description_EN',
-      label: 'English description',
+      name: 'description',
+      label: 'Description',
       type: 'text',
-      placeholder: 'Enter English description',
-      required: true,
-      defaultValue: farmer?.description_EN,
+      placeholder: 'Enter a description',
+      defaultValue: farmer?.description,
     },
     {
-      name: 'description_HE',
-      label: 'Hebrew description',
+      name: 'city',
+      label: 'City',
       type: 'text',
-      placeholder: 'Enter Hebrew description',
-      required: true,
-      defaultValue: farmer?.description_HE,
+      placeholder: 'Enter a city',
+      defaultValue: farmer?.city,
+    },
+    {
+      name: 'address',
+      label: 'Address',
+      type: 'text',
+      placeholder: 'Enter an address',
+      defaultValue: farmer?.address,
     },
   ];
 
@@ -128,6 +123,9 @@ function ProfilePage() {
             </div>
           </section>
           <section className={styles.extra}>
+            <p>
+              Adress: {farmer?.city}, {farmer?.address}
+            </p>
             <h2>About</h2>
             <p>{farmer?.description}</p>
           </section>
@@ -136,11 +134,10 @@ function ProfilePage() {
             open={open}
             setOpen={setOpen}
             onSubmit={handleSubmit}
-            inputs={inputs}
+            inputs={inputsFarmer}
             isLoading={isLoadingEditFarmer}
           />
           <section className={styles.offers}>
-            <h2>Offers:</h2>
             {farmer && <TableList farmerId={farmer?.id} />}
             {/* {farmer?.offers && <TableList farmerId={farmer?.id} />} */}
           </section>
