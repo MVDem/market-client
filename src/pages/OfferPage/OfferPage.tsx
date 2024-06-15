@@ -26,7 +26,7 @@ const OfferPage: React.FC = () => {
     <>
       {offer && (
         <div className={styles.container}>
-          <OfferShortDetails offerId={id!} />
+          <OfferShortDetails offerId={+id!} />
           <span className={styles.line}></span>
           {offer.farmer && (
             <div className={styles.farmerInfo} onClick={handleClick}>
