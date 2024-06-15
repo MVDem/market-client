@@ -72,7 +72,9 @@ function TableList({ farmerId }: TableList) {
       console.log('key=>', key, data[key]);
 
       if (key.includes('imageURL')) {
-        formData.append('file', data[key]);
+        console.log('data[key].file', data[key].file);
+
+        formData.append('file', data[key].file.originFileObj);
         continue;
       }
       formData.append(key, String(data[key]));

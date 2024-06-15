@@ -37,14 +37,12 @@ export const offersAPI = createApi({
 
     create: builder.mutation<Offer, { body?: FormData }>({
       query: (body) => {
-        const headers = new Headers();
-        headers.append('Cookie', document.cookie);
         return {
           url: '',
           method: 'POST',
           body: body.body,
-          headers: headers,
           credentials: 'include',
+          formData: true,
         };
       },
     }),

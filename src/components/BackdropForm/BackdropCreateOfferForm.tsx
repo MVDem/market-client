@@ -21,7 +21,7 @@ function BackdropCreateOfferForm({
   setOpen,
   onSubmit,
 }: BackdropCreateOfferFormProps) {
-  const [productId, setProductId] = useState<number>();
+  const [productId, setProductId] = useState<number[]>();
   const [options, setOptions] = useState<{ label: string; value: number }[]>(
     [],
   );
@@ -31,7 +31,7 @@ function BackdropCreateOfferForm({
     const newOptions: { label: string; value: number }[] = [];
     _products &&
       _products.map((product: Product) => {
-        newOptions.push({ label: product.name_EN, value: product.id });
+        newOptions.push({ label: product.name_EN, value: +product.id });
       });
     console.log('options', newOptions);
     console.log('products', _products);
@@ -49,8 +49,8 @@ function BackdropCreateOfferForm({
     console.log('value=>>', value);
   };
 
-  const HundleSubmit = (data) => {
-    data.productId = productId[0];
+  const HundleSubmit = (data: DataFormType) => {
+    data.productId = productId![0];
     onSubmit(data);
   };
   return (
