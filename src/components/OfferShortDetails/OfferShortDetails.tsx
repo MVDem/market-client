@@ -4,7 +4,7 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './offerShortDetails.module.scss';
 
 type OfferShortDetailsProps = {
-  offerId: string;
+  offerId: number;
 };
 
 function OfferShortDetails({ offerId }: OfferShortDetailsProps) {

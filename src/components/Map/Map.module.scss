@@ -1,4 +1,25 @@
 .leafletContainer {
   height: 70vh; /* высота экрана */
   width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.customPopup .leaflet-popup-content-wrapper {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.customPopup .leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.customPopup .leaflet-popup-tip-container {
+  display: none;
+}
+
+.customPopup .leaflet-popup-close-button {
+  display: none;
 }
