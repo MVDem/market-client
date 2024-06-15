@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
-import { Offer, CreateOfferUpload } from '../../types/Offers';
+import { Offer } from '../../types/Offers';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
@@ -35,20 +35,14 @@ export const offersAPI = createApi({
       },
     }),
 
-    create: builder.mutation<Offer, CreateOfferUpload>({
+    create: builder.mutation<Offer, { body?: FormData }>({
       query: (body) => {
         const headers = new Headers();
         headers.append('Cookie', document.cookie);
-        const formData = new FormData();
-        formData.append('dto', JSON.stringify(body.dto));
-        if (body.file) {
-          formData.append('file', body.file);
-          headers.append('Content-Type', 'multipart/form-data');
-        }
         return {
           url: '',
           method: 'POST',
-          body: formData,
+          body: body.body,
           headers: headers,
           credentials: 'include',
         };

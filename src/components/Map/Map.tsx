@@ -5,16 +5,15 @@ import styles from './Map.module.scss';
 import { Icon } from 'leaflet';
 import { Offer } from '../../types/Offers';
 
- const customIcon = new Icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-    iconSize: [38, 38],
-  });
+const customIcon = new Icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+  iconSize: [38, 38],
+});
 interface MapProps {
   offersList: Offer[];
 }
 
 export default function Map({ offersList }: MapProps) {
-
   return (
     <div className={styles.leafletContainer}>
       <MapContainer
@@ -27,10 +26,19 @@ export default function Map({ offersList }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <MarkerClusterGroup>
-          {offersList.map((offer) => (
-            <Marker 
-            position={[offer.farmer!.coordinateLat!, offer.farmer!.coordinateLong!]} 
-            icon={offer.imageURL !== null ?  new Icon({iconUrl: offer.imageURL, iconSize: [38, 38]}) : customIcon } >
+          {offersList.map((offer, i) => (
+            <Marker
+              key={i}
+              position={[
+                offer.farmer!.coordinateLat!,
+                offer.farmer!.coordinateLong!,
+              ]}
+              icon={
+                offer.imageURL !== null
+                  ? new Icon({ iconUrl: offer.imageURL, iconSize: [38, 38] })
+                  : customIcon
+              }
+            >
               <Popup>{offer.farmer!.name!}</Popup>
             </Marker>
           ))}

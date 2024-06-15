@@ -1,14 +1,20 @@
-import { Switch, Table, TableColumnsType } from 'antd';
+import { Button, Switch, Table, TableColumnsType } from 'antd';
 import { Offer } from '../../types/Offers';
 import TableListItem from './TableListItem';
 import { offersAPI } from '../../store/services/offers.service';
+import styles from './tableListItem.module.scss';
+import { useState } from 'react';
+import BackdropCreateOfferForm from '../BackdropForm/BackdropCreateOfferForm';
 
 type TableList = {
   farmerId: number;
 };
 
 function TableList({ farmerId }: TableList) {
+  const [open, setOpen] = useState(false);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
+  const [createOffer, { isLoading: isLoadingCreate }] =
+    offersAPI.useCreateMutation();
   const [deleteOffer] = offersAPI.useDeleteMutation();
   const { data: offers, refetch } = offersAPI.useGetPaginatedSortedOffersQuery({
     search: { columnName: 'farmerId', value: farmerId.toString() },
@@ -49,21 +55,112 @@ function TableList({ farmerId }: TableList) {
       dataIndex: '',
       key: 'x',
       render: (_, value) => (
-        <button onClick={() => handleDeleteOffer(+value.id)}>Delete</button>
+        <Button
+          type="dashed"
+          danger
+          onClick={() => handleDeleteOffer(+value.id)}
+        >
+          Delete
+        </Button>
       ),
     },
   ];
 
+  const handleCreate = async (data: any) => {
+    const formData = new FormData();
+    for (let key in data) {
+      if (key.includes('imageURL')) {
+        formData.append('file', data[key]);
+        continue;
+      }
+      formData.append(key, String(data[key]));
+    }
+    formData.append('farmerId', farmerId.toString());
+    await createOffer({ body: formData });
+    setOpen(false);
+    await refetch();
+  };
+
   return (
-    <Table
-      columns={columns}
-      expandable={{
-        expandedRowRender: (record) => <TableListItem offer={record} />,
-        rowExpandable: (record) => record.name_EN !== 'Not Expandable',
-      }}
-      rowKey={(record) => record.id}
-      dataSource={offers?.offers}
-    />
+    <>
+      <div className={styles.offersHeader}>
+        <h2>Offers:</h2>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          Add offer
+        </Button>
+      </div>
+      <Table
+        columns={columns}
+        expandable={{
+          expandedRowRender: (record) => (
+            <TableListItem offer={record} refetch={refetch} />
+          ),
+          rowExpandable: (record) => record.name_EN !== 'Not Expandable',
+        }}
+        rowKey={(record) => record.id}
+        dataSource={offers?.offers}
+        pagination={false}
+      />
+      <BackdropCreateOfferForm
+        open={open}
+        setOpen={setOpen}
+        onSubmit={handleCreate}
+        inputs={inputs}
+        isLoading={isLoadingCreate}
+      />
+    </>
   );
 }
 export default TableList;
+
+const inputs = [
+  {
+    name: 'name_EN',
+    label: 'English name',
+    type: 'text',
+    placeholder: 'Enter English name',
+    required: true,
+  },
+  {
+    name: 'name_HE',
+    label: 'Hebrew name',
+    type: 'text',
+    placeholder: 'Enter Hebrew name',
+    // required: true,
+  },
+  {
+    name: 'price',
+    label: 'Price',
+    type: 'number',
+    placeholder: 'Enter price',
+    required: true,
+  },
+  {
+    name: 'description_EN',
+    label: 'English description',
+    type: 'text',
+    placeholder: 'Enter English description',
+    required: true,
+  },
+  {
+    name: 'description_HE',
+    label: 'Hebrew description',
+    type: 'text',
+    placeholder: 'Enter Hebrew description',
+    // required: true,
+  },
+  {
+    name: 'unit',
+    label: 'Unit',
+    type: 'text',
+    placeholder: 'Enter unit',
+    required: true,
+  },
+  {
+    name: 'imageURL',
+    label: 'Image',
+    type: 'upload',
+    placeholder: 'Enter unit',
+    required: true,
+  },
+];

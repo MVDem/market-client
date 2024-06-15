@@ -82,7 +82,7 @@ const baseCategoryList: Category[] = [
 export default function Home() {
   const [params, setParams] = useState<Params | ParamsByCategory>({
     search: { columnName: '', value: '' },
-    limit: 10,
+    limit: 20,
     page: 1,
     sortBy: 'createdAt',
     order: 'ASC',

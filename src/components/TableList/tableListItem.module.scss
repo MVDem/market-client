@@ -1,0 +1,9 @@
+.offersHeader {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    @include font(24px, 28px, 500);
+    margin-bottom: 1rem;
+  }
+}

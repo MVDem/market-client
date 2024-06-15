@@ -8,7 +8,11 @@ type OfferShortDetailsProps = {
 };
 
 function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
-  const { data: offer, isLoading } = offersAPI.useGetByIdQuery({ offerId });
+  const { data: offer, isLoading } = offersAPI.useGetByIdQuery({
+    offerId: +offerId!,
+  });
+
+  console.log(offer, isLoading);
 
   return (
     <>
@@ -19,11 +23,21 @@ function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
         <div className={styles.wrapper}>
           <div className={styles.topContainer}>
             <p>/Shop/Category</p>
-            <div className={styles.category}>Category</div>
+            <div
+              className={styles.category}
+              style={{
+                backgroundImage: `url(${offer.product.category.imageURL})`,
+              }}
+            >
+              {offer.product.category.name_EN}
+            </div>
           </div>
           <div className={styles.mainContainer}>
             <div className={styles.image}>
-              <img src={offer.imageURL} alt="image" />
+              <img
+                src={offer.imageURL ? offer.imageURL : offer.product.imageURL}
+                alt="image"
+              />
             </div>
             <div className={styles.info}>
               <div className={styles.mainInfo}>

@@ -4,16 +4,22 @@ import OfferShortDetails from '../../components/OfferShortDetails/OfferShortDeta
 import styles from './OfferPage.module.scss';
 import { offersAPI } from '../../store/services/offers.service';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
+import { farmersAPI } from '../../store/services/farmers.service';
+import OffersListItem from '../../components/OffersList/OffersListItem';
 
 const OfferPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: offer } = offersAPI.useGetByIdQuery({ offerId: +id! });
-
-  console.log(offer);
+  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(
+    offer?.farmer.id.toString()!,
+  );
+  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
+    search: { columnName: 'farmerId', value: offer?.farmer.id.toString() },
+  });
 
   const handleClick = () => {
-    navigate(`/farmer/profile/${offer?.farmer.id}`);
+    navigate(`/farmer/ditails/${offer?.farmer.id}`);
   };
 
   return (
@@ -25,18 +31,25 @@ const OfferPage: React.FC = () => {
           {offer.farmer && (
             <div className={styles.farmerInfo} onClick={handleClick}>
               <div className={styles.logo}>
-                <AvatarUI src={offer.farmer.logoURL} />
+                <AvatarUI src={farmer?.logoURL!} />
               </div>
               <div className={styles.info}>
-                <h3>{offer.farmer.name}</h3>
+                <h3>{farmer?.name}</h3>
                 <p>
-                  {offer.farmer.city}, {offer.farmer.address}
+                  {farmer?.city}, {farmer?.address}
                 </p>
-                <p>{offer.farmer.email}</p>
+                <p>{farmer?.email}</p>
               </div>
             </div>
           )}
           <span className={styles.line}></span>
+          <div className={styles.offersList}>
+            {farmeroffers?.offers.slice(0, 5)?.map((offer, i) => (
+              <div key={i} className={styles.card}>
+                <OffersListItem offer={offer} />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>
