@@ -8,7 +8,7 @@ import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 const OfferPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { data: offer } = offersAPI.useGetOneByIdQuery({ offerId: id! });
+  const { data: offer } = offersAPI.useGetByIdQuery({ offerId: +id! });
 
   console.log(offer);
 
@@ -20,7 +20,7 @@ const OfferPage: React.FC = () => {
     <>
       {offer && (
         <div className={styles.container}>
-          <OfferShortDetails offerId={id!} />
+          <OfferShortDetails offerId={+id!} />
           <span className={styles.line}></span>
           {offer.farmer && (
             <div className={styles.farmerInfo} onClick={handleClick}>

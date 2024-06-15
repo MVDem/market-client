@@ -4,11 +4,11 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './offerShortDetails.module.scss';
 
 type OfferShortDetailsProps = {
-  offerId: string;
+  offerId: number;
 };
 
 function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
-  const { data: offer, isLoading } = offersAPI.useGetOneByIdQuery({ offerId });
+  const { data: offer, isLoading } = offersAPI.useGetByIdQuery({ offerId });
 
   return (
     <>
@@ -23,11 +23,11 @@ function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
           </div>
           <div className={styles.mainContainer}>
             <div className={styles.image}>
-              <img src={offer.image} alt="image" />
+              <img src={offer.imageURL} alt="image" />
             </div>
             <div className={styles.info}>
               <div className={styles.mainInfo}>
-                <h2>{offer.name}</h2>
+                <h2>{offer.name_EN}</h2>
                 <p>Unit: {offer.unit}</p>
               </div>
               <div className={styles.description}>
