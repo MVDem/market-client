@@ -4,6 +4,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import styles from './Map.module.scss';
 import { Icon } from 'leaflet';
 import { Offer } from '../../types/Offers';
+import MapCard from './MapCard';
 
 const customIcon = new Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
@@ -14,11 +15,12 @@ interface MapProps {
 }
 
 export default function Map({ offersList }: MapProps) {
+  // console.log(offersList);
   return (
     <div className={styles.leafletContainer}>
       <MapContainer
-        center={[32.1699171, 34.7335666]}
-        zoom={13}
+        center={[32.33910536709735, 34.9707402677743]}
+        zoom={8}
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
@@ -35,11 +37,18 @@ export default function Map({ offersList }: MapProps) {
               ]}
               icon={
                 offer.imageURL !== null
-                  ? new Icon({ iconUrl: offer.imageURL, iconSize: [38, 38] })
+                  ? new Icon({
+                      iconUrl: `${
+                        offer.imageURL ? offer.imageURL : offer.product.imageURL
+                      }`,
+                      iconSize: [38, 38],
+                    })
                   : customIcon
               }
             >
-              <Popup>{offer.farmer!.name!}</Popup>
+              <Popup className={styles.customPopup}>
+                <MapCard offer={offer} />
+              </Popup>
             </Marker>
           ))}
         </MarkerClusterGroup>

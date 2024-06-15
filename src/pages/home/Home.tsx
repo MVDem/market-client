@@ -23,14 +23,14 @@ export default function Home() {
   const [isMap, setIsMap] = useState(false);
   const [params, setParams] = useState<Params>({
     search: { columnName: '', value: '' },
-    limit: 20,
+    limit: 25,
     page: 1,
     sortBy: 'createdAt',
     order: 'ASC',
   });
 
   const { data: _data } = offersAPI.useGetPaginatedSortedOffersQuery(params);
-  const { offers, count } = _data || { offers: [], count: 0 };
+  const { offers } = _data || { offers: [] };
   // console.log(offers, count);
 
   return (

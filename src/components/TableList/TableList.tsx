@@ -67,6 +67,7 @@ function TableList({ farmerId }: TableList) {
   ];
 
   const handleCreate = async (data: any) => {
+    console.log(data);
     const formData = new FormData();
     for (let key in data) {
       if (key.includes('imageURL')) {
@@ -76,6 +77,7 @@ function TableList({ farmerId }: TableList) {
       formData.append(key, String(data[key]));
     }
     formData.append('farmerId', farmerId.toString());
+
     await createOffer({ body: formData });
     setOpen(false);
     await refetch();
