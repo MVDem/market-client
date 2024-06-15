@@ -80,11 +80,12 @@ const baseCategoryList: Category[] = [
 export default function Home() {
   const [params, setParams] = useState<Params | ParamsByCategory>({
     search: { columnName: '', value: '' },
-    limit: 20,
+    limit: 25,
     page: 1,
     sortBy: 'createdAt',
     order: 'ASC',
   });
+
 
   const [isMap, setIsMap] = useState(false);
   const [categoryList, setCategoryList] =
@@ -111,7 +112,6 @@ export default function Home() {
       };
     });
   };
-
 
   return (
     <>
