@@ -44,8 +44,15 @@ function BackdropCreateOfferForm({
     }
   };
 
-  const handleChange = (value: any) => {};
+  const handleChange = (value: any) => {
+    setProductId(value);
+    console.log('value=>>', value);
+  };
 
+  const HundleSubmit = (data) => {
+    data.productId = productId[0];
+    onSubmit(data);
+  };
   return (
     <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -83,7 +90,7 @@ function BackdropCreateOfferForm({
           <FormUICustom
             inputs={inputs}
             buttonLabel="Edit"
-            onSubmit={onSubmit}
+            onSubmit={HundleSubmit}
             colspan={12}
           />
         </div>
