@@ -18,8 +18,6 @@ import Bread from '../../../public/img/categories/Bread-600x600.jpg';
 import Fish from '../../../public/img/categories/Fish-600x600.webp';
 import Poultry from '../../../public/img/categories/Poultry-600x600.webp';
 
-
-
 export type Params = {
   search: {
     columnName: string;
@@ -43,7 +41,7 @@ const baseCategoryList: Category[] = [
   },
   {
     id: 2,
-    name_EN: 'Fruits',	
+    name_EN: 'Fruits',
     imageURL: Fruits,
   },
   {
@@ -66,7 +64,7 @@ const baseCategoryList: Category[] = [
     name_EN: 'Bread',
     imageURL: Bread,
   },
- 
+
   {
     id: 7,
     name_EN: 'Fish',
