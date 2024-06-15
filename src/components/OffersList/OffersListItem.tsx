@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './OffersListItem.module.scss';
-import { OfferCard } from '../../types/Offers';
+import { Offer } from '../../types/Offers';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 
 interface OffersListItemProps {
-  offer: OfferCard;
+  offer: Offer;
 }
 
 const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
@@ -14,14 +14,18 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
   const handleClick = () => {
     navigate(`/offer/ditails/${offer.id}`);
   };
+  // console.log(offer);
 
   return (
     <div className={styles.card} onClick={handleClick}>
       <div className={styles.image}>
-        <img src={offer.image} alt="image" />
+        <img
+          src={offer.imageURL ? offer.imageURL : offer.product.imageURL}
+          alt="image"
+        />
       </div>
       <div className={styles.details}>
-        <h3 className={styles.unit}>Apples</h3>
+        <h3 className={styles.unit}>{offer.name_EN}</h3>
         <p className={styles.price}>{offer.unit}</p>
         <p className={styles.price}>₪{offer.price}</p>
       </div>
