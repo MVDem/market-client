@@ -33,8 +33,6 @@ function BackdropCreateOfferForm({
       _products.map((product: Product) => {
         newOptions.push({ label: product.name_EN, value: +product.id });
       });
-    console.log('options', newOptions);
-    console.log('products', _products);
     setOptions(newOptions);
   }, [_products]);
 

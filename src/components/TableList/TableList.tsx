@@ -67,14 +67,9 @@ function TableList({ farmerId }: TableList) {
   ];
 
   const handleCreate = async (data: any) => {
-    console.log(data);
     const formData = new FormData();
     for (let key in data) {
-      console.log('key=>', key, data[key]);
-
       if (key.includes('imageURL')) {
-        console.log('data[key].file', data[key].file);
-
         formData.append('file', data[key].file.originFileObj);
         continue;
       }

@@ -49,14 +49,12 @@ export const offersAPI = createApi({
 
     update: builder.mutation<Offer, { body?: FormData; id: number }>({
       query: ({ body, id }) => {
-        const headers = new Headers();
-        headers.append('Cookie', document.cookie);
         return {
           url: `/${id}`,
           method: 'PUT',
           body: body,
-          headers: headers,
           credentials: 'include',
+          formData: true,
         };
       },
     }),
@@ -94,18 +92,16 @@ export const offersAPI = createApi({
           limit: limit.toString(),
           page: page.toString(),
         });
-        console.log('🚀 ~ params:', params)
+        console.log('🚀 ~ params:', params);
         if (sortBy && sortBy.length) params.append('sortBy', sortBy);
         if (order && order.length) params.append('order', order);
-         if (categoryId)
-          params.append('categoryId', categoryId.toString());
-        console.log('🚀 ~ categoryId:', categoryId)
+        if (categoryId) params.append('categoryId', categoryId.toString());
+        console.log('🚀 ~ categoryId:', categoryId);
         return {
           url: `?${params.toString()}`,
           method: 'GET',
         };
       },
-          
     }),
   }),
 });
