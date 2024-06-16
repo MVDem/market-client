@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { offersAPI } from '../../store/services/offers.service';
 import BackdropForm from '../BackdropForm/BackdropForm';
 import { CircularProgress } from '@mui/material';
+import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
 
 type TableOffersItemProps = {
   offer: Offer;
@@ -29,9 +30,7 @@ function TableListItem({ offer, refetch }: TableOffersItemProps) {
   const [open, setOpen] = useState(false);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
 
-  const handleSubmit = async (data: DataFormTypeCustom) => {
-    console.log('data=>>>>', data);
-
+  const handleSubmit = async (data: DataFormTypeCustom | DataFormType) => {
     const formData = new FormData();
     for (let key in data) {
       if (key.includes('imageURL')) {
@@ -42,9 +41,8 @@ function TableListItem({ offer, refetch }: TableOffersItemProps) {
     }
     await changeOffer({ body: formData, id: offer.id });
     setOpen(false);
-    await refetch();
+    refetch();
   };
-  console.log('offer', offer);
 
   const items: DescriptionsProps['items'] = [
     {
