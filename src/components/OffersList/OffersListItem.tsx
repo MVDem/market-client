@@ -14,7 +14,6 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
   const handleClick = () => {
     navigate(`/offer/ditails/${offer.id}`);
   };
-  console.log(offer);
 
   return (
     <div className={styles.card} onClick={handleClick}>
