@@ -24,9 +24,7 @@ function BackdropCreateOfferForm({
   const [productId, setProductId] = useState<number>();
 
   const { data: _products } = productsAPI.useGetProductsQuery(1);
-  const [options, setOptions] = useState<{ label: string; value: string }[]>([
-    { value: '123', label: 'alex' },
-  ]);
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
 
   useEffect(() => {
     const newOptions: { label: string; value: string }[] = [];
