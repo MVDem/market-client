@@ -17,7 +17,7 @@ export const offersAPI = createApi({
         categoryId?: number;
       }
     >({
-      query: ({ limit = 10, page = 1, sortBy, order, search, categoryId }) => {
+      query: ({ limit = 25, page = 1, sortBy, order, search, categoryId }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           page: page.toString(),
