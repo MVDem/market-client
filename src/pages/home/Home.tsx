@@ -10,15 +10,6 @@ import Map from '../../components/Map/Map';
 import { Category } from '../../types/Category';
 import { categoriesAPI } from '../../store/services/categories.service';
 
-// import Vegetables from '../../../public/img/categories/Vegetables-600x600.webp';
-// import Fruits from '../../../public/img/categories/Vegetables-600x600.webp';
-// import Meat from '../../../public/img/categories/Meat-600x600.jpg';
-// import Cheese from '../../../public/img/categories/Cheese-600x600.webp';
-// import Dairy from '../../../public/img/categories/Dairy-160x160.webp';
-// import Bread from '../../../public/img/categories/Bread-600x600.jpg';
-// import Fish from '../../../public/img/categories/Fish-600x600.webp';
-// import Poultry from '../../../public/img/categories/Poultry-600x600.webp';
-
 export type Params = {
   search: {
     columnName: string;
@@ -28,6 +19,7 @@ export type Params = {
   page: number;
   sortBy: string;
   order: string;
+  categoryId?: number;
 };
 
 export type ParamsByCategory = Params & {
@@ -54,15 +46,8 @@ export default function Home() {
     }
   }, [categories]);
 
-  const isParamsByCategory = (
-    params: Params | ParamsByCategory,
-  ): params is ParamsByCategory => {
-    return (params as ParamsByCategory).categoryId !== undefined;
-  };
-
-  const { data: paginatedData } = isParamsByCategory(params)
-    ? offersAPI.useGetByCategoryIdQuery(params)
-    : offersAPI.useGetPaginatedSortedOffersQuery(params);
+  const { data: paginatedData } =
+    offersAPI.useGetPaginatedSortedOffersQuery(params);
 
   const offers = paginatedData?.offers || [];
 
@@ -71,6 +56,7 @@ export default function Home() {
     setParams((prev) => {
       return {
         ...prev,
+        search: { columnName: '', value: '' },
         page: 1,
         categoryId: id,
       };
@@ -84,6 +70,7 @@ export default function Home() {
           setParams={setParams}
           setIsMap={setIsMap}
           refetch={refetch}
+          params={params}
         />
         <CategoryList
           categoryList={categoryList!}

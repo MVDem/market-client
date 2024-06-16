@@ -12,8 +12,6 @@ export default function CategoryListItem({
   chooseCategory,
   currentCategory,
 }: CategoryItemProps) {
-  console.log(item);
-
   return (
     <div
       className={styles.container}

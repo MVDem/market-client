@@ -1,22 +1,46 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchLogout } from '../../store/thunks/auth.thunk';
-import { FiLogOut } from 'react-icons/fi';
 import { IoMenu } from 'react-icons/io5';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
+import { Dropdown, MenuProps, Space } from 'antd';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(fetchLogout());
   };
 
+  const handleClick = () => {
+    navigate(`/profile/${user?.farmer?.id}`);
+  };
+
   const setActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? styles.linkActive : styles.link;
+
+  const items: MenuProps['items'] = [
+    {
+      label: (
+        <button onClick={handleClick} className={styles.btn}>
+          My Profile
+        </button>
+      ),
+      key: '0',
+    },
+    {
+      label: (
+        <button onClick={handleLogout} className={styles.btn}>
+          Logout
+        </button>
+      ),
+      key: '1',
+    },
+  ];
 
   return (
     <div className={styles.header}>
@@ -43,13 +67,13 @@ const Header: React.FC = () => {
                   Farmers
                 </NavLink>
               </li> */}
-              {user?.farmer && (
+              {/* {user?.farmer && (
                 <li>
                   <NavLink to="/profile/1" className={setActive}>
                     My Profile
                   </NavLink>
                 </li>
-              )}
+              )} */}
             </ul>
           </nav>
           <div className={styles.burger}>
@@ -58,13 +82,16 @@ const Header: React.FC = () => {
         </div>
         <div className={styles.rightPanel}>
           {user ? (
-            <div className={styles.userInfo}>
-              <h5>{user.email}</h5>
-              <AvatarUI src={user.farmer?.logoURL!} size={40} />
-              <button onClick={handleLogout}>
-                <FiLogOut />
-              </button>
-            </div>
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <div className={styles.userInfo}>
+                    <h5>{user.email}</h5>
+                    <AvatarUI src={user.farmer?.logoURL!} size={40} />
+                  </div>
+                </Space>
+              </a>
+            </Dropdown>
           ) : (
             <NavLink to="/sign" className={setActive}>
               Login

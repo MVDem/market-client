@@ -12,3 +12,10 @@
     @include font(1.2rem, 1.5rem, 500, italic, white);
   }
 }
+
+@include mobile {
+  .container {
+    background-color: lightgreen;
+    height: 2rem;
+  }
+}

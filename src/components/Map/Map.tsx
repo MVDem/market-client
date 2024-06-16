@@ -1,6 +1,5 @@
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
 import styles from './Map.module.scss';
 import { Icon } from 'leaflet';
 import { Offer } from '../../types/Offers';
