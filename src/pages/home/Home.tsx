@@ -71,6 +71,8 @@ export default function Home() {
           setIsMap={setIsMap}
           refetch={refetch}
           params={params}
+          setCurrentCategory={setCurrentCategory}
+          
         />
         <CategoryList
           categoryList={categoryList!}
