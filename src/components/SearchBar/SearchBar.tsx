@@ -9,27 +9,28 @@ type SearchBarProps = {
   setParams: (params: any) => void;
   setIsMap: (value: boolean) => void;
   refetch: () => void;
+  params: Params;
 };
 
 export default function SearchBar({
   setParams,
   setIsMap,
   refetch,
+  params,
 }: SearchBarProps) {
   const [mapBtn, setMapBtn] = useState<boolean>(true);
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string>(params.search.value || '');
   const debounced = useDebounce(text);
 
-  console.log(mapBtn);
-
   useEffect(() => {
-    if (debounced.length > 3) {
-      setParams((prev: Params) => {
-        const newParams = { ...prev };
-        newParams.search = { columnName: 'name_EN', value: debounced };
-        return newParams;
-      });
-    }
+    // if (debounced.length >= 3) {
+    setParams((prev: Params) => {
+      const newParams = { ...prev };
+      newParams.search = { columnName: 'name_EN', value: debounced };
+      delete newParams.categoryId;
+      return newParams;
+    });
+    // }
   }, [debounced]);
 
   const displayMap = () => {

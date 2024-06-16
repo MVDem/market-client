@@ -14,9 +14,10 @@ export const offersAPI = createApi({
         sortBy?: string;
         order?: string;
         search?: { columnName?: string; value?: string };
+        categoryId?: number;
       }
     >({
-      query: ({ limit = 10, page = 1, sortBy, order, search }) => {
+      query: ({ limit = 10, page = 1, sortBy, order, search, categoryId }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           page: page.toString(),
@@ -27,6 +28,7 @@ export const offersAPI = createApi({
           params.append('columnName', search.columnName);
         if (search?.value && search.value.length)
           params.append('value', search.value);
+        if (categoryId) params.append('categoryId', categoryId.toString());
 
         return {
           url: `?${params.toString()}`,
