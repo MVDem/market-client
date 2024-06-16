@@ -8,15 +8,16 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './Home.module.scss';
 import Map from '../../components/Map/Map';
 import { Category } from '../../types/Category';
+import { categoriesAPI } from '../../store/services/categories.service';
 
-import Vegetables from '../../../public/img/categories/Vegetables-600x600.webp';
-import Fruits from '../../../public/img/categories/Vegetables-600x600.webp';
-import Meat from '../../../public/img/categories/Meat-600x600.jpg';
-import Cheese from '../../../public/img/categories/Cheese-600x600.webp';
-import Dairy from '../../../public/img/categories/Dairy-160x160.webp';
-import Bread from '../../../public/img/categories/Bread-600x600.jpg';
-import Fish from '../../../public/img/categories/Fish-600x600.webp';
-import Poultry from '../../../public/img/categories/Poultry-600x600.webp';
+// import Vegetables from '../../../public/img/categories/Vegetables-600x600.webp';
+// import Fruits from '../../../public/img/categories/Vegetables-600x600.webp';
+// import Meat from '../../../public/img/categories/Meat-600x600.jpg';
+// import Cheese from '../../../public/img/categories/Cheese-600x600.webp';
+// import Dairy from '../../../public/img/categories/Dairy-160x160.webp';
+// import Bread from '../../../public/img/categories/Bread-600x600.jpg';
+// import Fish from '../../../public/img/categories/Fish-600x600.webp';
+// import Poultry from '../../../public/img/categories/Poultry-600x600.webp';
 
 export type Params = {
   search: {
@@ -33,51 +34,9 @@ export type ParamsByCategory = Params & {
   categoryId: number;
 };
 
-const baseCategoryList: Category[] = [
-  {
-    id: 1,
-    name_EN: 'Vegetables',
-    imageURL: Vegetables,
-  },
-  {
-    id: 2,
-    name_EN: 'Fruits',
-    imageURL: Fruits,
-  },
-  {
-    id: 3,
-    name_EN: 'Meat',
-    imageURL: Meat,
-  },
-  {
-    id: 4,
-    name_EN: 'Cheese',
-    imageURL: Cheese,
-  },
-  {
-    id: 5,
-    name_EN: 'Dairy',
-    imageURL: Dairy,
-  },
-  {
-    id: 6,
-    name_EN: 'Bread',
-    imageURL: Bread,
-  },
-
-  {
-    id: 7,
-    name_EN: 'Fish',
-    imageURL: Fish,
-  },
-  {
-    id: 7,
-    name_EN: 'Poultry',
-    imageURL: Poultry,
-  },
-];
-
 export default function Home() {
+  const { data: categories, refetch } = categoriesAPI.useGetCategoriesQuery({});
+
   const [params, setParams] = useState<Params | ParamsByCategory>({
     search: { columnName: '', value: '' },
     limit: 25,
@@ -85,11 +44,15 @@ export default function Home() {
     sortBy: 'createdAt',
     order: 'ASC',
   });
-
-
   const [isMap, setIsMap] = useState(false);
-  const [categoryList, setCategoryList] =
-    useState<Category[]>(baseCategoryList);
+  const [categoryList, setCategoryList] = useState<Category[]>();
+  const [currentCategory, setCurrentCategory] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (categories) {
+      setCategoryList(categories.categories);
+    }
+  }, [categories]);
 
   const isParamsByCategory = (
     params: Params | ParamsByCategory,
@@ -104,6 +67,7 @@ export default function Home() {
   const offers = paginatedData?.offers || [];
 
   const chooseCategory = (id: number) => {
+    setCurrentCategory(id);
     setParams((prev) => {
       return {
         ...prev,
@@ -116,12 +80,17 @@ export default function Home() {
   return (
     <>
       <div className={styles.container}>
-        <SearchBar setParams={setParams} setIsMap={setIsMap} />
-        <Banner />
-        <CategoryList
-          categoryList={categoryList}
-          chooseCategory={chooseCategory}
+        <SearchBar
+          setParams={setParams}
+          setIsMap={setIsMap}
+          refetch={refetch}
         />
+        <CategoryList
+          categoryList={categoryList!}
+          chooseCategory={chooseCategory}
+          currentCategory={currentCategory}
+        />
+        <Banner />
         {isMap ? (
           <Map offersList={offers} />
         ) : (

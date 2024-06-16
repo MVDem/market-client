@@ -31,6 +31,9 @@ function FarmerPage() {
           <section className={styles.title}>
             <div className={styles.mainInfo}>
               <h1>{farmer.name}</h1>
+              <p>
+                {farmer.city}, {farmer.address}
+              </p>
             </div>
             <div className={styles.contacts}>
               <p>Phone: {farmer?.phone}</p>

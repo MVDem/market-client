@@ -27,31 +27,31 @@ export default function Map({ offersList }: MapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <MarkerClusterGroup>
-          {offersList.map((offer, i) => (
-            <Marker
-              key={i}
-              position={[
-                offer.farmer!.coordinateLat!,
-                offer.farmer!.coordinateLong!,
-              ]}
-              icon={
-                offer.imageURL !== null
-                  ? new Icon({
-                      iconUrl: `${
-                        offer.imageURL ? offer.imageURL : offer.product.imageURL
-                      }`,
-                      iconSize: [38, 38],
-                    })
-                  : customIcon
-              }
-            >
-              <Popup className={styles.customPopup}>
-                <MapCard offer={offer} />
-              </Popup>
-            </Marker>
-          ))}
-        </MarkerClusterGroup>
+        {/* <MarkerClusterGroup> */}
+        {offersList.map((offer, i) => (
+          <Marker
+            key={i}
+            position={[
+              offer.farmer!.coordinateLat!,
+              offer.farmer!.coordinateLong!,
+            ]}
+            icon={
+              offer.product.imageURL === null
+                ? new Icon({
+                    iconUrl: `${
+                      offer.imageURL ? offer.imageURL : offer.product.imageURL
+                    }`,
+                    iconSize: [58, 58],
+                  })
+                : customIcon
+            }
+          >
+            <Popup className={styles.customPopup}>
+              <MapCard offer={offer} />
+            </Popup>
+          </Marker>
+        ))}
+        {/* </MarkerClusterGroup> */}
       </MapContainer>
     </div>
   );

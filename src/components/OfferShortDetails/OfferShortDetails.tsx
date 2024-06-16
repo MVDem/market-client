@@ -22,7 +22,7 @@ function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
       {!isLoading && offer && (
         <div className={styles.wrapper}>
           <div className={styles.topContainer}>
-            <p>/Shop/Category</p>
+            <p></p>
             <div
               className={styles.category}
               style={{

@@ -43,6 +43,7 @@ const OfferPage: React.FC = () => {
             </div>
           )}
           <span className={styles.line}></span>
+          <h2>Other products from this farmer:</h2>
           <div className={styles.offersList}>
             {farmeroffers?.offers.slice(0, 5)?.map((offer, i) => (
               <div key={i} className={styles.card}>
