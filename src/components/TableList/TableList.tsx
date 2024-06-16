@@ -5,6 +5,7 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './tableListItem.module.scss';
 import { useState } from 'react';
 import BackdropCreateOfferForm from '../BackdropForm/BackdropCreateOfferForm';
+import showSnackBar from '../../UI/SnackBar/SnackBar';
 
 type TableList = {
   farmerId: number;
@@ -21,8 +22,11 @@ function TableList({ farmerId }: TableList) {
   });
 
   const handleDeleteOffer = async (id: number) => {
-    await deleteOffer({ offerId: id });
-    await refetch();
+    const res = await deleteOffer({ offerId: id });
+    if (res?.data) {
+      showSnackBar('The Offer was deleted');
+      await refetch();
+    }
   };
 
   const handleActivate = async (checked: boolean, offer: Offer) => {
