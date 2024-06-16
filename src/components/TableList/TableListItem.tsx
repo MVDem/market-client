@@ -2,7 +2,6 @@ import { Descriptions, DescriptionsProps } from 'antd';
 import { Offer } from '../../types/Offers';
 import { FiEdit2 } from 'react-icons/fi';
 import { useState } from 'react';
-import { DataFormType } from '../../UI/FormUICustom/FormUICustom';
 import { offersAPI } from '../../store/services/offers.service';
 import BackdropForm from '../BackdropForm/BackdropForm';
 import { CircularProgress } from '@mui/material';
@@ -11,21 +10,41 @@ type TableOffersItemProps = {
   offer: Offer;
   refetch: () => void;
 };
+type DataFormTypeCustom = {
+  name_EN: string;
+  name_HE: string;
+  price: number;
+  description_EN: string;
+  description_HE: string;
+  unit: string;
+  imageURL?: {
+    file: {
+      originFileObj: File;
+    };
+  };
+  [key: string]: any;
+};
 
 function TableListItem({ offer, refetch }: TableOffersItemProps) {
   const [open, setOpen] = useState(false);
   const [changeOffer, { isLoading }] = offersAPI.useUpdateMutation();
 
-  const handleSubmit = async (data: DataFormType) => {
-    console.log(data);
+  const handleSubmit = async (data: DataFormTypeCustom) => {
+    console.log('data=>>>>', data);
+
     const formData = new FormData();
     for (let key in data) {
+      if (key.includes('imageURL')) {
+        formData.append('file', data[key].file.originFileObj);
+        continue;
+      }
       formData.append(key, String(data[key]));
     }
     await changeOffer({ body: formData, id: offer.id });
     setOpen(false);
-    refetch();
+    await refetch();
   };
+  console.log('offer', offer);
 
   const items: DescriptionsProps['items'] = [
     {
