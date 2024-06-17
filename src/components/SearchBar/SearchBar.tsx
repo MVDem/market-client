@@ -3,6 +3,7 @@ import { useDebounce } from '../../hooks/debounse';
 import styles from './SearchBar.module.scss';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FaGrip, FaMapLocationDot } from 'react-icons/fa6';
+import { TbZoomReset } from 'react-icons/tb';
 import { Params } from '../../pages/home/Home';
 
 type SearchBarProps = {
@@ -10,6 +11,7 @@ type SearchBarProps = {
   setIsMap: (value: boolean) => void;
   refetch: () => void;
   params: Params;
+  setCurrentCategory: (id: number | null) => void;
 };
 
 export default function SearchBar({
@@ -17,6 +19,7 @@ export default function SearchBar({
   setIsMap,
   refetch,
   params,
+  setCurrentCategory,
 }: SearchBarProps) {
   const [mapBtn, setMapBtn] = useState<boolean>(true);
   const [text, setText] = useState<string>(params.search.value || '');
@@ -55,11 +58,24 @@ export default function SearchBar({
     setMapBtn(true);
   };
 
+  const onReset = () => {
+    setParams((prev: Params) => {
+      const newParams = { ...prev };
+      newParams.search = { columnName: '', value: '' };
+      delete newParams.categoryId;
+      return newParams;
+    });
+    setText('');
+    setCurrentCategory(null)
+    refetch();
+  }
+
   return (
     <div className={styles.contaner}>
       <div className={styles.search}>
         <input
           type="text"
+          value={text}
           placeholder="Search groceries"
           onChange={(e) => setText(e.target.value)}
         />
@@ -67,7 +83,15 @@ export default function SearchBar({
           <RiSearch2Line />
         </label>
       </div>
+
       <div className={styles.buttonContainer}>
+        <button
+          className={styles.glowOnHover}
+          type="button"
+          onClick={onReset}
+        >
+          <TbZoomReset />
+        </button>
         {mapBtn ? (
           <button
             className={styles.glowOnHover}

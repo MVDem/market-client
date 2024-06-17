@@ -9,6 +9,9 @@ import styles from './Home.module.scss';
 import Map from '../../components/Map/Map';
 import { Category } from '../../types/Category';
 import { categoriesAPI } from '../../store/services/categories.service';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { CircularProgress } from '@mui/material';
+import { Offer } from '../../types/Offers';
 
 export type Params = {
   search: {
@@ -39,6 +42,11 @@ export default function Home() {
   const [isMap, setIsMap] = useState(false);
   const [categoryList, setCategoryList] = useState<Category[]>();
   const [currentCategory, setCurrentCategory] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [offers, setOffers] = useState<Offer[]>([]);
+
+  const { data: paginatedData } =
+    offersAPI.useGetPaginatedSortedOffersQuery(params);
 
   useEffect(() => {
     if (categories) {
@@ -46,10 +54,16 @@ export default function Home() {
     }
   }, [categories]);
 
-  const { data: paginatedData } =
-    offersAPI.useGetPaginatedSortedOffersQuery(params);
-
-  const offers = paginatedData?.offers || [];
+  useEffect(() => {
+    if (paginatedData) {
+      if (params.page === 1) {
+        setOffers(paginatedData.offers);
+      } else {
+        setOffers((prev) => [...prev, ...paginatedData.offers]);
+      }
+      setHasMore(paginatedData.offers.length >= params.limit);
+    }
+  }, [paginatedData]);
 
   const chooseCategory = (id: number) => {
     setCurrentCategory(id);
@@ -61,7 +75,17 @@ export default function Home() {
         categoryId: id,
       };
     });
+    setHasMore(true);
   };
+
+  const fetchMoreData = () => {
+    console.log('🚀 ~ fetchMoreData')
+    setParams((prev) => ({
+      ...prev,
+      page: prev.page + 1,
+    }));
+  };
+  
 
   return (
     <>
@@ -71,6 +95,7 @@ export default function Home() {
           setIsMap={setIsMap}
           refetch={refetch}
           params={params}
+          setCurrentCategory={setCurrentCategory}
         />
         <CategoryList
           categoryList={categoryList!}
@@ -81,7 +106,17 @@ export default function Home() {
         {isMap ? (
           <Map offersList={offers} />
         ) : (
-          <OffersList offersList={offers} />
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <InfiniteScroll
+            dataLength={offers.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<CircularProgress />}
+            style={{ overflow: 'unset' }}
+          >
+            <OffersList offersList={offers} />
+          </InfiniteScroll>
+          </div>
         )}
       </div>
     </>
