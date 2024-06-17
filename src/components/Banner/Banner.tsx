@@ -4,12 +4,15 @@ export default function Baner() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h2 className={styles.title}>Order your favorite food here</h2>
+        <h2 className={styles.title}>Welcome to <br></br>Farmer's Market Hub!</h2>
         <p className={styles.subTitle}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita
-          suscipit voluptas excepturi ea illo earum necessitatibus, libero
-          consequatur. Asperiores nam modi adipisci explicabo fugit vero sequi
-          libero? Iusto, minus est.
+          We are dedicated to connecting farmers and buyers, bringing fresh, 
+          high-quality produce directly to your table. Our platform allows 
+          farmers to showcase their products and buyers to discover a wide 
+          variety of farm-fresh goods. Join us in supporting local agriculture 
+          and enjoying the best that our farmers have to offer. Explore our 
+          marketplace and find your next favorite product straight from the farm!
+          
         </p>
         {/* <button className={styles.btn}>View Menu</button> */}
       </div>
