@@ -1,5 +1,6 @@
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import MarkerClusterGroup from "react-leaflet-cluster";
 import styles from './Map.module.scss';
 import { Icon } from 'leaflet';
 import { Offer } from '../../types/Offers';
@@ -26,7 +27,7 @@ export default function Map({ offersList }: MapProps) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* <MarkerClusterGroup> */}
+        <MarkerClusterGroup>
         {offersList.map((offer, i) => (
           <Marker
             key={i}
@@ -50,7 +51,7 @@ export default function Map({ offersList }: MapProps) {
             </Popup>
           </Marker>
         ))}
-        {/* </MarkerClusterGroup> */}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );
