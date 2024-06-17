@@ -1,3 +1,4 @@
+// src/components/CategoryListItem.tsx
 import { Category } from '../../types/Category';
 import styles from './CategoryListItem.module.scss';
 
@@ -17,9 +18,8 @@ export default function CategoryListItem({
       className={styles.container}
       style={{
         backgroundImage: `url(${item.imageURL})`,
-        border: ` 5px solid ${currentCategory ? '#05c454' : ' #fff'} `,
+        border: `5px solid ${currentCategory ? '#05c454' : '#fff'}`,
       }}
-      key={item.id}
       onClick={() => chooseCategory(item.id)}
     >
       <h4>{item.name_EN}</h4>
