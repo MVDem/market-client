@@ -27,8 +27,8 @@ export const farmersAPI = createApi({
     }),
 
     updateFarmer: builder.mutation({
-      query: ({ body, id }: { body: Omit<Farmer, 'userId'>; id: number }) => ({
-        url: `${id}`,
+      query: ({ body, id }: { body: FormData; id: number }) => ({
+        url: `/${id}`,
         method: 'PUT',
         credentials: 'include',
         body,

@@ -2,7 +2,7 @@ import TableList from '../../../components/TableList/TableList';
 import { useAppSelector } from '../../../store/hooks';
 import styles from './profilePage.module.scss';
 import { FiEdit2 } from 'react-icons/fi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BackdropForm from '../../../components/BackdropForm/BackdropForm';
 import { farmersAPI } from '../../../store/services/farmers.service';
 import { DataFormType } from '../../../UI/FormUICustom/FormUICustom';
@@ -10,22 +10,50 @@ import { Button, Dropdown, Space } from 'antd';
 
 function ProfilePage() {
   const [open, setOpen] = useState(false);
+  const [farmerData, setFarmerData] = useState<DataFormType | null>(null);
   const { user } = useAppSelector((state) => state.authReducer);
-  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(
+  const [operation, setOperation] = useState<
+    'editInfo' | 'changeCover' | 'changeLogo'
+  >();
+  const { data: farmer, refetch } = farmersAPI.useGetFarmerByIdQuery(
     user?.farmer?.id!.toString()!,
   );
   const [editFarmer, { isLoading: isLoadingEditFarmer }] =
     farmersAPI.useUpdateFarmerMutation();
 
-  const handleSubmit = (data: DataFormType) => {
-    editFarmer({
-      body: {
-        ...farmer,
-        ...data,
-      },
-      id: farmer?.id!,
-    });
+  useEffect(() => {
+    if (farmer) {
+      setFarmerData({
+        name: farmer.name,
+        phone: farmer.phone,
+        email: farmer.email,
+        description: farmer.description,
+        city: farmer.city,
+        address: farmer.address,
+      });
+    }
+  }, [farmer]);
+
+  const handleSubmit = async (data: DataFormType) => {
+    const formData = new FormData();
+    if (operation === 'editInfo') {
+      for (let key in data) {
+        formData.append(key, String(data[key]));
+      }
+      await editFarmer({
+        body: formData,
+        id: farmer?.id!,
+      });
+    } else {
+      formData.append('file', data.imageURL.file.originFileObj);
+      if (operation === 'changeCover') {
+      }
+      if (operation === 'changeLogo') {
+      }
+    }
+
     setOpen(false);
+    refetch();
   };
 
   const inputsFarmer = [
@@ -34,59 +62,105 @@ function ProfilePage() {
       label: 'Name',
       type: 'text',
       placeholder: 'Enter a name',
-      defaultValue: farmer?.name,
+      defaultValue: farmerData?.name,
     },
     {
       name: 'phone',
       label: 'Phone',
       type: 'text',
       placeholder: 'Enter phone',
-      defaultValue: farmer?.phone,
+      defaultValue: farmerData?.phone,
     },
     {
       name: 'email',
       label: 'Email',
       type: 'email',
       placeholder: 'Enter email',
-      defaultValue: farmer?.email,
+      defaultValue: farmerData?.email,
     },
     {
       name: 'description',
       label: 'Description',
       type: 'text',
       placeholder: 'Enter a description',
-      defaultValue: farmer?.description,
+      defaultValue: farmerData?.description,
     },
     {
       name: 'city',
       label: 'City',
       type: 'text',
       placeholder: 'Enter a city',
-      defaultValue: farmer?.city,
+      defaultValue: farmerData?.city,
     },
     {
       name: 'address',
       label: 'Address',
       type: 'text',
       placeholder: 'Enter an address',
-      defaultValue: farmer?.address,
+      defaultValue: farmerData?.address,
     },
   ];
 
   const items = [
     {
       key: '1',
-      icon: <Button onClick={() => setOpen(true)}>Edit info</Button>,
+      icon: (
+        <Button
+          onClick={() => {
+            setOperation('editInfo');
+            setOpen(true);
+          }}
+        >
+          Edit info
+        </Button>
+      ),
     },
     {
       key: '2',
-      icon: <Button onClick={() => setOpen(true)}>Change cover</Button>,
+      icon: (
+        <Button
+          onClick={() => {
+            setOperation('changeCover');
+            setOpen(true);
+          }}
+        >
+          Change cover
+        </Button>
+      ),
     },
     {
       key: '3',
-      icon: <Button onClick={() => setOpen(true)}>Change logo</Button>,
+      icon: (
+        <Button
+          onClick={() => {
+            setOperation('changeLogo');
+            setOpen(true);
+          }}
+        >
+          Change logo
+        </Button>
+      ),
     },
   ];
+  const getInputsForCurrentOperation = () => {
+    switch (operation) {
+      case 'editInfo':
+        return inputsFarmer;
+      case 'changeCover':
+      case 'changeLogo':
+        return [
+          {
+            name: 'imageURL',
+            label: 'Image',
+            type: 'upload',
+            placeholder: 'Select an image',
+            required: true,
+          },
+        ];
+      default:
+        return [];
+    }
+  };
 
   return (
     <>
@@ -134,7 +208,7 @@ function ProfilePage() {
             open={open}
             setOpen={setOpen}
             onSubmit={handleSubmit}
-            inputs={inputsFarmer}
+            inputs={getInputsForCurrentOperation()}
             isLoading={isLoadingEditFarmer}
           />
           <section className={styles.offers}>
