@@ -28,7 +28,7 @@ export default function CategoryList({
     }
   };
 
-  const handleMouseMove = (event: MouseEvent) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!isDragging.current || !containerRef.current) return;
     const x = event.pageX - containerRef.current.offsetLeft;
     const walk = x - startX.current;
@@ -49,7 +49,7 @@ export default function CategoryList({
           onMouseLeave={handleMouseUp}
           onMouseUp={handleMouseUp}
           onMouseMove={(e: React.MouseEvent<HTMLDivElement>) =>
-            handleMouseMove(e)
+            handleMouseMove(e as React.MouseEvent<HTMLDivElement, MouseEvent>)
           }
         >
           {categoryList?.map((category, i) => (

@@ -117,6 +117,10 @@ function ProfilePage() {
             </div>
             <div className={styles.mainInfo}>
               <h1>{farmer.name}</h1>
+              <br></br>
+              <p>
+              Adress: {farmer?.city}, {farmer?.address}
+            </p>
             </div>
             <div className={styles.contacts}>
               <p>Phone: {farmer?.phone}</p>
@@ -124,9 +128,6 @@ function ProfilePage() {
             </div>
           </section>
           <section className={styles.extra}>
-            <p>
-              Adress: {farmer?.city}, {farmer?.address}
-            </p>
             <h2>About</h2>
             <p>{farmer?.description}</p>
           </section>
