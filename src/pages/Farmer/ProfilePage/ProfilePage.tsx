@@ -11,20 +11,21 @@ import { Button, Dropdown, Space } from 'antd';
 function ProfilePage() {
   const [open, setOpen] = useState(false);
   const { user } = useAppSelector((state) => state.authReducer);
-  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(
+  const { data: farmer, refetch } = farmersAPI.useGetFarmerByIdQuery(
     user?.farmer?.id!.toString()!,
   );
   const [editFarmer, { isLoading: isLoadingEditFarmer }] =
     farmersAPI.useUpdateFarmerMutation();
 
-  const handleSubmit = (data: DataFormType) => {
-    editFarmer({
+  const handleSubmit = async (data: DataFormType) => {
+    await editFarmer({
       body: {
         ...farmer,
         ...data,
       },
       id: farmer?.id!,
     });
+    refetch();
     setOpen(false);
   };
 
@@ -78,14 +79,14 @@ function ProfilePage() {
       key: '1',
       icon: <Button onClick={() => setOpen(true)}>Edit info</Button>,
     },
-    {
-      key: '2',
-      icon: <Button onClick={() => setOpen(true)}>Change cover</Button>,
-    },
-    {
-      key: '3',
-      icon: <Button onClick={() => setOpen(true)}>Change logo</Button>,
-    },
+    // {
+    //   key: '2',
+    //   icon: <Button onClick={() => setOpen(true)}>Change cover</Button>,
+    // },
+    // {
+    //   key: '3',
+    //   icon: <Button onClick={() => setOpen(true)}>Change logo</Button>,
+    // },
   ];
 
   return (
