@@ -14,9 +14,10 @@ export const offersAPI = createApi({
         sortBy?: string;
         order?: string;
         search?: { columnName?: string; value?: string };
+        categoryId?: number;
       }
     >({
-      query: ({ limit = 10, page = 1, sortBy, order, search }) => {
+      query: ({ limit = 10, page = 1, sortBy, order, search, categoryId }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           page: page.toString(),
@@ -27,6 +28,7 @@ export const offersAPI = createApi({
           params.append('columnName', search.columnName);
         if (search?.value && search.value.length)
           params.append('value', search.value);
+        if (categoryId) params.append('categoryId', categoryId.toString());
 
         return {
           url: `?${params.toString()}`,
@@ -37,28 +39,24 @@ export const offersAPI = createApi({
 
     create: builder.mutation<Offer, { body?: FormData }>({
       query: (body) => {
-        const headers = new Headers();
-        headers.append('Cookie', document.cookie);
         return {
           url: '',
           method: 'POST',
           body: body.body,
-          headers: headers,
           credentials: 'include',
+          formData: true,
         };
       },
     }),
 
     update: builder.mutation<Offer, { body?: FormData; id: number }>({
       query: ({ body, id }) => {
-        const headers = new Headers();
-        headers.append('Cookie', document.cookie);
         return {
           url: `/${id}`,
           method: 'PUT',
           body: body,
-          headers: headers,
           credentials: 'include',
+          formData: true,
         };
       },
     }),
@@ -80,6 +78,33 @@ export const offersAPI = createApi({
         method: 'GET',
       }),
     }),
+
+    getByCategoryId: builder.query<
+      { offers: Offer[]; count: number },
+      {
+        limit?: number;
+        page?: number;
+        sortBy?: string;
+        order?: string;
+        categoryId: number;
+      }
+    >({
+      query: ({ limit = 10, page = 1, sortBy, order, categoryId }) => {
+        const params = new URLSearchParams({
+          limit: limit.toString(),
+          page: page.toString(),
+        });
+        console.log('🚀 ~ params:', params);
+        if (sortBy && sortBy.length) params.append('sortBy', sortBy);
+        if (order && order.length) params.append('order', order);
+        if (categoryId) params.append('categoryId', categoryId.toString());
+        console.log('🚀 ~ categoryId:', categoryId);
+        return {
+          url: `?${params.toString()}`,
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
@@ -89,4 +114,5 @@ export const {
   useUpdateMutation,
   useDeleteMutation,
   useGetByIdQuery,
+  useGetByCategoryIdQuery,
 } = offersAPI;

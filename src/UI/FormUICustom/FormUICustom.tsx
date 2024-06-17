@@ -8,7 +8,8 @@ import { FormItem } from 'react-hook-form-antd';
 interface InputProps {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'upload';
+  // type: 'text' | 'email' | 'password' | 'number' | 'upload';
+  type: string;
   placeholder?: string;
   defaultValue?: string | number;
   required?: boolean;

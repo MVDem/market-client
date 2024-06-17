@@ -4,7 +4,7 @@ import { offersAPI } from '../../store/services/offers.service';
 import styles from './offerShortDetails.module.scss';
 
 type OfferShortDetailsProps = {
-  offerId: string;
+  offerId: number;
 };
 
 function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
@@ -22,7 +22,7 @@ function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
       {!isLoading && offer && (
         <div className={styles.wrapper}>
           <div className={styles.topContainer}>
-            <p>/Shop/Category</p>
+            <p></p>
             <div
               className={styles.category}
               style={{

@@ -2,6 +2,12 @@
   margin-top: 1rem;
   width: 100%;
   overflow-y: hidden;
+  position: sticky;
+  z-index: 8;
+  top: 9rem;
+  background-color: #fff;
+  padding-bottom: 1rem;
+
   .wrapper {
     width: 100%;
     overflow-y: auto;

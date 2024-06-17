@@ -22,19 +22,17 @@ function BackdropCreateOfferForm({
   onSubmit,
 }: BackdropCreateOfferFormProps) {
   const [productId, setProductId] = useState<number>();
-  const [options, setOptions] = useState<{ label: string; value: number }[]>(
-    [],
-  );
-  const { data: _products } = productsAPI.useGetProductsQuery(1); // check this
+
+  const { data: _products } = productsAPI.useGetProductsQuery(1);
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
 
   useEffect(() => {
-    const newOptions: { label: string; value: number }[] = [];
+    const newOptions: { label: string; value: string }[] = [];
     _products &&
       _products.map((product: Product) => {
         newOptions.push({ label: product.name_EN, value: product.id });
       });
-    console.log('options', newOptions);
-    console.log('products', _products);
+
     setOptions(newOptions);
   }, [_products]);
 
@@ -44,7 +42,20 @@ function BackdropCreateOfferForm({
     }
   };
 
-  const handleChange = (value: any) => {};
+  const handleChange = (value: number) => {
+    setProductId(value);
+  };
+
+  const HundleSubmit = (data: DataFormType) => {
+    data.productId = productId!;
+    onSubmit(data);
+  };
+
+  // Filter `option.label` match the user type `input`
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string },
+  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   return (
     <Backdrop
@@ -69,7 +80,10 @@ function BackdropCreateOfferForm({
           <label className={styles.label}>
             Select a product
             <Select
-              mode="tags"
+              getPopupContainer={(trigger) => trigger.parentNode}
+              showSearch
+              optionFilterProp="children"
+              filterOption={filterOption}
               style={{
                 width: '100%',
                 height: '3rem',
@@ -83,7 +97,7 @@ function BackdropCreateOfferForm({
           <FormUICustom
             inputs={inputs}
             buttonLabel="Edit"
-            onSubmit={onSubmit}
+            onSubmit={HundleSubmit}
             colspan={12}
           />
         </div>

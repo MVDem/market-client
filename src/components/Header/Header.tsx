@@ -1,24 +1,46 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchLogout } from '../../store/thunks/auth.thunk';
-import { FiLogOut } from 'react-icons/fi';
-// import { FaBasketShopping } from 'react-icons/fa6';
-// import { RiSearch2Line } from 'react-icons/ri';
 import { IoMenu } from 'react-icons/io5';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
+import { Dropdown, MenuProps, Space } from 'antd';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(fetchLogout());
   };
 
+  const handleClick = () => {
+    navigate(`/profile/${user?.farmer?.id}`);
+  };
+
   const setActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? styles.linkActive : styles.link;
+
+  const items: MenuProps['items'] = [
+    {
+      label: (
+        <button onClick={handleClick} className={styles.btn}>
+          My Profile
+        </button>
+      ),
+      key: '0',
+    },
+    {
+      label: (
+        <button onClick={handleLogout} className={styles.btn}>
+          Logout
+        </button>
+      ),
+      key: '1',
+    },
+  ];
 
   return (
     <div className={styles.header}>
@@ -40,23 +62,18 @@ const Header: React.FC = () => {
                   Home
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="/about" className={setActive}>
                   Farmers
                 </NavLink>
-              </li>
-              {user?.farmer && (
+              </li> */}
+              {/* {user?.farmer && (
                 <li>
                   <NavLink to="/profile/1" className={setActive}>
                     My Profile
                   </NavLink>
                 </li>
-              )}
-              <li>
-                <NavLink to="/offer/ditails/1" className={setActive}>
-                  An offer
-                </NavLink>
-              </li>
+              )} */}
             </ul>
           </nav>
           <div className={styles.burger}>
@@ -64,16 +81,17 @@ const Header: React.FC = () => {
           </div>
         </div>
         <div className={styles.rightPanel}>
-          {/* <RiSearch2Line />
-          <FaBasketShopping /> */}
           {user ? (
-            <div className={styles.userInfo}>
-              <h5>{user.email}</h5>
-              <AvatarUI src={user.farmer?.logoURL!} size={40} />
-              <button onClick={handleLogout}>
-                <FiLogOut />
-              </button>
-            </div>
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <div className={styles.userInfo}>
+                    <h5>{user.email}</h5>
+                    <AvatarUI src={user.farmer?.logoURL!} size={40} />
+                  </div>
+                </Space>
+              </a>
+            </Dropdown>
           ) : (
             <NavLink to="/sign" className={setActive}>
               Login

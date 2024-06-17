@@ -1,20 +1,18 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './OffersListItem.module.scss';
 import { Offer } from '../../types/Offers';
-import AvatarUI from '../../UI/AvatarUI/AvatarUI';
+import OffersListItem from '../OffersList/OffersListItem';
+import styles from './mapCard.module.scss';
 
-interface OffersListItemProps {
+type MapCardProps = {
   offer: Offer;
-}
+};
 
-const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
+function MapCard({ offer }: MapCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/offer/ditails/${offer.id}`);
   };
-
   return (
     <div className={styles.card} onClick={handleClick}>
       <div className={styles.image}>
@@ -28,12 +26,7 @@ const OffersListItem: React.FC<OffersListItemProps> = ({ offer }) => {
         <p className={styles.price}>{offer.unit}</p>
         <p className={styles.price}>₪{offer.price}</p>
       </div>
-      <div className={styles.farmer}>
-        <AvatarUI src={offer.farmer?.logoURL} size={50} />
-        <h5>{offer.farmer?.name}</h5>
-      </div>
     </div>
   );
-};
-
-export default OffersListItem;
+}
+export default MapCard;

@@ -26,7 +26,7 @@ const OfferPage: React.FC = () => {
     <>
       {offer && (
         <div className={styles.container}>
-          <OfferShortDetails offerId={id!} />
+          <OfferShortDetails offerId={+id!} />
           <span className={styles.line}></span>
           {offer.farmer && (
             <div className={styles.farmerInfo} onClick={handleClick}>
@@ -43,6 +43,7 @@ const OfferPage: React.FC = () => {
             </div>
           )}
           <span className={styles.line}></span>
+          <h2>Other products from this farmer:</h2>
           <div className={styles.offersList}>
             {farmeroffers?.offers.slice(0, 5)?.map((offer, i) => (
               <div key={i} className={styles.card}>

@@ -70,12 +70,13 @@ function TableList({ farmerId }: TableList) {
     const formData = new FormData();
     for (let key in data) {
       if (key.includes('imageURL')) {
-        formData.append('file', data[key]);
+        formData.append('file', data[key].file.originFileObj);
         continue;
       }
       formData.append(key, String(data[key]));
     }
     formData.append('farmerId', farmerId.toString());
+
     await createOffer({ body: formData });
     setOpen(false);
     await refetch();

@@ -2,9 +2,11 @@
   min-height: 3rem;
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-
+  padding: 1rem 0;
+  background-color: #fff;
+  position: sticky;
+  top: 4rem;
+  z-index: 8;
   .search {
     position: relative;
 
@@ -40,6 +42,7 @@
       height: 100%;
       padding: 0 1rem;
       margin-left: 0.5rem;
+      cursor: pointer;
       svg {
         width: 1.3rem;
         height: 1.3rem;

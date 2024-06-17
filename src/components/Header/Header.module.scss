@@ -1,6 +1,9 @@
 .header {
   background-color: $background-input;
   color: $color-input;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   .container {
     width: 95dvw;
@@ -66,6 +69,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    cursor: pointer;
 
     .userInfo {
       height: 100%;
@@ -79,7 +83,7 @@
         @include font(1.2rem, 1.2rem, 400);
         cursor: pointer;
         border-radius: 0.5rem;
-        // &:hover {
+        border: none; // &:hover {
         // text-decoration: underline;
         // }
         svg {
@@ -94,7 +98,26 @@
   .burger {
     visibility: visible;
   }
-  .navbar {
+  .logo {
+    text-align: center;
+    @include font(1rem, 1.2rem, 400);
+    position: relative;
+    z-index: 7;
+    top: 1rem;
+    div {
+      visibility: hidden;
+    }
+  }
+
+  .header .rightPanel .userInfo h5 {
     display: none;
   }
+}
+
+.btn {
+  background-color: transparent;
+  @include font(1.2rem, 1.2rem, 400);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: none;
 }
