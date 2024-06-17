@@ -61,7 +61,7 @@ export default function Home() {
       } else {
         setOffers((prev) => [...prev, ...paginatedData.offers]);
       }
-      setHasMore(paginatedData.offers.length >= params.limit) 
+      setHasMore(paginatedData.offers.length >= params.limit);
     }
   }, [paginatedData]);
 
@@ -74,47 +74,51 @@ export default function Home() {
         page: 1,
         categoryId: id,
       };
-
     });
     setHasMore(true);
   };
 
   const fetchMoreData = () => {
+    console.log('🚀 ~ fetchMoreData')
     setParams((prev) => ({
-        ...prev,
-        page: prev.page + 1,
-      }));
-    };
+      ...prev,
+      page: prev.page + 1,
+    }));
+  };
+  
 
   return (
     <>
-      <InfiniteScroll
-        dataLength={offers.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<CircularProgress />}
-      >
-        <div className={styles.container}>
-          <SearchBar
-            setParams={setParams}
-            setIsMap={setIsMap}
-            refetch={refetch}
-            params={params}
-            setCurrentCategory={setCurrentCategory}
-          />
-          <CategoryList
-            categoryList={categoryList!}
-            chooseCategory={chooseCategory}
-            currentCategory={currentCategory}
-          />
-          <Banner />
-          {isMap ? (
-            <Map offersList={offers} />
-          ) : (
+      <div className={styles.container}>
+        <SearchBar
+          setParams={setParams}
+          setIsMap={setIsMap}
+          refetch={refetch}
+          params={params}
+          setCurrentCategory={setCurrentCategory}
+        />
+        <CategoryList
+          categoryList={categoryList!}
+          chooseCategory={chooseCategory}
+          currentCategory={currentCategory}
+        />
+        <Banner />
+        {isMap ? (
+          <Map offersList={offers} />
+        ) : (
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <InfiniteScroll
+            dataLength={offers.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<CircularProgress />}
+            style={{ overflow: 'unset' }}
+          >
             <OffersList offersList={offers} />
-          )}
-        </div>
-      </InfiniteScroll>
+          </InfiniteScroll>
+          </div>
+        )}
+      </div>
     </>
   );
 }
