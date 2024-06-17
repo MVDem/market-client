@@ -19,12 +19,12 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.authReducer);
-
+  const { user } = useAppSelector((state) => state.authReducer);
   useEffect(() => {
     if (page === 'signUp' && authState.loading === 'succeeded') {
       setPage('signIn');
     }
-    if (page === 'signIn' && authState.loading === 'succeeded') {
+    if (page === 'signIn' && user) {
       navigate('/');
     }
   }, [authState]);
