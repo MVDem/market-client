@@ -61,7 +61,7 @@ export default function Login() {
         )}
         <FormUICustom
           inputs={inputs}
-          buttonLabel={page === 'signUp' ? 'Sign up' : 'Sign in'}
+          buttonLabel={page === 'signUp' ? 'Register' : 'Login'}
           onSubmit={handleSubmit}
         />
         <div>
