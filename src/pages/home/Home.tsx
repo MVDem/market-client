@@ -45,8 +45,8 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [offers, setOffers] = useState<Offer[]>([]);
 
-  const { data: paginatedData } =
-    offersAPI.useGetPaginatedSortedOffersQuery(params);
+  // const { data: paginatedData } =
+  //   offersAPI.useGetPaginatedSortedOffersQuery(params);
 
   useEffect(() => {
     if (categories) {
@@ -54,16 +54,16 @@ export default function Home() {
     }
   }, [categories]);
 
-  useEffect(() => {
-    if (paginatedData) {
-      if (params.page === 1) {
-        setOffers(paginatedData.offers);
-      } else {
-        setOffers((prev) => [...prev, ...paginatedData.offers]);
-      }
-      setHasMore(paginatedData.offers.length >= params.limit);
-    }
-  }, [paginatedData]);
+  // useEffect(() => {
+  //   if (paginatedData) {
+  //     if (params.page === 1) {
+  //       setOffers(paginatedData.offers);
+  //     } else {
+  //       setOffers((prev) => [...prev, ...paginatedData.offers]);
+  //     }
+  //     setHasMore(paginatedData.offers.length >= params.limit);
+  //   }
+  // }, [paginatedData]);
 
   const chooseCategory = (id: number) => {
     setCurrentCategory(id);
@@ -79,13 +79,12 @@ export default function Home() {
   };
 
   const fetchMoreData = () => {
-    console.log('🚀 ~ fetchMoreData')
+    console.log('🚀 ~ fetchMoreData');
     setParams((prev) => ({
       ...prev,
       page: prev.page + 1,
     }));
   };
-  
 
   return (
     <>
@@ -106,8 +105,15 @@ export default function Home() {
         {isMap ? (
           <Map offersList={offers} />
         ) : (
-          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <InfiniteScroll
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            {/* <InfiniteScroll
             dataLength={offers.length}
             next={fetchMoreData}
             hasMore={hasMore}
@@ -115,7 +121,7 @@ export default function Home() {
             style={{ overflow: 'unset' }}
           >
             <OffersList offersList={offers} />
-          </InfiniteScroll>
+          </InfiniteScroll> */}
           </div>
         )}
       </div>

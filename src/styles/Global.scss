@@ -2,6 +2,9 @@
 @import './index.scss';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
+$bg-header: var(--bg-header);
+$color-header: var(--color-header);
+//===============================
 $background-input: var(--bg-input);
 $color-input: var(--color-input);
 $color-lable: var(--color-lable);
