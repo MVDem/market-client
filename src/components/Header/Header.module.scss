@@ -1,40 +1,34 @@
 .header {
-  background-color: $background-input;
-  color: $color-input;
+  background-color: $bg-header;
+  color: $color-header;
   position: sticky;
   top: 0;
   z-index: 10;
 
   .container {
-    width: 95dvw;
+    position: relative;
+    width: 100dvw;
     max-width: 1280px;
-    height: 4rem;
+    height: 3rem;
     margin: 0 auto;
     display: flex;
     box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 0 2rem;
+    @include mobile {
+      padding: 0 2rem;
+    }
   }
 
   .leftgroup {
     display: flex;
     align-items: center;
-    .logo {
-      text-align: center;
-      @include font(1rem, 1.2rem, 400);
-      position: relative;
-      z-index: 7;
-      top: 1rem;
-      div {
-        padding: 0.3rem;
-        border-radius: 0.5rem;
-        background-color: lightgreen;
-      }
-    }
 
     .navbar {
-      padding-left: 2rem;
+      @include mobile {
+        display: none;
+      }
       ul {
         display: flex;
         list-style: none;
@@ -43,9 +37,6 @@
         gap: 1.5rem;
         font-size: 1.2rem;
       }
-    }
-    .burger {
-      visibility: hidden;
     }
   }
   .link {
@@ -58,7 +49,6 @@
   }
 
   .linkActive {
-    padding-bottom: 0.2rem;
     border-bottom: 2px solid #49557e;
     text-decoration: none;
     @include font(1.2rem, 1.2rem, 400);
@@ -68,56 +58,30 @@
     height: 100%;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    background-color: $bg-header;
     cursor: pointer;
+    @include mobile {
+      display: none;
+    }
 
-    .userInfo {
-      height: 100%;
+    .rightMenu {
       display: flex;
+      gap: 1.5rem;
       align-items: center;
-      margin-right: 1.5rem;
-      gap: 1rem;
-      @include font(1.2rem, 1.2rem, 400);
-      button {
-        background-color: transparent;
+      h5 {
         @include font(1.2rem, 1.2rem, 400);
-        cursor: pointer;
-        border-radius: 0.5rem;
-        border: none; // &:hover {
-        // text-decoration: underline;
-        // }
-        svg {
-          height: 1.5rem;
-          width: 1.5rem;
-        }
       }
     }
   }
-}
-@include mobile {
   .burger {
-    visibility: visible;
-  }
-  .logo {
-    text-align: center;
-    @include font(1rem, 1.2rem, 400);
-    position: relative;
-    z-index: 7;
-    top: 1rem;
-    div {
-      visibility: hidden;
+    display: none;
+    cursor: pointer;
+    svg {
+      font-size: 2rem;
+      color: $color-header;
+    }
+    @include mobile {
+      display: flex;
     }
   }
-
-  .header .rightPanel .userInfo h5 {
-    display: none;
-  }
-}
-
-.btn {
-  background-color: transparent;
-  @include font(1.2rem, 1.2rem, 400);
-  cursor: pointer;
-  border-radius: 0.5rem;
-  border: none;
 }
