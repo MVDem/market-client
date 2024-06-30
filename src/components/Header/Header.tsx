@@ -5,6 +5,7 @@ import { useAppSelector } from '../../store/hooks';
 import { IoMenu } from 'react-icons/io5';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 import DropDown from './DropDown';
+import SearchBar from '../SearchBar/SearchBar';
 
 type DropDownProps = {
   onCloseMemu?: () => void;
@@ -35,6 +36,7 @@ const Header: React.FC = ({}: DropDownProps) => {
         <div className={styles.burger} onClick={() => setIsOpen(!isOpen)}>
           <IoMenu />
         </div>
+        <SearchBar />
         <div className={styles.rightPanel}>
           {user ? (
             <div

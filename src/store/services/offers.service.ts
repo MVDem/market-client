@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../../config';
 import { Offer } from '../../types/Offers';
+import { SearchState } from '../slices/search.slice';
 
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
@@ -8,27 +9,21 @@ export const offersAPI = createApi({
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },
-      {
-        limit?: number;
-        page?: number;
-        sortBy?: string;
-        order?: string;
-        search?: { columnName?: string; value?: string };
-        categoryId?: number;
-      }
+      { stateParams: SearchState }
     >({
-      query: ({ limit = 25, page = 1, sortBy, order, search, categoryId }) => {
+      query: ({ stateParams }) => {
+        const { pagination, search, sort } = stateParams;
         const params = new URLSearchParams({
-          limit: limit.toString(),
-          page: page.toString(),
+          limit: pagination.limit.toString(),
+          page: pagination.page.toString(),
         });
-        if (sortBy && sortBy.length) params.append('sortBy', sortBy);
-        if (order && order.length) params.append('order', order);
+        if (sort.columnName && sort.columnName.length)
+          params.append('sortBy', sort.columnName);
+        if (sort.order && sort.order.length) params.append('order', sort.order);
         if (search?.columnName && search.columnName.length)
           params.append('columnName', search.columnName);
         if (search?.value && search.value.length)
           params.append('value', search.value);
-        if (categoryId) params.append('categoryId', categoryId.toString());
 
         return {
           url: `?${params.toString()}`,

@@ -1,110 +1,84 @@
 import { useEffect, useState } from 'react';
-import { useDebounce } from '../../hooks/debounse';
 import styles from './SearchBar.module.scss';
+import { useDebounce } from '../../hooks/debounse';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FaGrip, FaMapLocationDot } from 'react-icons/fa6';
-import { TbZoomReset } from 'react-icons/tb';
-import { Params } from '../../pages/home/Home';
+import { RxReset } from 'react-icons/rx';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  resetSearchParams,
+  updateSearchParams,
+} from '../../store/slices/search.slice';
 
-type SearchBarProps = {
-  setParams: (params: any) => void;
-  setIsMap: (value: boolean) => void;
-  refetch: () => void;
-  params: Params;
-  setCurrentCategory: (id: number | null) => void;
-};
+type SearchBarProps = {};
 
-export default function SearchBar({
-  setParams,
-  setIsMap,
-  refetch,
-  params,
-  setCurrentCategory,
-}: SearchBarProps) {
-  const [mapBtn, setMapBtn] = useState<boolean>(true);
-  const [text, setText] = useState<string>(params.search.value || '');
+export default function SearchBar({}: SearchBarProps) {
+  const [text, setText] = useState<string>('');
+  const searchState = useAppSelector((state) => state.searchReducer);
+  const dispatch = useAppDispatch();
+
   const debounced = useDebounce(text);
 
   useEffect(() => {
-    // if (debounced.length >= 3) {
-    setParams((prev: Params) => {
-      const newParams = { ...prev };
-      newParams.search = { columnName: 'name_EN', value: debounced };
-      delete newParams.categoryId;
-      return newParams;
-    });
-    // }
+    let columnName = '';
+    if (debounced.length > 0) {
+      columnName = 'name_EN';
+    }
+    dispatch(
+      updateSearchParams({
+        search: { columnName, value: debounced },
+      }),
+    );
   }, [debounced]);
 
-  const displayMap = () => {
-    setParams((prev: Params) => {
-      const newParams = { ...prev };
-      newParams.limit = 1000;
-      return newParams;
-    });
-    refetch();
-    setIsMap(true);
-    setMapBtn(false);
+  useEffect(() => {
+    if (searchState.search.columnName === 'name_EN') {
+      setText(searchState.search.value);
+    }
+  }, [searchState.search.value]);
+
+  const handleDisplayMod = (mod: string) => {
+    dispatch(updateSearchParams({ display: mod }));
   };
 
-  const displayGrip = () => {
-    setParams((prev: Params) => {
-      const newParams = { ...prev };
-      newParams.limit = 25;
-      return newParams;
-    });
-    refetch();
-    setIsMap(false);
-    setMapBtn(true);
+  const handleReset = () => {
+    dispatch(resetSearchParams());
   };
-
-  const onReset = () => {
-    setParams((prev: Params) => {
-      const newParams = { ...prev };
-      newParams.search = { columnName: '', value: '' };
-      delete newParams.categoryId;
-      return newParams;
-    });
-    setText('');
-    setCurrentCategory(null)
-    refetch();
-  }
 
   return (
     <div className={styles.contaner}>
-      <div className={styles.search}>
+      <label className={styles.search}>
+        <span className={styles.icon}>
+          <RiSearch2Line />
+        </span>
         <input
           type="text"
           value={text}
           placeholder="Search groceries"
           onChange={(e) => setText(e.target.value)}
         />
-        <label>
-          <RiSearch2Line />
-        </label>
-      </div>
-
+      </label>
       <div className={styles.buttonContainer}>
         <button
-          className={styles.glowOnHover}
+          className={styles.searchBtn}
           type="button"
-          onClick={onReset}
+          onClick={handleReset}
         >
-          <TbZoomReset />
+          <RxReset />
         </button>
-        {mapBtn ? (
+        {searchState.display === 'grid' ? (
           <button
-            className={styles.glowOnHover}
+            className={styles.searchBtn}
             type="button"
-            onClick={displayMap}
+            onClick={() => handleDisplayMod('map')}
           >
             <FaMapLocationDot />
           </button>
         ) : (
           <button
-            className={styles.glowOnHover}
+            className={styles.searchBtn}
             type="button"
-            onClick={displayGrip}
+            onClick={() => handleDisplayMod('grid')}
           >
             <FaGrip />
           </button>

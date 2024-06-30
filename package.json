@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@bytescale/upload-widget-react": "^4.19.0",
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.4.2",
