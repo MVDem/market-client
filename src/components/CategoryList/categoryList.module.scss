@@ -1,13 +1,9 @@
-/* src/components/CategoryList.module.scss */
 .container {
-  margin-top: 1rem;
   width: 100%;
   overflow-y: hidden;
+  background-color: $bg-body;
   position: sticky;
   z-index: 8;
-  top: 9rem;
-  background-color: #fff;
-  padding-bottom: 1rem;
 
   .wrapper {
     width: 100%;
@@ -16,13 +12,18 @@
     gap: 3rem;
 
     .content {
+      padding: 1rem;
       display: flex;
       overflow-x: auto;
       cursor: grab;
       user-select: none;
-      padding: 10px;
       gap: 2rem;
       -ms-overflow-style: none;
+      @include mobile {
+        height: 3.5rem;
+        padding: 0.5rem;
+        gap: 1rem;
+      }
 
       &::-webkit-scrollbar {
         display: none;

@@ -4,6 +4,9 @@
 
 $bg-header: var(--bg-header);
 $color-header: var(--color-header);
+$bg-search: var(--bg-search);
+$color-search: var(--color-search);
+$bg-body: var(--bg-body);
 //===============================
 $background-input: var(--bg-input);
 $color-input: var(--color-input);
@@ -44,6 +47,7 @@ body {
   @include font(16px, 19px, 300, medium, $text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $bg-body;
 }
 @mixin tablet {
   @media (max-width: $max-tablet-width) {

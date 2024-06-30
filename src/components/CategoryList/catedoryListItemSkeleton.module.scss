@@ -1,0 +1,15 @@
+.skeleton {
+  min-height: 8rem;
+  min-width: 8rem;
+  overflow: hidden;
+  border-radius: 1rem;
+
+  @include mobile {
+    min-width: 8rem;
+    min-height: 3.5rem;
+    div {
+      padding: 0;
+      max-height: 3.5rem;
+    }
+  }
+}

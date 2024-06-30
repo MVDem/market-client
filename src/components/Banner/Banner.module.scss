@@ -1,11 +1,11 @@
 .container {
   height: 30rem;
-  margin: 2rem auto;
+  margin: 0 auto;
   background: url(https://s1.1zoom.ru/b6853/487/Avocado_Lime_552106_3840x2400.jpg)
     no-repeat;
   background-size: cover;
-  // position: relative;
   box-sizing: border-box;
+  border-radius: 1rem;
 
   .wrapper {
     padding: 0 3rem;
@@ -24,7 +24,8 @@
     .subTitle {
       color: rgb(228, 217, 217);
       font-size: 1.2rem;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
     .btn {
       border: none;
