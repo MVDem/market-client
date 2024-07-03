@@ -5,7 +5,7 @@ import styles from './OfferPage.module.scss';
 import { offersAPI } from '../../store/services/offers.service';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 import { farmersAPI } from '../../store/services/farmers.service';
-import OffersListItem from '../../components/OffersList/OffersListItem';
+import OffersListItem from '../../components/OfferCard/OfferCard';
 
 const OfferPage: React.FC = () => {
   const navigate = useNavigate();

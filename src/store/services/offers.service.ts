@@ -6,6 +6,7 @@ import { SearchState } from '../slices/search.slice';
 export const offersAPI = createApi({
   reducerPath: 'offersAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/offers` }),
+  tagTypes: ['Offers'],
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },
@@ -29,6 +30,27 @@ export const offersAPI = createApi({
           url: `?${params.toString()}`,
           method: 'GET',
         };
+      },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newCache, { arg: { stateParams } }) => {
+        if (stateParams.pagination.page === 0) currentCache.offers.length = 0;
+        currentCache.offers.push(...newCache.offers);
+      },
+      forceRefetch: ({ currentArg, previousArg }) => {
+        return currentArg?.stateParams !== previousArg?.stateParams;
+      },
+      providesTags: (result) => {
+        return result
+          ? [
+              ...result.offers.map((offer) => ({
+                type: 'Offers' as const,
+                id: offer.id,
+              })),
+              'Offers',
+            ]
+          : ['Offers'];
       },
     }),
 

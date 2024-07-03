@@ -1,62 +1,39 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { offersAPI } from '../../store/services/offers.service';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { updateSearchParams } from '../../store/slices/search.slice';
+import styles from './Home.module.scss';
 import Banner from '../../components/Banner/Banner';
 import CategoryList from '../../components/CategoryList/CategoryList';
-import OffersList from '../../components/OffersList/OffersList';
-import { offersAPI } from '../../store/services/offers.service';
-import styles from './Home.module.scss';
 import Map from '../../components/Map/Map';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { CircularProgress } from '@mui/material';
-import { Offer } from '../../types/Offers';
-import { useAppSelector } from '../../store/hooks';
-
-// export type Params = {
-//   search: {
-//     columnName: string;
-//     value: string;
-//   };
-//   limit: number;
-//   page: number;
-//   sortBy: string;
-//   order: string;
-//   categoryId?: number;
-// };
-
-// export type ParamsByCategory = Params & {
-//   categoryId: number;
-// };
+import OfferCard from '../../components/OfferCard/OfferCard';
+import OfferCardSkeleton from '../../components/OfferCard/OfferCardSkeleton';
 
 export default function Home() {
   const searchState = useAppSelector((state) => state.searchReducer);
-  const { data: paginatedData } = offersAPI.useGetPaginatedSortedOffersQuery({
+  const dispatch = useAppDispatch();
+  const {
+    data: paginatedData,
+    isSuccess: isSuccessOffers,
+    refetch,
+  } = offersAPI.useGetPaginatedSortedOffersQuery({
     stateParams: searchState,
   });
-  console.log(paginatedData, 'paginatedData');
-  const [hasMore, setHasMore] = useState(true);
-  const [offers, setOffers] = useState<Offer[]>([]);
 
-  // useEffect(() => {
-  //   if (paginatedData) {
-  //     if (params.page === 1) {
-  //       setOffers(paginatedData.offers);
-  //     } else {
-  //       setOffers((prev) => [...prev, ...paginatedData.offers]);
-  //     }
-  //     setHasMore(paginatedData.offers.length >= params.limit);
-  //   }
-  // }, [paginatedData]);
-
-  // const chooseCategory = (id: number) => {
-  //   setCurrentCategory(id);
-  //   setHasMore(true);
-  // };
+  useEffect(() => {
+    refetch();
+  }, [searchState]);
 
   const fetchMoreData = () => {
-    console.log('🚀 ~ fetchMoreData');
-    // setParams((prev) => ({
-    //   ...prev,
-    //   page: prev.page + 1,
-    // }));
+    dispatch(
+      updateSearchParams({
+        pagination: {
+          page: searchState.pagination.page + 1,
+          limit: searchState.pagination.limit,
+        },
+      }),
+    );
   };
 
   return (
@@ -64,27 +41,41 @@ export default function Home() {
       <div className={styles.container}>
         <CategoryList />
         <Banner />
-        {searchState.display === 'map' ? (
-          <Map offersList={offers} />
-        ) : (
-          <div
-            style={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-            }}
-          >
-            <InfiniteScroll
-              dataLength={offers.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={<CircularProgress />}
-              style={{ overflow: 'unset' }}
-            >
-              <OffersList offersList={offers} />
-            </InfiniteScroll>
-          </div>
+        {paginatedData && (
+          <>
+            {searchState.display === 'map' ? (
+              <Map offersList={paginatedData?.offers} />
+            ) : (
+              <div
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <InfiniteScroll
+                  dataLength={paginatedData.offers.length}
+                  next={fetchMoreData}
+                  hasMore={paginatedData.offers.length < paginatedData.count}
+                  loader={<OfferCardSkeleton count={10} />}
+                  style={{ overflow: 'unset' }}
+                  pullDownToRefreshThreshold={50}
+                  className={styles.offersList}
+                >
+                  {isSuccessOffers && (
+                    <>
+                      {paginatedData?.offers.map((offer, i) => (
+                        <div key={i} className={styles.card}>
+                          <OfferCard offer={offer} />
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </InfiniteScroll>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>
