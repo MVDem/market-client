@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './OffersList.module.scss';
-import OffersListItem from './OffersListItem';
+import OffersListItem from './OfferCard';
 import { Offer } from '../../types/Offers';
 
 interface OffersListProps {

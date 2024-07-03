@@ -1,7 +1,7 @@
 import styles from './farmerPage.module.scss';
 import { useParams } from 'react-router-dom';
 import { farmersAPI } from '../../store/services/farmers.service';
-import OffersList from '../../components/OffersList/OffersList';
+import OffersList from '../../components/OfferCard/OffersList';
 import { offersAPI } from '../../store/services/offers.service';
 
 function FarmerPage() {
