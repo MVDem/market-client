@@ -1,6 +1,5 @@
 .container {
-  width: 95dvw;
-  max-width: 1280px;
+  max-width: 980px;
   margin: 0 auto;
 
   .farmerInfo {
@@ -59,6 +58,11 @@
 
 @include mobile {
   .container {
+    width: 100dvw;
+    h2 {
+      @include font(24px, 28px, 500);
+      margin: 1rem 0.5rem;
+    }
     .farmerInfo {
       flex-direction: column;
       gap: 1rem;
@@ -69,6 +73,9 @@
     }
     .offersList {
       grid-template-columns: 1fr;
+    }
+    .card {
+      height: 300px;
     }
   }
 }

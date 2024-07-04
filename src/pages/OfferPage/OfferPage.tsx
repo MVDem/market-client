@@ -1,53 +1,62 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import OfferShortDetails from '../../components/OfferShortDetails/OfferShortDetails';
 import styles from './OfferPage.module.scss';
 import { offersAPI } from '../../store/services/offers.service';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
-import { farmersAPI } from '../../store/services/farmers.service';
-import OffersListItem from '../../components/OfferCard/OfferCard';
+import OfferCard from '../../components/OfferCard/OfferCard';
 
 const OfferPage: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const { data: offer } = offersAPI.useGetByIdQuery({ offerId: +id! });
-  const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(
-    offer?.farmer.id.toString()!,
-  );
-  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
-    search: { columnName: 'farmerId', value: offer?.farmer.id.toString() },
-  });
+  const { state } = useLocation();
 
-  const handleClick = () => {
-    navigate(`/farmer/ditails/${offer?.farmer.id}`);
+  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
+    stateParams: {
+      search: { columnName: 'farmerId', value: state.offer?.farmer.id },
+      sort: { columnName: 'createdAt', order: 'ASC' },
+      pagination: { limit: 5, page: 1 },
+      display: 'grid',
+    },
+  });
+  console.log(farmeroffers?.offers);
+
+  const handleNavigate = (directory: string, id: number) => {
+    navigate(`/${directory}/ditails/${id}`);
   };
 
   return (
     <>
-      {offer && (
+      {state.offer && (
         <div className={styles.container}>
-          <OfferShortDetails offerId={+id!} />
+          <OfferShortDetails offer={state.offer} />
           <span className={styles.line}></span>
-          {offer.farmer && (
-            <div className={styles.farmerInfo} onClick={handleClick}>
+          {state.offer.farmer && (
+            <div
+              className={styles.farmerInfo}
+              onClick={() => handleNavigate('farmer', state.offer?.farmer.id)}
+            >
               <div className={styles.logo}>
-                <AvatarUI src={farmer?.logoURL!} />
+                <AvatarUI src={state.offer?.farmer?.logoURL!} />
               </div>
               <div className={styles.info}>
-                <h3>{farmer?.name}</h3>
+                <h3>{state.offer?.farmer?.name}</h3>
                 <p>
-                  {farmer?.city}, {farmer?.address}
+                  {state.offer?.farmer?.city}, {state.offer?.farmer?.address}
                 </p>
-                <p>{farmer?.email}</p>
+                <p>{state.offer?.farmer?.email}</p>
               </div>
             </div>
           )}
           <span className={styles.line}></span>
           <h2>Other products from this farmer:</h2>
           <div className={styles.offersList}>
-            {farmeroffers?.offers.slice(0, 5)?.map((offer, i) => (
-              <div key={i} className={styles.card}>
-                <OffersListItem offer={offer} />
+            {farmeroffers?.offers.map((offer, i) => (
+              <div
+                key={i}
+                className={styles.card}
+                onClick={() => handleNavigate('offer', offer.id)}
+              >
+                <OfferCard offer={offer} farmerInfo={false} />
               </div>
             ))}
           </div>

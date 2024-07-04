@@ -1,12 +1,19 @@
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 import Layout from '../pages/layout/Layout';
-import { ProfilePage } from '../pages/Farmer';
 import Guard from './Guard';
-import Login from '../pages/login/Login';
-import OfferPage from '../pages/OfferPage/OfferPage';
-import FarmerPage from '../pages/FarmerPage/FarmerPage';
+// import { ProfilePage } from '../pages/Farmer';
+// import Login from '../pages/login/Login';
+// import OfferPage from '../pages/OfferPage/OfferPage';
+// import FarmerPage from '../pages/FarmerPage/FarmerPage';
+
+const Login = lazy(() => import('../pages/login/Login'));
+const OfferPage = lazy(() => import('../pages/OfferPage/OfferPage'));
+const FarmerPage = lazy(() => import('../pages/FarmerPage/FarmerPage'));
+const ProfilePage = lazy(
+  () => import('../pages/Farmer/ProfilePage/ProfilePage'),
+);
 
 function Routing() {
   return (
@@ -15,10 +22,11 @@ function Routing() {
         <Routes>
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route path="/" element={<Home />}>
+              <Route path="/offer/ditails/:id" element={<OfferPage />} />
+            </Route>
             <Route path="/sign" element={<Login />} />
             <Route path="/farmer/ditails/:id" element={<FarmerPage />} />
-            <Route path="/offer/ditails/:id" element={<OfferPage />} />
             <Route
               path="/profile/:id"
               element={<Guard role={'FARMER'} element={<ProfilePage />} />}

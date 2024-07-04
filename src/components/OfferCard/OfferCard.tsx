@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './offerCard.module.scss';
 import { Offer } from '../../types/Offers';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
@@ -15,18 +14,16 @@ import {
 
 interface OffersListItemProps {
   offer: Offer;
+  farmerInfo?: boolean;
 }
 
-const OfferCard: React.FC<OffersListItemProps> = ({ offer }) => {
-  const navigate = useNavigate();
+const OfferCard: React.FC<OffersListItemProps> = ({ offer, farmerInfo }) => {
   const cld = useCloudinary();
   const image = cld
     ?.image(offer.imageURL ? offer.imageURL : offer.product.imageURL)
     .resize(fill().width(320).height(350));
 
-  const handleClick = () => {
-    navigate(`/offer/ditails/${offer.id}`);
-  };
+  const handleClick = () => {};
 
   return (
     <div className={styles.card} onClick={handleClick}>
@@ -48,10 +45,12 @@ const OfferCard: React.FC<OffersListItemProps> = ({ offer }) => {
         <p className={styles.price}>{offer.unit}</p>
         <p className={styles.price}>₪{offer.price}</p>
       </div>
-      <div className={styles.farmer}>
-        <AvatarUI src={offer.farmer?.logoURL} size={50} />
-        <h5>{offer.farmer?.name}</h5>
-      </div>
+      {farmerInfo && (
+        <div className={styles.farmer}>
+          <AvatarUI src={offer.farmer?.logoURL} size={50} />
+          <h5>{offer.farmer?.name}</h5>
+        </div>
+      )}
     </div>
   );
 };

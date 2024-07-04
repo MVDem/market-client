@@ -7,6 +7,9 @@
   justify-content: space-between;
   border-radius: 1rem;
   cursor: pointer;
+  @include mobile {
+    border-radius: 0;
+  }
 }
 
 .card:hover {
@@ -22,6 +25,9 @@
   justify-content: center;
   align-items: center;
   border-radius: 1rem;
+  @include mobile {
+    border-radius: 0;
+  }
 
   svg {
     width: 30%;
@@ -42,8 +48,7 @@
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  // flex-direction: column;
-  // gap: 1rem;
+  align-items: center;
 }
 
 .unit {
@@ -59,7 +64,6 @@
 }
 
 .farmer {
-  // height: 2rem;
   font-size: 1rem;
   color: #777;
   padding: 1rem;
@@ -67,33 +71,3 @@
   align-items: center;
   gap: 1rem;
 }
-
-// @include mobile {
-//   .card {
-//     height: auto;
-//   }
-
-//   .image {
-//     height: 50%;
-//   }
-
-//   .details {
-//     padding: 0.5rem;
-//     flex-direction: column;
-//     gap: 0.5rem;
-//   }
-
-//   .unit {
-//     font-size: 1rem;
-//     margin: 0;
-//   }
-
-//   .price {
-//     font-size: 0.8rem;
-//     margin: 0 !important;
-//   }
-
-//   .farmer {
-//     display: none;
-//   }
-// }
