@@ -1,25 +1,28 @@
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import { offersAPI } from '../../store/services/offers.service';
 import styles from './offerShortDetails.module.scss';
+import { Offer } from '../../types/Offers';
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import useCloudinary from '../../hooks/cloudinary';
+import {
+  AdvancedImage,
+  lazyload,
+  placeholder,
+  responsive,
+} from '@cloudinary/react';
+import { FaRegImage } from 'react-icons/fa6';
 
 type OfferShortDetailsProps = {
-  offerId: number;
+  offer: Offer;
 };
 
-function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
-  const { data: offer, isLoading } = offersAPI.useGetByIdQuery({
-    offerId: +offerId!,
-  });
-
-  console.log(offer, isLoading);
+function OfferShortDetails({ offer }: OfferShortDetailsProps) {
+  const cld = useCloudinary();
+  const image = cld
+    ?.image(offer.imageURL ? offer.imageURL : offer.product.imageURL)
+    .resize(fill().width(400).height(400));
 
   return (
     <>
-      {isLoading && (
-        <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-      )}
-      {!isLoading && offer && (
+      {offer && (
         <div className={styles.wrapper}>
           <div className={styles.topContainer}>
             <p></p>
@@ -34,22 +37,28 @@ function OfferShortDetails({ offerId }: OfferShortDetailsProps) {
           </div>
           <div className={styles.mainContainer}>
             <div className={styles.image}>
-              <img
-                src={offer.imageURL ? offer.imageURL : offer.product.imageURL}
-                alt="image"
-              />
+              {image && (
+                <AdvancedImage
+                  cldImg={image}
+                  plugins={[
+                    lazyload(),
+                    responsive({ steps: 100 }),
+                    placeholder({ mode: 'blur' }),
+                  ]}
+                />
+              )}
+              {!image && <FaRegImage />}
             </div>
             <div className={styles.info}>
-              <div className={styles.mainInfo}>
-                <h2>{offer.name_EN}</h2>
-                <p>Unit: {offer.unit}</p>
-              </div>
+              <h2>{offer.name_EN}</h2>
               <div className={styles.description}>
                 <h3>About:</h3>
                 <article>{offer.description_EN}</article>
               </div>
               <div className={styles.purchases}>
-                <div className="offer-short-details__price">₪{offer.price}</div>
+                <p>
+                  ₪{offer.price} / <span>{offer.unit}</span>
+                </p>
                 <button disabled>Buy now</button>
               </div>
             </div>

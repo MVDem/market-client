@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { offersAPI } from '../../store/services/offers.service';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateSearchParams } from '../../store/slices/search.slice';
@@ -9,8 +9,13 @@ import Map from '../../components/Map/Map';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import OfferCard from '../../components/OfferCard/OfferCard';
 import OfferCardSkeleton from '../../components/OfferCard/OfferCardSkeleton';
+import { Modal } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Offer } from '../../types/Offers';
 
 export default function Home() {
+  const [open, setOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
   const searchState = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
   const {
@@ -34,6 +39,13 @@ export default function Home() {
         },
       }),
     );
+  };
+
+  const handleClick = (offer: Offer) => {
+    setOpen(true);
+    navigate(`/offer/ditails/${offer.id}`, {
+      state: { offer: offer },
+    });
   };
 
   return (
@@ -66,8 +78,12 @@ export default function Home() {
                   {isSuccessOffers && (
                     <>
                       {paginatedData?.offers.map((offer, i) => (
-                        <div key={i} className={styles.card}>
-                          <OfferCard offer={offer} />
+                        <div
+                          key={i}
+                          className={styles.card}
+                          onClick={() => handleClick(offer)}
+                        >
+                          <OfferCard offer={offer} farmerInfo={true} />
                         </div>
                       ))}
                     </>
@@ -77,6 +93,19 @@ export default function Home() {
             )}
           </>
         )}
+        <Modal
+          open={open}
+          footer={<></>}
+          onCancel={() => {
+            setOpen(false);
+            navigate(-1);
+          }}
+          width={'max-content'}
+          className={styles.myModal}
+          classNames={{ content: styles.myModalContent }}
+        >
+          <Outlet />
+        </Modal>
       </div>
     </>
   );
