@@ -6,6 +6,7 @@ import { IoMenu } from 'react-icons/io5';
 import AvatarUI from '../../UI/AvatarUI/AvatarUI';
 import DropDown from './DropDown';
 import SearchBar from '../SearchBar/SearchBar';
+import ThemeButton from '../../UI/ThemeButton/ThemeButton';
 
 type DropDownProps = {
   onCloseMemu?: () => void;
@@ -47,9 +48,12 @@ const Header: React.FC = ({}: DropDownProps) => {
               <AvatarUI src={user?.farmer?.logoURL!} size={36} />
             </div>
           ) : (
-            <NavLink to="/sign" className={setActive}>
-              Login
-            </NavLink>
+            <>
+              <ThemeButton />
+              <NavLink to="/sign" className={setActive}>
+                Login
+              </NavLink>
+            </>
           )}
         </div>
         {isOpen && <DropDown user={user} setIsOpen={setIsOpen} />}

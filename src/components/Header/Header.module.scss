@@ -1,6 +1,6 @@
 .header {
-  background-color: $bg-header;
-  color: $color-header;
+  background-color: $bg-secondary;
+  color: $text-secondary;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -44,21 +44,24 @@
     @include font(1.2rem, 1.2rem, 400);
 
     &:hover {
-      border-bottom: 2px solid #49557e;
+      color: $text-accent;
+      // border-bottom: 2px solid #49557e;
     }
   }
 
   .linkActive {
-    border-bottom: 2px solid #49557e;
+    // border-bottom: 2px solid #49557e;
     text-decoration: none;
     @include font(1.2rem, 1.2rem, 400);
+    color: $text-accent;
   }
 
   .rightPanel {
     height: 100%;
     display: flex;
     align-items: center;
-    background-color: $bg-header;
+    background-color: $bg-secondary;
+    gap: 1.5rem;
     cursor: pointer;
     @include mobile {
       display: none;
@@ -78,7 +81,7 @@
     cursor: pointer;
     svg {
       font-size: 2rem;
-      color: $color-header;
+      color: $text-secondary;
     }
     @include mobile {
       display: flex;
