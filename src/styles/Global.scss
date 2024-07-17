@@ -1,37 +1,22 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
-$bg-header: var(--bg-header);
-$color-header: var(--color-header);
-$bg-search: var(--bg-search);
-$color-search: var(--color-search);
-$bg-body: var(--bg-body);
-$baner-content-color: var(--banerContentColor);
-$text-color: var(--text);
-$table-border-color: var(--table-border);
-//===============================
-// $background-input: var(--bg-input);
-// $color-input: var(--color-input);
-// $color-lable: var(--color-lable);
-
-// $background-header: var(--bg-header);
-// $background-sideBar: var(--bg-sideBar);
-// $background-card: var(--bg-card);
-// $background-card-searchCard: var(--bg-card-searchCard);
-// $background-card-addUserCard: var(--bg-card-addUserCard);
-// $background-card-paginationCard: var(--bg-card-paginationCard);
-// $background-body: var(--bg-body);
-// $subText-color: var(--subText);
-// $active-text-color: var(--active-text);
-// $active-link-color: var(--active-link-text);
-// $active-link-background-color: var(--bg-active-link);
-// $hover-btn-color: var(--hover-btn);
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-accent: var(--bg-accent);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-disabled: var(--text-disabled);
+$text-warning: var(--text-warning);
+$text-success: var(--text-success);
+$text-accent: var(--text-accent);
+$text-fixed: var(--text-fixed);
 
 @mixin font(
   $size: 16px,
   $height: 19px,
   $weight: 300,
   $style: medium,
-  $color: $text-color
+  $color: $text-primary
 ) {
   font-family: 'SF Pro Display', sans-serif;
   font-size: $size;

@@ -12,7 +12,7 @@
   position: absolute;
   right: 0;
   top: 3.2rem;
-  background-color: $bg-header;
+  background-color: $bg-secondary;
   border-radius: 1rem;
   padding: 0.5rem;
   z-index: -5;
@@ -71,7 +71,7 @@
 
     .link {
       text-decoration: none;
-      color: $color-header;
+      color: $text-secondary;
       padding: 0.5rem;
       text-align: center;
       font-size: 1.2rem;
@@ -81,7 +81,7 @@
       }
     }
     .linkActive {
-      color: $color-header;
+      color: $text-secondary;
       padding: 0.5rem;
       text-align: center;
       font-size: 1.2rem;

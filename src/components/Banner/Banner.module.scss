@@ -18,7 +18,7 @@
 
     .title {
       @include font(3rem, 3rem, 500);
-      color: white;
+      color: $text-primary;
     }
 
     .subTitle {
@@ -29,7 +29,7 @@
     }
     .btn {
       border: none;
-      color: $baner-content-color;
+      color: $text-secondary;
       padding: 1.4rem 3rem;
       font-size: 1rem;
       border-radius: 1rem;

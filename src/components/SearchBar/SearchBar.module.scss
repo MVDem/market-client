@@ -22,7 +22,7 @@
       border-radius: 0.4rem 0 0 0.4rem;
       box-sizing: border-box;
       border: none;
-      background-color: $bg-search;
+      background-color: $bg-primary;
       @include font(1rem, 1.2rem, 400);
       @include mobile {
         padding-left: 2rem;
@@ -33,7 +33,7 @@
       top: 50%;
       left: 1rem;
       transform: translateY(-40%);
-      color: $color-search;
+      color: $text-primary;
       @include mobile {
         left: 0.5rem;
       }
@@ -45,10 +45,14 @@
 
     .searchBtn {
       width: 2.5rem;
-      color: $color-search;
-      background-color: $bg-search;
+      color: $text-primary;
+      background-color: $bg-primary;
       border: none;
       cursor: pointer;
+
+      &:hover {
+        color: $text-accent;
+      }
 
       svg {
         width: 1.3rem;
