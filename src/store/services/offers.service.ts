@@ -35,7 +35,10 @@ export const offersAPI = createApi({
         return endpointName;
       },
       merge: (currentCache, newCache, { arg: { stateParams } }) => {
-        if (stateParams.pagination.page === 0) currentCache.offers.length = 0;
+        if (stateParams.pagination.page === 1) {
+          currentCache.offers.length = 0;
+          currentCache.count = newCache.count;
+        }
         currentCache.offers.push(...newCache.offers);
       },
       forceRefetch: ({ currentArg, previousArg }) => {
