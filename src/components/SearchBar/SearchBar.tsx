@@ -27,6 +27,7 @@ export default function SearchBar({}: SearchBarProps) {
     dispatch(
       updateSearchParams({
         search: { columnName, value: debounced },
+        pagination: { limit: 25, page: 1 },
       }),
     );
   }, [debounced]);
@@ -34,6 +35,8 @@ export default function SearchBar({}: SearchBarProps) {
   useEffect(() => {
     if (searchState.search.columnName === 'name_EN') {
       setText(searchState.search.value);
+    } else {
+      setText('');
     }
   }, [searchState.search.value]);
 
