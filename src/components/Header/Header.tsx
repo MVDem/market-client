@@ -50,7 +50,7 @@ const Header: React.FC = ({}: DropDownProps) => {
           ) : (
             <>
               <ThemeButton />
-              <NavLink to="/sign" className={setActive}>
+              <NavLink to="/signIn" className={setActive}>
                 Login
               </NavLink>
             </>
