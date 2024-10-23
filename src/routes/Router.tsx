@@ -8,7 +8,7 @@ import Guard from './Guard';
 // import OfferPage from '../pages/OfferPage/OfferPage';
 // import FarmerPage from '../pages/FarmerPage/FarmerPage';
 
-const Login = lazy(() => import('../pages/login/Login'));
+const Login = lazy(() => import('../pages/SignPage/SignPage'));
 const OfferPage = lazy(() => import('../pages/OfferPage/OfferPage'));
 const FarmerPage = lazy(() => import('../pages/FarmerPage/FarmerPage'));
 const ProfilePage = lazy(
@@ -25,7 +25,8 @@ function Routing() {
             <Route path="/" element={<Home />}>
               <Route path="/offer/ditails/:id" element={<OfferPage />} />
             </Route>
-            <Route path="/sign" element={<Login />} />
+            <Route path="/signUp" element={<Login />} />
+            <Route path="/signIn" element={<Login />} />
             <Route path="/farmer/ditails/:id" element={<FarmerPage />} />
             <Route
               path="/profile/:id"

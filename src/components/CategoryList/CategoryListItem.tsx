@@ -31,6 +31,7 @@ export default function CategoryListItem({ item }: CategoryItemProps) {
     dispatch(
       updateSearchParams({
         search: { columnName: 'categoryId', value: id.toString() },
+        pagination: { limit: 25, page: 1 },
       }),
     );
   };
