@@ -18,5 +18,12 @@ export default defineConfig({
       usePolling: true,
     },
     cors: false,
+    proxy: {
+      '/api': {
+        target: 'https://farmers-market-api-seven.vercel.app',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 });
