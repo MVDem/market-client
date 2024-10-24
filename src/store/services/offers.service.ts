@@ -10,7 +10,7 @@ export const offersAPI = createApi({
   endpoints: (builder) => ({
     getPaginatedSortedOffers: builder.query<
       { offers: Offer[]; count: number },
-      { stateParams: SearchState }
+      { stateParams: SearchState; context: string }
     >({
       query: ({ stateParams }) => {
         const { pagination, search, sort } = stateParams;
@@ -31,8 +31,8 @@ export const offersAPI = createApi({
           method: 'GET',
         };
       },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.context}`;
       },
       merge: (currentCache, newCache, { arg: { stateParams } }) => {
         if (stateParams.pagination.page === 1) {

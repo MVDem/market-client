@@ -1,28 +1,36 @@
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import useCloudinary from '../../hooks/cloudinary';
 import styles from './AvatarUI.module.scss';
 import { RxAvatar } from 'react-icons/rx';
+import {
+  AdvancedImage,
+  lazyload,
+  placeholder,
+  responsive,
+} from '@cloudinary/react';
 
 interface AvatarProps {
   src: string;
   size?: number;
 }
 
-const AvatarUI = (props: AvatarProps) => {
+const AvatarUI = ({ src, size = 100 }: AvatarProps) => {
+  const cld = useCloudinary();
+  const image = cld?.image(src).resize(fill().width(size!).height(size!));
+
   return (
-    <div
-      className={styles.avatar}
-      style={{ width: props.size, height: props.size }}
-    >
-      {props.src ? (
-        <img
-          className={styles.icon}
-          src={props.src}
-          alt="avatar"
-          width={`${props.size}`}
-          height={`${props.size}`}
+    <div className={styles.avatar} style={{ width: size, height: size }}>
+      {image && (
+        <AdvancedImage
+          cldImg={image}
+          plugins={[
+            lazyload(),
+            responsive({ steps: 100 }),
+            placeholder({ mode: 'blur' }),
+          ]}
         />
-      ) : (
-        <RxAvatar className={styles.icon} />
       )}
+      {!image && <RxAvatar className={styles.icon} />}
     </div>
   );
 };
