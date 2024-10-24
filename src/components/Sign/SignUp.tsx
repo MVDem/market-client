@@ -1,4 +1,4 @@
-import styles from './signUp.module.scss';
+// import styles from './signUp.module.scss';
 
 function SignUp() {
   return <section>Form</section>;
