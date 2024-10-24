@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { offersAPI } from '../../store/services/offers.service';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateSearchParams } from '../../store/slices/search.slice';
@@ -24,6 +24,7 @@ export default function Home() {
     refetch,
   } = offersAPI.useGetPaginatedSortedOffersQuery({
     stateParams: searchState,
+    context: 'home',
   });
 
   useEffect(() => {
@@ -104,7 +105,9 @@ export default function Home() {
           className={styles.myModal}
           classNames={{ content: styles.myModalContent }}
         >
-          <Outlet />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </Modal>
       </div>
     </>

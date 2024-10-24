@@ -24,7 +24,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     @include font(1.2rem, 1.5rem, 500, italic);
     // color: $bg-primary;
-    color: $text-fixed;
+    color: $text-secondary;
     @include mobile {
       padding: 1rem 1.5rem;
       background-color: $bg-primary;

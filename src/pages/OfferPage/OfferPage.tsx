@@ -17,12 +17,14 @@ const OfferPage: React.FC = () => {
       pagination: { limit: 5, page: 1 },
       display: 'grid',
     },
+    context: 'offerPage',
   });
-  console.log(farmeroffers?.offers);
 
   const handleNavigate = (directory: string, id: number) => {
     navigate(`/${directory}/ditails/${id}`);
   };
+
+  console.log(state.offer);
 
   return (
     <>
@@ -36,7 +38,7 @@ const OfferPage: React.FC = () => {
               onClick={() => handleNavigate('farmer', state.offer?.farmer.id)}
             >
               <div className={styles.logo}>
-                <AvatarUI src={state.offer?.farmer?.logoURL!} />
+                <AvatarUI src={state.offer?.farmer?.logoURL!} size={160} />
               </div>
               <div className={styles.info}>
                 <h3>{state.offer?.farmer?.name}</h3>
