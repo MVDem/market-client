@@ -3,13 +3,35 @@ import { useParams } from 'react-router-dom';
 import { farmersAPI } from '../../store/services/farmers.service';
 import OffersList from '../../components/OfferCard/OffersList';
 import { offersAPI } from '../../store/services/offers.service';
+import { SearchState } from '../../store/slices/search.slice';
+import { useEffect, useState } from 'react';
 
 function FarmerPage() {
   const { id } = useParams<{ id: string }>();
   const { data: farmer } = farmersAPI.useGetFarmerByIdQuery(id!);
-  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
-    search: { columnName: 'farmerId', value: farmer?.id.toString() },
+
+  const [searchState, setSearchState] = useState<SearchState>({
+    search: { columnName: 'farmerId', value: id!.toString() },
+    sort: { columnName: 'createdAt', order: 'ASC' },
+    pagination: { limit: 25, page: 1 },
+    display: 'grid',
   });
+
+  useEffect(() => {
+    setSearchState((prev) => ({
+      ...prev,
+      search: { columnName: 'farmerId', value: id!.toString() },
+    }));
+  });
+
+  const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
+    stateParams: searchState,
+    context: 'home',
+  });
+
+  // const { data: farmeroffers } = offersAPI.useGetPaginatedSortedOffersQuery({
+  //   search: { columnName: 'farmerId', value: farmer?.id.toString() },
+  // });
 
   return (
     <>

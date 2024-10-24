@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './signPage.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 // import FormUICustom from '../../UI/FormUICustom/FormUICustom';
 // import {
 //   emailInput,
@@ -13,14 +13,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 // import { User } from '../../types/User';
 import SignUp from '../../components/Sign/SignUp';
 
-const INITIAL_ROLE = 'FARMER';
+// const INITIAL_ROLE = 'FARMER';
 
 export default function Login() {
   const { pathname } = useLocation();
   console.log(pathname);
   const [page, setPage] = useState('signIn');
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.authReducer);
   const { user } = useAppSelector((state) => state.authReducer);
   useEffect(() => {

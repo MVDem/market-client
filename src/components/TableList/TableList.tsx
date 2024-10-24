@@ -3,9 +3,10 @@ import { Offer } from '../../types/Offers';
 import TableListItem from './TableListItem';
 import { offersAPI } from '../../store/services/offers.service';
 import styles from './tableListItem.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BackdropCreateOfferForm from '../BackdropForm/BackdropCreateOfferForm';
 import showSnackBar from '../../UI/SnackBar/SnackBar';
+import { SearchState } from '../../store/slices/search.slice';
 
 type TableList = {
   farmerId: number;
@@ -17,8 +18,23 @@ function TableList({ farmerId }: TableList) {
   const [createOffer, { isLoading: isLoadingCreate }] =
     offersAPI.useCreateMutation();
   const [deleteOffer] = offersAPI.useDeleteMutation();
-  const { data: offers, refetch } = offersAPI.useGetPaginatedSortedOffersQuery({
+  const [searchState, setSearchState] = useState<SearchState>({
     search: { columnName: 'farmerId', value: farmerId.toString() },
+    sort: { columnName: 'createdAt', order: 'ASC' },
+    pagination: { limit: 25, page: 1 },
+    display: 'grid',
+  });
+
+  useEffect(() => {
+    setSearchState((prev) => ({
+      ...prev,
+      search: { columnName: 'farmerId', value: farmerId.toString() },
+    }));
+  });
+
+  const { data: offers, refetch } = offersAPI.useGetPaginatedSortedOffersQuery({
+    stateParams: searchState,
+    context: 'home',
   });
 
   const handleDeleteOffer = async (id: number) => {
