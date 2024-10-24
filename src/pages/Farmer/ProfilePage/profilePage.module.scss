@@ -1,0 +1,109 @@
+$border: green;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.topContainer {
+  position: relative;
+  .cover {
+    width: 100%;
+    height: 30dvh;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #777;
+    }
+  }
+  .avatar {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 6px solid $border;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: absolute;
+    left: 10%;
+    top: 18dvh;
+    background-color: #777;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.title {
+  width: 100%;
+  padding: 3rem 3rem 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  .mainInfo {
+    h1 {
+      @include font(28px, 32px, 500);
+    }
+  }
+  .edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    background-color: inherit;
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $text-color;
+      cursor: pointer;
+    }
+  }
+}
+.line {
+  width: 100%;
+  height: 3px;
+  background-color: $border;
+  box-sizing: border-box;
+}
+
+.extra {
+  padding: 1rem 3rem;
+  h2 {
+    @include font(24px, 28px, 500);
+    margin-bottom: 1rem;
+  }
+  p {
+    @include font(16px, 19px, 300);
+    text-align: justify;
+  }
+}
+
+.offers {
+  padding: 1rem 3rem;
+  // .offersHeader {
+  //   display: flex;
+  //   justify-content: space-between;
+
+  //   h2 {
+  //     @include font(24px, 28px, 500);
+  //     margin-bottom: 1rem;
+  //   }
+  // }
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}

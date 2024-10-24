@@ -1,0 +1,90 @@
+.header {
+  background-color: $bg-secondary;
+  color: $text-secondary;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .container {
+    position: relative;
+    width: 100dvw;
+    max-width: 1280px;
+    height: 3rem;
+    margin: 0 auto;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    @include mobile {
+      padding: 0 0.25rem;
+    }
+  }
+
+  .leftgroup {
+    display: flex;
+    align-items: center;
+
+    .navbar {
+      @include mobile {
+        display: none;
+      }
+      ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 1.5rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+  .link {
+    text-decoration: none;
+    @include font(1.2rem, 1.2rem, 400);
+
+    &:hover {
+      color: $text-accent;
+      // border-bottom: 2px solid #49557e;
+    }
+  }
+
+  .linkActive {
+    // border-bottom: 2px solid #49557e;
+    text-decoration: none;
+    @include font(1.2rem, 1.2rem, 400);
+    color: $text-accent;
+  }
+
+  .rightPanel {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: $bg-secondary;
+    gap: 1.5rem;
+    cursor: pointer;
+    @include mobile {
+      display: none;
+    }
+
+    .rightMenu {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      h5 {
+        @include font(1.2rem, 1.2rem, 400);
+      }
+    }
+  }
+  .burger {
+    display: none;
+    cursor: pointer;
+    svg {
+      font-size: 2rem;
+      color: $text-secondary;
+    }
+    @include mobile {
+      display: flex;
+    }
+  }
+}

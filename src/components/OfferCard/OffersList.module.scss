@@ -1,0 +1,12 @@
+.offersList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  justify-items: center;
+  grid-auto-rows: minmax(auto, 200px);
+}
+
+.card {
+  width: 100%;
+  height: 450px;
+}

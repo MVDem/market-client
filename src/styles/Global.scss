@@ -1,0 +1,41 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-accent: var(--bg-accent);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-disabled: var(--text-disabled);
+$text-warning: var(--text-warning);
+$text-success: var(--text-success);
+$text-accent: var(--text-accent);
+$text-fixed: var(--text-fixed);
+
+@mixin font(
+  $size: 16px,
+  $height: 19px,
+  $weight: 300,
+  $style: medium,
+  $color: $text-primary
+) {
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $height;
+  font-style: $style;
+  color: $color;
+}
+
+@mixin tablet {
+  @media (max-width: $max-tablet-width) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: $max-mobile-width) {
+    @content;
+  }
+}
+
+$max-tablet-width: 1279px;
+$max-mobile-width: 780px;
